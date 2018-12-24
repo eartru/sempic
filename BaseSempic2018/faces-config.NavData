@@ -6,8 +6,12 @@
         <Node id="public/create-user.xhtml" x="150" y="450" zoom="false"/>
         <Node id="admin/list-users.xhtml" x="900" y="150" zoom="true"/>
         <Node id="login-error.html" x="150" y="300" zoom="true"/>
-        <Node id="user/create-group.xhtml" x="400" y="300" zoom="true"/>
-        <Node id="goodbye.xhtml" x="150" y="150" zoom="false"/>
+        <Node id="user/view-album.xhtml" x="553" y="405" zoom="true"/>
+        <Node id="user/create-group.xhtml" x="355" y="238" zoom="true"/>
+        <Node id="user/create-photo.xhtml" x="941" y="245" zoom="true"/>
+        <Node id="user/create-album.xhtml" x="642" y="299" zoom="false"/>
+        <Node id="user/home.xhtml" x="437" y="74" zoom="true"/>
+        <Node id="goodbye.xhtml" x="79" y="71" zoom="false"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>
