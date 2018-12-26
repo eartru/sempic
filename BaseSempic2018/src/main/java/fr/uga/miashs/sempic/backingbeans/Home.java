@@ -33,11 +33,10 @@ public class Home implements Serializable{
     private AlbumFacade albumService;
     
     public Home() {
-        System.out.println("ouiiiiiiiiii");
+        
     }
     
-    public List<Album> getAlbums() {     
-        System.out.println(albumService.findAlbumsOf(current));
+    public List<Album> getAlbums() {
         return albumService.findAlbumsOf(current);
     }
 
