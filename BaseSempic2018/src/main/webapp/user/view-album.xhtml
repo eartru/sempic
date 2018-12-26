@@ -17,6 +17,7 @@
                 <a href="#{application.contextPath}/webapi/picture/#{photo.path}" type="text/html">
                     <h:graphicImage value="/webapi/picture/#{photo.path}?width=200"/>
                 </a>
+                <h:commandButton value="X" action="#{deletePhoto.delete(photo)}"/>
             </ui:repeat>
             <p>
                 <h:inputFile p:multiple="multiple" id="photoUpload" p:type="file"  value="#{viewAlbum.createPhoto.files}" p:accept="image/*">
