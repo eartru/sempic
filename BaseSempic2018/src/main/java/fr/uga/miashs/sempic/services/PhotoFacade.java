@@ -52,7 +52,7 @@ public class PhotoFacade extends AbstractJpaFacade<Long,Photo> {
         }
     }
     
-    public List<Photo> findAll(Album a) throws SempicModelException {
+        public List<Photo> findAll(Album a) throws SempicModelException {
         Query q = getEntityManager().createNamedQuery("findPhotoAlbum");
         q.setParameter("album", a);
         return q.getResultList();

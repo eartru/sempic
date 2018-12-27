@@ -52,24 +52,24 @@ public class DeleteAlbum implements Serializable {
         }
         boolean partiallyFailed=false;
         try {
-            service.delete(selectedAlbum);
-            try {
-                listPhoto = photoService.findAll(selectedAlbum);
-            } catch (SempicModelException ex) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
-                partiallyFailed=true; 
+            listPhoto = photoService.findAll(selectedAlbum);
+            for(Photo p : listPhoto){
+                try {
+                    photoService.delete(p);
+                } catch (SempicModelException ex) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
+                    partiallyFailed=true; 
+                }
             }
             if (partiallyFailed) {
              return "failure";
             }
             else {
-                for(Photo p : listPhoto){
-                    try {
-                        photoService.delete(p);
-                    } catch (SempicModelException ex) {
+                try {
+                    service.delete(selectedAlbum);
+                } catch (SempicModelException ex) {
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
                         partiallyFailed=true; 
-                    }
                 }
             }
         } catch (SempicModelException ex) {
@@ -81,7 +81,7 @@ public class DeleteAlbum implements Serializable {
         }
         else {
             init();
-            return "success";
+            return "suppAlbumSuccess";
         }
     }
 }

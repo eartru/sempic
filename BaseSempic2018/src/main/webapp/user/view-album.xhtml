@@ -11,7 +11,9 @@
     <h:body>
         
         <h1>Album <h:outputText value="#{viewAlbum.current.title}"/></h1>
-        <h:commandButton value="Supprimer album" action="#{deleteAlbum.delete(viewAlbum.current)}"/>
+        <h:form id="supprAlbum" enctype="multipart/form-data">
+            <h:commandButton value="Supprimer album" action="#{deleteAlbum.delete(viewAlbum.current)}"/>
+        </h:form>   
         
         <h:form id="addPhoto" enctype="multipart/form-data">
             <ui:repeat id="listPhotos" value="#{viewAlbum.photos}" var="photo">
