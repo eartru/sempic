@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+
+        <!--On met en place un titre par défaut-->
+        <title>
+            <ui:insert name="title">Titre par défaut</ui:insert>
+        </title>
+
+        <!--On place ici tous les fichiers de style commun-->
+        <!--<h:outputStylesheet name="css/style.css"/>-->
+
+        <!--On permet l'ajout de feuille de style par la suite au besoin-->
+        <ui:insert name="css"/>
+
+    </h:head>
+
+    <h:body>
+
+        <!--Le Header par défaut-->
+        <ui:insert name="header">
+            <h:panelGroup layout="block" class="header-style">
+                <ui:include src="/template/header.xhtml" />
+            </h:panelGroup>
+        </ui:insert>
+
+        <!--Le Contenu de la page-->
+        <h:panelGroup layout="block" class="content-style">
+            <ui:insert name="content"/>
+        </h:panelGroup>
+
+        <!--Le Footer par défaut-->
+        <ui:insert name="footer">
+            <h:panelGroup layout="block" class="footer-style">
+                <ui:include src="/template/footer.xhtml" />
+            </h:panelGroup>
+        </ui:insert>
+
+        <!--On place ici tous les fichiers javascript commun-->
+        <!--<h:outputScript name="js/script.js"/>-->
+
+        <!--On permet l'ajout de fichier javascript par la suite au besoin-->
+        <ui:insert name="js"/>
+
+    </h:body>
+</html>
