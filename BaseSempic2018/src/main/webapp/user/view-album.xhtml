@@ -5,31 +5,33 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
-    <h:head>
-        <title>Album <h:outputText value="#{viewAlbum.current.title}"/></title>
-    </h:head>
-    <h:body>
-        
-        <h1>Album <h:outputText value="#{viewAlbum.current.title}"/></h1>
-        <h:form id="supprAlbum" enctype="multipart/form-data">
-            <h:commandButton value="Supprimer album" action="#{deleteAlbum.delete(viewAlbum.current)}"/>
-        </h:form>   
-        
-        <h:form id="addPhoto" enctype="multipart/form-data">
-            <ui:repeat id="listPhotos" value="#{viewAlbum.photos}" var="photo">
-                <a href="#{application.contextPath}/webapi/picture/#{photo.path}" type="text/html">
-                    <h:graphicImage value="/webapi/picture/#{photo.path}?width=200"/>
-                </a>
-                <h:commandButton value="X" action="#{deletePhoto.delete(photo)}"/>
-            </ui:repeat>
-            <p>
-                <h:inputFile p:multiple="multiple" id="photoUpload" p:type="file"  value="#{viewAlbum.createPhoto.files}" p:accept="image/*">
-                    <f:ajax listener="#{viewAlbum.createPhoto.create()}" render="@form"/> 
-                </h:inputFile>
-                <h:message for="photoUpload" />
-            </p>
-            
-        </h:form>
-    </h:body>
+    
+    <ui:composition template="/template/layout.xhtml">
+        <ui:define name="title">
+            Album <h:outputText value="#{viewAlbum.current.title}"/>
+        </ui:define>
+        <ui:define name="content">
+            <h1>Album <h:outputText value="#{viewAlbum.current.title}"/></h1>
+            <h:form id="supprAlbum" enctype="multipart/form-data">
+                <h:commandButton value="Supprimer album" action="#{deleteAlbum.delete(viewAlbum.current)}"/>
+            </h:form>   
+
+            <h:form id="addPhoto" enctype="multipart/form-data">
+                <ui:repeat id="listPhotos" value="#{viewAlbum.photos}" var="photo">
+                    <a href="#{application.contextPath}/webapi/picture/#{photo.path}" type="text/html">
+                        <h:graphicImage value="/webapi/picture/#{photo.path}?width=200"/>
+                    </a>
+                    <h:commandButton value="X" action="#{deletePhoto.delete(photo)}"/>
+                </ui:repeat>
+                <p>
+                    <h:inputFile p:multiple="multiple" id="photoUpload" p:type="file"  value="#{viewAlbum.createPhoto.files}" p:accept="image/*">
+                        <f:ajax listener="#{viewAlbum.createPhoto.create()}" render="@form"/> 
+                    </h:inputFile>
+                    <h:message for="photoUpload" />
+                </p>
+
+            </h:form>
+        </ui:define>      
+    </ui:composition>
 </html>
 
