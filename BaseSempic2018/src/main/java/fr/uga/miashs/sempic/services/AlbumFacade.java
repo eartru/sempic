@@ -5,9 +5,15 @@
  */
 package fr.uga.miashs.sempic.services;
 
+import fr.uga.miashs.sempic.SempicException;
+import fr.uga.miashs.sempic.SempicModelException;
 import fr.uga.miashs.sempic.entities.Album;
+import fr.uga.miashs.sempic.entities.Photo;
 import fr.uga.miashs.sempic.entities.SempicUser;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -31,4 +37,9 @@ public class AlbumFacade extends AbstractJpaFacade<Long,Album> {
         q.setParameter("owner", owner);
         return q.getResultList();
     }    
+    
+    @Override
+    public void delete(Album a) throws SempicModelException {
+        super.delete(a);
+    }
 }
