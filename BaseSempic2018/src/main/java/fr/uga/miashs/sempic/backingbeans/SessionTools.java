@@ -7,12 +7,15 @@ package fr.uga.miashs.sempic.backingbeans;
 
 import fr.uga.miashs.sempic.SempicException;
 import fr.uga.miashs.sempic.entities.Album;
+import fr.uga.miashs.sempic.entities.Photo;
 import fr.uga.miashs.sempic.qualifiers.LoggedUser;
 import fr.uga.miashs.sempic.qualifiers.SelectedUser;
 import fr.uga.miashs.sempic.entities.SempicUser;
 import fr.uga.miashs.sempic.entities.SempicUserType;
 import fr.uga.miashs.sempic.qualifiers.SelectedAlbum;
+import fr.uga.miashs.sempic.qualifiers.SelectedPhoto;
 import fr.uga.miashs.sempic.services.AlbumFacade;
+import fr.uga.miashs.sempic.services.PhotoFacade;
 import fr.uga.miashs.sempic.services.SempicUserFacade;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -46,6 +49,9 @@ public class SessionTools implements Serializable {
     
     @Inject
     private AlbumFacade albumService;
+    
+    @Inject
+    private PhotoFacade photoService;
 
     private SempicUser connectedUser;
 
@@ -111,6 +117,27 @@ public class SessionTools implements Serializable {
             }
         } 
         throw new SempicException("parameter albumId not given");
+    }
+    
+    @Produces
+    @SelectedPhoto
+    @Dependent
+    @Named
+    public Photo getSelectedPhoto() throws SempicException {
+        String photoId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("photoId");
+        if (photoId != null ) {
+            try {
+                long id = Long.parseLong(photoId);
+                Photo p =  photoService.read(id);
+                if (getConnectedUser()==null){
+                     throw new SempicException("not allowed to access photoId="+photoId);
+                }
+                return p;
+            } catch (NumberFormatException e) {
+                throw new SempicException("parameter photoId is not a number: "+photoId,e);
+            }
+        } 
+        throw new SempicException("parameter photoId not given");
     }
     
     public boolean isNotLogged() {
