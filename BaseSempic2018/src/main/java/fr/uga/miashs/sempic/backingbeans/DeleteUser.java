@@ -79,20 +79,6 @@ public class DeleteUser implements Serializable {
                             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
                             partiallyFailed=true; 
                     }
-                    if (partiallyFailed) {
-                        return "failure";
-                    }
-                    else {
-                        try {
-                            service.delete(selectedUser);
-                        } catch (SempicModelException ex) {
-                                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
-                                partiallyFailed=true; 
-                        }
-                        if (partiallyFailed) {
-                            return "failure";
-                       }
-                    }
                 }
             }
         } catch (SempicModelException ex) {
@@ -100,11 +86,21 @@ public class DeleteUser implements Serializable {
            partiallyFailed=true; 
         }
         if (partiallyFailed) {
-             return "failure";
+            return "failure";
         }
         else {
-            init();
-            return "suppUserSuccess";
+            try {
+                service.delete(selectedUser);
+            } catch (SempicModelException ex) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
+                    partiallyFailed=true; 
+            }
+            if (partiallyFailed) {
+             return "failure";
+            } else {
+                init();
+                return "supprUserSuccess";
+            }
         }
     }
 }
