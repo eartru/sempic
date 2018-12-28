@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:pf="http://primefaces.org/ui">
     
     <ui:composition template="/template/layout.xhtml">
         <ui:define name="title">
@@ -17,12 +18,23 @@
             </h:form>   
 
             <h:form id="addPhoto" enctype="multipart/form-data">
-                <ui:repeat id="listPhotos" value="#{viewAlbum.photos}" var="photo">
-                    <a href="#{application.contextPath}/webapi/picture/#{photo.path}" type="text/html">
-                        <h:graphicImage value="/webapi/picture/#{photo.path}?width=200"/>
-                    </a>
-                    <h:commandButton value="X" action="#{deletePhoto.delete(photo)}"/>
-                </ui:repeat>
+                <pf:dataGrid var="photo" value="#{viewAlbum.photos}" columns="4" layout="grid"
+        rows="12" paginator="false" id="cars">
+                <!--<ui:repeat id="listPhotos" value="#{viewAlbum.photos}" var="photo">-->
+                    <pf:panelGrid columns="12">
+                        <f:facet name="header">
+                            <a href="#{application.contextPath}/webapi/picture/#{photo.path}" type="text/html">
+                                <h:graphicImage value="/webapi/picture/#{photo.path}?width=200"/>
+                            </a>
+                        </f:facet>
+
+                        <h:commandButton value="Supprimer" action="#{deletePhoto.delete(photo)}"/>
+                        <pf:link outcome="view-photo" value="Detail">
+                            <f:param name="photoId" value="#{photo.id}" />
+                        </pf:link>
+                    </pf:panelGrid>
+                <!--</ui:repeat>-->
+                    </pf:dataGrid>
                 <p>
                     <h:inputFile p:multiple="multiple" id="photoUpload" p:type="file"  value="#{viewAlbum.createPhoto.files}" p:accept="image/*">
                         <f:ajax listener="#{viewAlbum.createPhoto.create()}" render="@form"/> 
