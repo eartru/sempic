@@ -28,10 +28,10 @@
                             </a>
                         </f:facet>
 
-                        <h:commandButton value="Supprimer" action="#{deletePhoto.delete(photo)}"/>
                         <pf:link outcome="view-photo" value="Detail">
                             <f:param name="photoId" value="#{photo.id}" />
                         </pf:link>
+                        <h:commandButton value="Supprimer" action="#{deletePhoto.delete(photo)}"/>                       
                     </pf:panelGrid>
                 <!--</ui:repeat>-->
                     </pf:dataGrid>
