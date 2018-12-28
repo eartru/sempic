@@ -21,7 +21,7 @@
                 <pf:dataGrid var="photo" value="#{viewAlbum.photos}" columns="4" layout="grid"
         rows="12" paginator="false" id="cars">
                 <!--<ui:repeat id="listPhotos" value="#{viewAlbum.photos}" var="photo">-->
-                    <pf:panelGrid columns="12">
+                    <pf:panelGrid columns="1">
                         <f:facet name="header">
                             <a href="#{application.contextPath}/webapi/picture/#{photo.path}" type="text/html">
                                 <h:graphicImage value="/webapi/picture/#{photo.path}?width=200"/>
