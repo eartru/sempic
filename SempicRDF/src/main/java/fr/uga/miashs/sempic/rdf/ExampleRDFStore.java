@@ -59,7 +59,7 @@ public class ExampleRDFStore {
 
         //s.deleteModel(m);
         //s.readPhoto(1).getModel().write(System.out,"turtle");
-        // print the graph on the standard output
-        //pRes.getModel().write(System.out);
+        // print the graph on the standard outputs
+        pRes.getModel().write(System.out);
     }
 }
