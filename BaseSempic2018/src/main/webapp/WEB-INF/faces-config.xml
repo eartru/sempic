@@ -57,4 +57,11 @@
             <to-view-id>/user/home.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/user/edit-account.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/user/view-account.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

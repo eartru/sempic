@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pf="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:composition template="/template/layout.xhtml">
+        <ui:define name="title">
+            Modification du compte
+        </ui:define>
+        <ui:define name="content">
+            <h:form>
+                <h:panelGrid columns = "3">
+                    <label for="lastname">Nom:</label>
+                    <h:inputText id="lastname" h5:placeholder="Dupond" value="#{editAccount.user.lastname}"/>
+                    <h:message for="lastname"/>
+
+                    <label for="firstname">Prenom:</label>
+                    <h:inputText id="firstname" value="#{editAccount.user.firstname}"/>
+                    <h:message for="firstname"/>
+                    <p>OK : #{editAccount.current.gender}, #{editAccount.user.firstname}</p>
+                    <label for="gender">Genre :</label>
+                    <pf:selectOneMenu id="gender" value="#{editAccount.user.gender}">
+                        <f:selectItem itemLabel="femme" itemValue="femme"/>
+                        <f:selectItem itemLabel="homme" itemValue="homme"/>
+                    </pf:selectOneMenu>
+                    <h:message for="gender"/>
+
+                    <label for="email">Email:</label>
+                    <h:inputText id="email" h5:type="email" value="#{editAccount.user.email}"/>
+                    <h:message for="email"/>
+
+                    <label for="password">Password</label>
+                    <h:inputSecret id="password" value="#{editAccount.user.passwordHash}"/>
+                    <h:message for="password"/>
+                    
+                    <pf:outputLabel value="Parent 1" for="parent1" />
+                    <pf:autoComplete id="parent1" dropdown="true" value="#{editAccount.parent1}" completeMethod="#{editAccount.completeText}" var="user" itemLabel="#{user.email}" itemValue="#{user.id}"/>
+                    <h:message for="parent1"/> 
+                    
+                    <pf:outputLabel value="Parent 2" for="parent2" />
+                    <pf:autoComplete id="parent2" dropdown="true" value="#{editAccount.parent2}" completeMethod="#{editAccount.completeText}" var="user" itemLabel="#{user.email}" itemValue="#{user.id}"/>
+                    <h:message for="parent2"/>
+                    
+                    <pf:outputLabel value="Enfants" for="listChild" />
+                    <pf:autoComplete id="listChild" multiple="true" value="#{editAccount.listChild}" completeMethod="#{editAccount.completeText}"
+                                     var="child" itemLabel="#{child.email}" itemValue="#{child.id}"  forceSelection="true">
+                        <h:outputText value="#{child}" />
+                    </pf:autoComplete>
+                    <h:message for="listChild"/> 
+                    
+                    <h:commandButton value="Modifier" action="#{editAccount.edit()}"/>
+                </h:panelGrid>
+                <h:messages globalOnly="true"/>
+
+            </h:form>
+        </ui:define>      
+    </ui:composition>
+</html>
+
