@@ -24,6 +24,10 @@
     </welcome-file-list>
     
 
+    <context-param>
+	<param-name>primefaces.THEME</param-name>
+	<param-value>eggplant</param-value>
+    </context-param>
     <!--
     By default images will be store under glassfish subdirectory 
     glassfish/domains/domain1/config/images
