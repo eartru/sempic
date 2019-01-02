@@ -54,28 +54,31 @@ public class ViewPhoto implements Serializable {
     }
     
     public String update() {
-        System.out.println("hello");
-        RDFStore s = new RDFStore();
-        
+                RDFStore s = new RDFStore();
+        boolean partiallyFailed = false;
+
         try {
-            Resource pRes = s.createPhoto(current.getId(), current.getAlbum().getId(), current.getAlbum().getOwner().getId());
+            Resource pRes = s.createPhoto(1, 1, 1);
 
             Model m = ModelFactory.createDefaultModel();
 
             Resource someone = m.createResource(SempicOnto.Person);
-            someone.addLiteral(RDFS.label, "Georges");
+            someone.addLiteral(RDFS.label, "Lucien");
             m.add(pRes, SempicOnto.depicts, someone);
 
             m.write(System.out, "turtle");
-            pRes.getModel().write(System.out);
+
             s.saveModel(m);
-            
-        } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
-            return "failure";
+        } catch (Exception e) {
+            partiallyFailed = true;
         }
-        
-        return "success";
+        if (partiallyFailed) {
+             return "failure";
+        }
+        else {
+            init();
+            return "success";
+        }
     }
 
     public Photo getCurrent() {
