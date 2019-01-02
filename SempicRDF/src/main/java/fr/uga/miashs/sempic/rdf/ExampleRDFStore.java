@@ -19,33 +19,45 @@ import org.apache.jena.vocabulary.RDFS;
 public class ExampleRDFStore {
     public static void main(String[] args) {
         RDFStore s = new RDFStore();
-
+        
         Resource pRes = s.createPhoto(1, 1, 1);
 
-        Model m = ModelFactory.createDefaultModel();
-        
-        Resource meme = m.createResource(SempicOnto.Person);
-        meme.addLiteral(RDFS.label, "Mémé");
-        m.add(pRes, SempicOnto.depicts, meme);
-        
-        Resource newDog = m.createResource(SempicOnto.Dog);
-        newDog.addLiteral(RDFS.label, "Medor");
-        m.add(pRes, SempicOnto.depicts, newDog);
-        m.add(pRes, SempicOnto.owns, newDog);
-        
-        Resource newCat = m.createResource(SempicOnto.Cat);
-        newCat.addLiteral(RDFS.label, "Félix");
-        m.add(pRes, SempicOnto.depicts, newCat);
-        m.add(pRes, SempicOnto.owns, newCat);
-        
-        Resource newTV = m.createResource(SempicOnto.TV);
-        newTV.addLiteral(RDFS.label, "Samsung");
-        m.add(pRes, SempicOnto.depicts, newTV);
-        m.add(pRes, SempicOnto.owns, newTV);
-        
-        m.write(System.out, "turtle");
+            Model m = ModelFactory.createDefaultModel();
 
-        s.saveModel(m);
+            Resource someone = m.createResource(SempicOnto.Person);
+            someone.addLiteral(RDFS.label, "Julie");
+            m.add(pRes, SempicOnto.depicts, someone);
+
+            m.write(System.out, "turtle");
+            
+            s.saveModel(m);
+
+//        Resource pRes = s.createPhoto(1, 1, 1);
+//
+//        Model m = ModelFactory.createDefaultModel();
+//        
+//        Resource meme = m.createResource(SempicOnto.Person);
+//        meme.addLiteral(RDFS.label, "Mémé");
+//        m.add(pRes, SempicOnto.depicts, meme);
+//        
+//        Resource newDog = m.createResource(SempicOnto.Dog);
+//        newDog.addLiteral(RDFS.label, "Medor");
+//        m.add(pRes, SempicOnto.depicts, newDog);
+//        m.add(pRes, SempicOnto.owns, newDog);
+//        
+//        Resource newCat = m.createResource(SempicOnto.Cat);
+//        newCat.addLiteral(RDFS.label, "Félix");
+//        m.add(pRes, SempicOnto.depicts, newCat);
+//        m.add(pRes, SempicOnto.owns, newCat);
+//        
+//        Resource newTV = m.createResource(SempicOnto.TV);
+//        newTV.addLiteral(RDFS.label, "Samsung");
+//        m.add(pRes, SempicOnto.depicts, newTV);
+//        m.add(pRes, SempicOnto.owns, newTV);
+//        
+//        m.write(System.out, "turtle");
+//
+//        s.saveModel(m);
         
         //s.deleteModel(m);
         //s.cnx.load(m);
@@ -60,6 +72,6 @@ public class ExampleRDFStore {
         //s.deleteModel(m);
         //s.readPhoto(1).getModel().write(System.out,"turtle");
         // print the graph on the standard outputs
-        pRes.getModel().write(System.out);
+        //pRes.getModel().write(System.out);
     }
 }

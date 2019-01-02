@@ -5,7 +5,6 @@
  */
 package fr.uga.miashs.sempic.backingbeans;
 
-import fr.uga.miashs.sempic.qualifiers.SelectedPhoto;
 import fr.uga.miashs.sempic.SempicModelException;
 import fr.uga.miashs.sempic.entities.Album;
 import fr.uga.miashs.sempic.entities.Photo;

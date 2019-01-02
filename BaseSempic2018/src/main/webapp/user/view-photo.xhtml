@@ -4,6 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pf="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       >
     
     <ui:composition template="/template/layout.xhtml">
@@ -37,7 +39,9 @@
                     <h:inputText id="when"  value=""/>
                     <h:message for="when"/>
                 </h:panelGrid>
-                <h:commandButton value="Update" action="#{viewPhoto.update()}"/>
+                <h:commandButton value="Update" action="#{viewPhoto.update()}"> 
+                    <f:param name="photoId" value="#{viewPhoto.current.id}" />
+                </h:commandButton>
 
                 <h:messages globalOnly="true"/>
             </h:form> 
