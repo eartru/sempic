@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      >
+    
+    <ui:composition template="/template/layout.xhtml">
+        <ui:define name="title">
+            Recherche
+        </ui:define>
+        <ui:define name="content">
+
+            <p>Faire une recherche selon : </p>
+            <h:form>
+                <h:panelGrid columns = "3">
+                    <label for="title">Titre</label>
+                    <h:inputText id="title" value="titi"/>
+                    <h:message for="title"/>
+                    
+                    <label for="who">Quelqu'un</label>
+                    <h:inputText id="who" value="toto"/>
+                    <h:message for="who"/>
+
+                    <label for="what">Quoi</label>
+                    <h:inputText id="what" value="tutu"/>
+                    <h:message for="what"/>
+
+                    <label for="where">Où</label>
+                    <h:inputText id="where"  value="tata"/>
+                    <h:message for="where"/>
+
+                    <label for="when">Quand</label>
+                    <h:inputText id="when"  value="tyty"/>
+                    <h:message for="when"/>
+                </h:panelGrid>
+                <h:commandButton value="Search" action="#{search.search()}"/>
+
+                <h:messages globalOnly="true"/>
+            </h:form> 
+
+        </ui:define>      
+    </ui:composition>
+</html>
+
