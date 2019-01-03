@@ -11,34 +11,21 @@
         </ui:define>
         <ui:define name="content">
 
-            <p>Faire une recherche selon : </p>
-            <h:form>
-                <h:panelGrid columns = "3">
-                    <label for="title">Titre</label>
-                    <h:inputText id="title" value=""/>
-                    <h:message for="title"/>
-                    
-                    <label for="who">Quelqu'un</label>
-                    <h:inputText id="who" value=""/>
-                    <h:message for="who"/>
-
-                    <label for="what">Quoi</label>
-                    <h:inputText id="what" value=""/>
-                    <h:message for="what"/>
-
-                    <label for="where">Où</label>
-                    <h:inputText id="where"  value=""/>
-                    <h:message for="where"/>
-
-                    <label for="when">Quand</label>
-                    <h:inputText id="when"  value=""/>
-                    <h:message for="when"/>
-                </h:panelGrid>
-                <h:commandButton value="Search" action="#{Search.search()}"/>
-
-                <h:messages globalOnly="true"/>
-            </h:form> 
-
+            <p>Liste de vos albums : </p>
+            <ul>
+                <ui:repeat id="listAlbums" value="#{home.albums}" var="album">
+                    <li>
+                        <a href="#{application.contextPath}/faces/user/view-album.xhtml?albumId=#{album.id}">
+                            #{album.title}
+                        </a>                   
+                    </li>
+                </ui:repeat>
+            </ul>
+            <h:commandButton value="Update" action="#{viewPhoto.update()}"/> 
+            <h:messages globalOnly="true"/>
+            <a href="#{application.contextPath}/faces/user/create-album.xhtml">
+                Ajouter un album
+            </a> 
         </ui:define>      
     </ui:composition>
 </html>
