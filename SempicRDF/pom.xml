@@ -48,6 +48,16 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena-core</artifactId>
+            <version>3.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena-maven-tools</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
@@ -63,6 +73,7 @@
                 <version>1.6.0</version>
                 <executions>
                     <execution>
+                        <id>first</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>java</goal>
@@ -79,6 +90,42 @@
                             </commandlineArgs>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>second</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>jena.schemagen</mainClass>
+                            <commandlineArgs>
+                                --inference \
+                                -i ${basedir}/src/main/resources/geonames.rdf \
+                                -e RDF/XML \
+                                --package fr.uga.miashs.sempic.model.rdf \
+                                -o ${project.build.directory}/generated-sources/java \
+                                -n GeoNames
+                            </commandlineArgs>
+                        </configuration>
+                    </execution>
+                    <!--<execution>
+                        <id>third</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>jena.schemagen</mainClass>
+                            <commandlineArgs> // double - removed for inference and package to comment
+                                -inference 
+                                -i ${basedir}/src/main/resources/dbpedia.owl \
+                                -e RDF/XML \
+                                -package fr.uga.miashs.sempic.model.rdf \
+                                -o ${project.build.directory}/generated-sources/java \
+                                -n Dbpedia
+                            </commandlineArgs>
+                        </configuration>
+                    </execution> -->
                 </executions>
             </plugin>
             <plugin>
