@@ -23,6 +23,7 @@ import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.modify.request.QuadAcc;
 import org.apache.jena.sparql.modify.request.UpdateDeleteWhere;
 import org.apache.jena.update.Update;
+import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 
 /**
@@ -151,7 +152,8 @@ public class RDFStore {
         // create an empty RDF graph
         Model m = ModelFactory.createDefaultModel();
         // create an instance of Photo in Model m
-        Resource pRes = m.createResource(Namespaces.getPhotoUri(photoId), SempicOnto.Photo);
+        Resource pRes = m.createResource(Namespaces.getPhotoUri(photoId));
+        pRes.addProperty(RDF.type, SempicOnto.Photo);
 
         pRes.addLiteral(SempicOnto.albumId, albumId);
         pRes.addLiteral(SempicOnto.ownerId, ownerId);

@@ -4,6 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pf="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       >
     
     <ui:composition template="/template/layout.xhtml">
@@ -18,26 +20,28 @@
                 <h:panelGrid columns = "3">
                     <!--will contains value for title ontology-->
                     <label for="title">Titre</label>
-                    <h:inputText id="title" h5:placeholder="My Photo" value="#{viewPhoto.current}"/>
+                    <h:inputText id="title" value="title"/>
                     <h:message for="title"/>
                     <!--will contains value for a ontology-->
                     <label for="who">Who is in the picture ?</label>
-                    <h:inputText id="who" value=""/>
+                    <h:inputText id="who" value="who"/>
                     <h:message for="who"/>
                     <!--will contains value for a ontology-->
                     <label for="what">What is in the picture ?</label>
-                    <h:inputText id="what" value=""/>
+                    <h:inputText id="what" value="what"/>
                     <h:message for="what"/>
                     <!--will contains value for a ontology-->
                     <label for="where">Where was the picture taken ?</label>
-                    <h:inputText id="where"  value=""/>
+                    <h:inputText id="where"  value="where"/>
                     <h:message for="where"/>
                     <!--will contains value for a ontology-->
                     <label for="when">When was the picture taken ?</label>
-                    <h:inputText id="when"  value=""/>
+                    <h:inputText id="when"  value="when"/>
                     <h:message for="when"/>
                 </h:panelGrid>
-                <h:commandButton value="Update" action="#{viewPhoto.update()}"/>
+                <h:commandButton value="Update" action="#{viewPhoto.update()}"> 
+                    <f:param name="photoId" value="#{viewPhoto.current.id}" />
+                </h:commandButton>
 
                 <h:messages globalOnly="true"/>
             </h:form> 

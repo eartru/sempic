@@ -7,13 +7,9 @@
     
     <ui:composition template="/template/layout.xhtml">
         <ui:define name="title">
-            Accueil
+            Recherche
         </ui:define>
         <ui:define name="content">
-            <p>
-                Bonjour <h:outputText value="#{sessionTools.connectedUser.firstname} "/>  
-                <h:outputText value="#{sessionTools.connectedUser.lastname}"/>
-            </p>
 
             <p>Liste de vos albums : </p>
             <ul>
@@ -25,7 +21,8 @@
                     </li>
                 </ui:repeat>
             </ul>
-
+            <h:commandButton value="Update" action="#{viewPhoto.update()}"/> 
+            <h:messages globalOnly="true"/>
             <a href="#{application.contextPath}/faces/user/create-album.xhtml">
                 Ajouter un album
             </a> 
