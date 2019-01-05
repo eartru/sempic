@@ -44,6 +44,7 @@ public class EditAccount implements Serializable {
     private String parent1;
     private String parent2;
     private List<SempicUser> listChild;
+    private List<SempicUser> listFriend;
     
     public SempicUser getUser() {
         return current;
@@ -88,6 +89,7 @@ public class EditAccount implements Serializable {
         System.out.println(parent1);
         System.out.println(parent2);
         System.out.println(listChild);
+        System.out.println(listFriend);
         
         /*try {
             userService.update(current);

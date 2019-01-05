@@ -52,6 +52,13 @@
                     </pf:autoComplete>
                     <h:message for="listChild"/> 
                     
+                    <pf:outputLabel value="Amis" for="listFriend" />
+                    <pf:autoComplete id="listFriend" multiple="true" value="#{editAccount.listFriend}" completeMethod="#{editAccount.completeText}"
+                                     var="friend" itemLabel="#{friend.email}" itemValue="#{friend.id}"  forceSelection="true">
+                        <h:outputText value="#{friend}" />
+                    </pf:autoComplete>
+                    <h:message for="listChild"/> 
+                    
                     <h:commandButton value="Modifier" action="#{editAccount.edit()}"/>
                 </h:panelGrid>
                 <h:messages globalOnly="true"/>
