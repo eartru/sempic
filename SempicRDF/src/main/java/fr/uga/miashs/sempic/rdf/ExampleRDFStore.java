@@ -23,18 +23,18 @@ public class ExampleRDFStore {
         
         Resource pRes = s.createPhoto(2, 1, 1);
 
-            Model m = ModelFactory.createDefaultModel();
+        Model m = ModelFactory.createDefaultModel();
 
-            String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/TomDupond"; 
+        String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond"; 
+          
+        Resource someone = m.createResource(personURI);
+        someone.addLiteral(RDFS.label, "Jeff Dupond");
+        someone.addProperty(RDF.type, SempicOnto.Person);
+        m.add(pRes, SempicOnto.depicts, someone);
+        
+        m.write(System.out, "turtle");
             
-            Resource someone = m.createResource(personURI);
-            someone.addLiteral(RDFS.label, "Jules Dupond");
-            someone.addProperty(RDF.type, SempicOnto.Person);
-            m.add(pRes, SempicOnto.depicts, someone);
-
-            m.write(System.out, "turtle");
-            
-            s.saveModel(m);
+        s.saveModel(m);
 
 //        Resource pRes = s.createPhoto(1, 1, 1);
 //
