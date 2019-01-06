@@ -108,7 +108,8 @@
                             </commandlineArgs>
                         </configuration>
                     </execution>
-                    <!--<execution>
+                    <!--
+                    <execution>
                         <id>third</id>
                         <phase>generate-sources</phase>
                         <goals>
