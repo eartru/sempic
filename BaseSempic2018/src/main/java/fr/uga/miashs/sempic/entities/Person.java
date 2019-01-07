@@ -35,68 +35,23 @@ import javax.validation.constraints.*;
  *
  */
 
-@Entity
 public class Person implements Serializable {
-    
-    @Id
-    private long id;
-    
-    private String lastname;
-    
-    private String firstname;
+        
+    private String label;
 
     public Person() {
-       
     }
     
-    public long getId() {
-        return id;
+    public Person(String label) {
+       this.label = label;
     }
     
-    public String getLastname() {
-        return lastname;
+    public String getLabel() {
+        return label;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + (int) (this.id ^ (this.id >>> 32));
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Person other = (Person) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{id="+ id + ", "
-                + "lastname=" + lastname + ", firstname=" + firstname + '}';
-    }
 }

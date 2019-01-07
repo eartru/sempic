@@ -99,7 +99,6 @@
                         <configuration>
                             <mainClass>jena.schemagen</mainClass>
                             <commandlineArgs>
-                                --inference \
                                 -i ${basedir}/src/main/resources/geonames.rdf \
                                 -e RDF/XML \
                                 --package fr.uga.miashs.sempic.model.rdf \
@@ -108,7 +107,6 @@
                             </commandlineArgs>
                         </configuration>
                     </execution>
-                    <!--
                     <execution>
                         <id>third</id>
                         <phase>generate-sources</phase>
@@ -117,16 +115,15 @@
                         </goals>
                         <configuration>
                             <mainClass>jena.schemagen</mainClass>
-                            <commandlineArgs> // double - removed for inference and package to comment
-                                -inference 
+                            <commandlineArgs>
                                 -i ${basedir}/src/main/resources/dbpedia.owl \
                                 -e RDF/XML \
-                                -package fr.uga.miashs.sempic.model.rdf \
+                                --package fr.uga.miashs.sempic.model.rdf \
                                 -o ${project.build.directory}/generated-sources/java \
                                 -n Dbpedia
                             </commandlineArgs>
                         </configuration>
-                    </execution> -->
+                    </execution>
                 </executions>
             </plugin>
             <plugin>

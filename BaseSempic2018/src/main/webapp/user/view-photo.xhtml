@@ -22,11 +22,17 @@
                     <label for="title">Titre</label>
                     <h:inputText id="title" value="title"/>
                     <h:message for="title"/>
+                    
                     <!--will contains value for a ontology-->
                     <pf:outputLabel value="Who is in the picture ?" for="persons" />
-                    <!--<pf:autoComplete id="persons" value="#{viewPhoto.person}" completeMethod="#{viewPhoto.completePerson}" /> -->
-                    <pf:autoComplete id="persons" dropdown="true" value="#{viewPhoto.person}" completeMethod="#{viewPhoto.completePerson}" var="person" itemLabel="#{person}" itemValue="#{person}"/>
+                    <pf:autoComplete id="persons" multiple="true" value="#{viewPhoto.perso}" completeMethod="#{viewPhoto.completePerson}" 
+                                     var="person" itemLabel="#{person.label}" itemValue="#{person}" forceSelection="true">
+                         <pf:column>
+                            <h:outputText value="#{person.label}" />
+                        </pf:column>
+                    </pf:autoComplete>
                     <h:message for="persons"/> 
+                    
                     <!--will contains value for a ontology-->
                     <label for="what">What is in the picture ?</label>
                     <h:inputText id="what" value="what"/>

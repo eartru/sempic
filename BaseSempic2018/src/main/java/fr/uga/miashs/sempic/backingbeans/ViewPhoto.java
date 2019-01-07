@@ -7,6 +7,7 @@ package fr.uga.miashs.sempic.backingbeans;
 
 import fr.uga.miashs.sempic.SempicModelException;
 import fr.uga.miashs.sempic.entities.Album;
+import fr.uga.miashs.sempic.entities.Person;
 import fr.uga.miashs.sempic.entities.Photo;
 import fr.uga.miashs.sempic.qualifiers.SelectedAlbum;
 import fr.uga.miashs.sempic.qualifiers.SelectedPhoto;
@@ -23,6 +24,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
+import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -45,20 +47,15 @@ public class ViewPhoto implements Serializable {
     @Inject
     private PhotoFacade service;
     
-    private String person;
-        
-    public ViewPhoto() {
-        
+    private String perso;
+    
+    private List<Person> persons;
+    
+     public ViewPhoto() {
     }
     
     @PostConstruct
     public void init() {
-    }
-    
-    public List<String> completePerson(String query) {
-        RDFStore s = new RDFStore();
-        System.out.println(s.getPersons(query));
-        return s.getPersons(query);
     }
     
     public String annotate() {
@@ -92,6 +89,24 @@ public class ViewPhoto implements Serializable {
             return "success";
         }
     }
+    
+    public List<Person> completePerson(String query) {
+        List<Person> personList = new ArrayList<>();
+        RDFStore s = new RDFStore();
+        
+        List<Resource> list = s.getPersons(query);
+        
+        list.forEach(c -> {
+            Person p = new Person(c.getProperty(RDFS.label).getObject().toString());
+            
+            personList.add(p);
+            
+            System.out.println(p.getLabel());
+        });
+        
+        
+        return personList;
+    }
 
     public Photo getCurrent() {
         return current;
@@ -100,13 +115,21 @@ public class ViewPhoto implements Serializable {
     public void setCurrent(Photo current) {
         this.current = current;
     }
+    
+     public String getPerso() {
+        return perso;
+    }
+
+    public void setPerso(String p) {
+        this.perso = p;
+    }
      
-     public String getPerson() {
-        return person;
+     public List<Person> getPersons() {
+        return persons;
     }
  
-    public void setPerson(String p) {
-        this.person = p;
+    public void setPersons(List<Person> p) {
+        this.persons = p;
     }
 
     
