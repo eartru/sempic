@@ -18,6 +18,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -68,8 +70,9 @@ public class SempicUser implements Serializable {
     
     //@NotBlank(message="Un mot de passe doit être donné")
     private String passwordHash;
-    
-    
+     
+    private String gender;
+      
     @OneToMany(mappedBy = "owner",cascade = CascadeType.REMOVE)
     private Set<SempicGroup> groups;
 
@@ -78,7 +81,7 @@ public class SempicUser implements Serializable {
     
     @Enumerated(EnumType.STRING)
     private SempicUserType userType;
-
+        
     public SempicUser() {
         userType=SempicUserType.USER;
     }
@@ -134,6 +137,14 @@ public class SempicUser implements Serializable {
 
     public void setUserType(SempicUserType userType) {
         this.userType = userType;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     @Override
