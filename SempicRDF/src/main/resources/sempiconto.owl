@@ -87,33 +87,11 @@
     
 
 
-    <!-- http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#child -->
-
-    <owl:ObjectProperty rdf:about="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#child">
-        <owl:equivalentProperty rdf:resource="http://xmlns.com/foaf/0.1/knows"/>
-        <rdfs:domain rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person"/>
-        <rdfs:range rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person"/>
-        <owl:propertyDisjointWith rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#parent"/>
-    </owl:ObjectProperty>
-    
-
-
     <!-- http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#depicts -->
 
     <owl:ObjectProperty rdf:about="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#depicts">
         <rdfs:domain rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo"/>
         <rdfs:range rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Depiction"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#father -->
-
-    <owl:ObjectProperty rdf:about="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#father">
-        <owl:equivalentProperty rdf:resource="http://xmlns.com/foaf/0.1/knows"/>
-        <rdfs:subPropertyOf rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#parent"/>
-        <rdfs:domain rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person"/>
-        <rdfs:range rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Male"/>
     </owl:ObjectProperty>
     
 
@@ -151,17 +129,6 @@
     
 
 
-    <!-- http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#mother -->
-
-    <owl:ObjectProperty rdf:about="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#mother">
-        <owl:equivalentProperty rdf:resource="http://xmlns.com/foaf/0.1/knows"/>
-        <rdfs:subPropertyOf rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#parent"/>
-        <rdfs:domain rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person"/>
-        <rdfs:range rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Female"/>
-    </owl:ObjectProperty>
-    
-
-
     <!-- http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#owns -->
 
     <owl:ObjectProperty rdf:about="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#owns">
@@ -171,27 +138,6 @@
         <rdfs:range rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object"/>
         <rdfs:label>owns</rdfs:label>
         <rdfs:label xml:lang="fr">possède</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#parent -->
-
-    <owl:ObjectProperty rdf:about="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#parent">
-        <owl:equivalentProperty rdf:resource="http://xmlns.com/foaf/0.1/knows"/>
-        <rdfs:domain rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person"/>
-        <rdfs:range rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person"/>
-        <owl:propertyDisjointWith rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#sibling"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#sibling -->
-
-    <owl:ObjectProperty rdf:about="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#sibling">
-        <owl:equivalentProperty rdf:resource="http://xmlns.com/foaf/0.1/knows"/>
-        <rdfs:domain rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person"/>
-        <rdfs:range rdf:resource="http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person"/>
     </owl:ObjectProperty>
     
 

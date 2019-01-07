@@ -27,6 +27,7 @@ import javax.annotation.PostConstruct;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 
 
@@ -44,6 +45,7 @@ public class ViewPhoto implements Serializable {
     @Inject
     private PhotoFacade service;
     
+    private String person;
         
     public ViewPhoto() {
         
@@ -53,22 +55,32 @@ public class ViewPhoto implements Serializable {
     public void init() {
     }
     
-    public String update() {
-                RDFStore s = new RDFStore();
+    public List<String> completePerson(String query) {
+        RDFStore s = new RDFStore();
+        System.out.println(s.getPersons(query));
+        return s.getPersons(query);
+    }
+    
+    public String annotate() {
+        RDFStore s = new RDFStore();
         boolean partiallyFailed = false;
 
         try {
-            Resource pRes = s.createPhoto(1, 1, 1);
+            Resource pRes = s.createPhoto(current.getId(), current.getAlbum().getId(), current.getAlbum().getOwner().getId());
 
             Model m = ModelFactory.createDefaultModel();
-
-            Resource someone = m.createResource(SempicOnto.Person);
-            someone.addLiteral(RDFS.label, "Lucien");
-            m.add(pRes, SempicOnto.depicts, someone);
+            
+            //String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/"; 
+          
+//            Resource someone = m.createResource(personURI);
+//            someone.addLiteral(RDFS.label, "Jeff Dupond");
+//            someone.addProperty(RDF.type, SempicOnto.Person);
+//            m.add(pRes, SempicOnto.depicts, someone);
 
             m.write(System.out, "turtle");
 
             s.saveModel(m);
+
         } catch (Exception e) {
             partiallyFailed = true;
         }
@@ -88,5 +100,14 @@ public class ViewPhoto implements Serializable {
     public void setCurrent(Photo current) {
         this.current = current;
     }
+     
+     public String getPerson() {
+        return person;
+    }
+ 
+    public void setPerson(String p) {
+        this.person = p;
+    }
+
     
 }

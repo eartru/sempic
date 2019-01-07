@@ -12,7 +12,14 @@ import java.util.Map;
 import javax.ejb.Stateless;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.Triple;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ReadWrite;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
@@ -28,7 +35,7 @@ import org.apache.jena.vocabulary.RDFS;
 
 /**
  *
- * @author jerome.david@univ-grenoble-alpes.fr
+ *
  */
 @Stateless
 public class RDFStore {
@@ -191,5 +198,25 @@ public class RDFStore {
         return m.getResource(pUri);
     }
 
+    public List<String> getPersons(String q) {
+        List<String> list = new ArrayList<String>();
+        
+        String queryString = "SELECT ?p ?label WHERE { ?p a <" + SempicOnto.Person + "> ; <" + RDFS.label +"> ?label. FILTER (regex(?label, \"" + q +"\", \"i\"))}";
+        Model model = cnx.queryConstruct(queryString);
+        Query query = QueryFactory.create(queryString) ;
+        QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
+        try {
+          ResultSet results = qexec.execSelect() ;
+          for ( ; results.hasNext() ; )
+          {
+            QuerySolution soln = results.nextSolution() ;
+            Literal l = soln.getLiteral("label") ;
+ 
+            list.add(l.getString());
+          }
+        } finally { qexec.close() ; }
+        
+        return list;
+    }
     
 }
