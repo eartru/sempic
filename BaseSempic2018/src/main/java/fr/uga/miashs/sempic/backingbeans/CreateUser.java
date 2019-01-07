@@ -71,7 +71,7 @@ public class CreateUser implements Serializable {
     }*/
     
     public String create() {
-        //System.out.println(current);
+        System.out.println(current);
         
         try {
             service.create(current);
