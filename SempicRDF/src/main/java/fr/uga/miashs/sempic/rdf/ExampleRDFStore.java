@@ -6,6 +6,7 @@
 package fr.uga.miashs.sempic.rdf;
 
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -21,16 +22,22 @@ public class ExampleRDFStore {
     public static void main(String[] args) {
         RDFStore s = new RDFStore();
         
-        System.out.println(s.getPersons("Mé"));
+        List<Resource> list = new ArrayList<>();
+        list = s.getPersons("Dup");
+        
+        list.forEach(listItem -> {
+            System.out.println(listItem.getProperty(RDFS.label).getObject().toString());
+        });
+        
         
 //        Resource pRes = s.createPhoto(2, 1, 1);
 //
 //        Model m = ModelFactory.createDefaultModel();
 //
-//        String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond"; 
+//        String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/PaulDupond"; 
 //          
 //        Resource someone = m.createResource(personURI);
-//        someone.addLiteral(RDFS.label, "Jeff Dupond");
+//        someone.addLiteral(RDFS.label, "Paul Dupond");
 //        someone.addProperty(RDF.type, SempicOnto.Person);
 //        m.add(pRes, SempicOnto.depicts, someone);
 //        

@@ -198,25 +198,29 @@ public class RDFStore {
         return m.getResource(pUri);
     }
 
-    public List<String> getPersons(String q) {
-        List<String> list = new ArrayList<String>();
+    public List<Resource> getPersons(String q) {
         
-        String queryString = "SELECT ?p ?label WHERE { ?p a <" + SempicOnto.Person + "> ; <" + RDFS.label +"> ?label. FILTER (regex(?label, \"" + q +"\", \"i\"))}";
-        Model model = cnx.queryConstruct(queryString);
-        Query query = QueryFactory.create(queryString) ;
-        QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
-        try {
-          ResultSet results = qexec.execSelect() ;
-          for ( ; results.hasNext() ; )
-          {
-            QuerySolution soln = results.nextSolution() ;
-            Literal l = soln.getLiteral("label") ;
- 
-            list.add(l.getString());
-          }
-        } finally { qexec.close() ; }
+        Model m = cnx.queryConstruct("CONSTRUCT { ?p <" + RDFS.label + "> ?label "
+                + "} WHERE {"
+                + "?p a <" + SempicOnto.Person + "> ; <" + RDFS.label +"> ?label. FILTER (regex(?label, \"" + q +"\", \"i\"))}");
         
-        return list;
+        return m.listSubjects().toList();
+        
+        //String queryString = "SELECT ?p ?label WHERE { ?p a <" + SempicOnto.Person + "> ; <" + RDFS.label +"> ?label. FILTER (regex(?label, \"" + q +"\", \"i\"))}";
+//        String queryString = "SELECT ?s ?p ?o WHERE { ?s ?p ?o }";
+//        Query query = QueryFactory.create(queryString) ;
+//        System.out.println(queryString);
+//        QueryExecution qexec = QueryExecutionFactory.create(queryString, model) ;
+//        try {
+//          ResultSet results = qexec.execSelect() ;
+//          for ( ; results.hasNext() ; )
+//          {
+//            QuerySolution soln = results.nextSolution() ;
+//            Literal l = soln.getLiteral("label") ;
+// 
+//            list.add(l.getString());
+//          }
+//        } finally { qexec.close() ; }
     }
     
 }
