@@ -5,31 +5,20 @@
  */
 package fr.uga.miashs.sempic.backingbeans;
 
-import fr.uga.miashs.sempic.SempicModelException;
-import fr.uga.miashs.sempic.entities.Album;
 import fr.uga.miashs.sempic.entities.Person;
 import fr.uga.miashs.sempic.entities.Photo;
-import fr.uga.miashs.sempic.qualifiers.SelectedAlbum;
 import fr.uga.miashs.sempic.qualifiers.SelectedPhoto;
 import fr.uga.miashs.sempic.rdf.RDFStore;
 import fr.uga.miashs.sempic.services.PhotoFacade;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import fr.uga.miashs.sempic.model.rdf.SempicOnto;
 import java.util.ArrayList;
-import javax.annotation.PostConstruct;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 
 
@@ -47,7 +36,7 @@ public class ViewPhoto implements Serializable {
     @Inject
     private PhotoFacade service;
     
-    private String perso;
+    private Person perso;
     
     private List<Person> persons;
     
@@ -87,16 +76,15 @@ public class ViewPhoto implements Serializable {
         RDFStore s = new RDFStore();
         
         List<Resource> list = s.getPersons(query);
-        
-        list.forEach(c -> {
-            //Person p = new Person(c.getProperty(RDFS.label).getObject().toString());
+
+        list.forEach(c -> {    
+            String[] labelSplit = c.getProperty(RDFS.label).getObject().toString().split("\\s+");
+            perso = new Person(c.getURI()
+                    , labelSplit[0]
+                    , labelSplit[1]);
             
-            //personList.add(p);
-            
-            //System.out.println(p.getLabel());
-        });
-        
-        
+            personList.add(perso);
+        });        
         return personList;
     }
 
@@ -108,11 +96,11 @@ public class ViewPhoto implements Serializable {
         this.current = current;
     }
     
-     public String getPerso() {
+     public Person getPerso() {
         return perso;
     }
 
-    public void setPerso(String perso) {
+    public void setPerso(Person perso) {
         this.perso = perso;
     }
      

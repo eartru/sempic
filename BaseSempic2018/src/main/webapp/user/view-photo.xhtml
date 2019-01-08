@@ -26,9 +26,9 @@
                     <!--will contains value for a ontology-->
                     <pf:outputLabel value="Who is in the picture ?" for="persons" />
                     <pf:autoComplete id="persons" multiple="true" value="#{viewPhoto.perso}" completeMethod="#{viewPhoto.completePerson}" 
-                                     var="person" itemLabel="#{person.label}" itemValue="#{person}" forceSelection="true">
+                                     var="person" itemLabel="#{person.firstname} #{person.lastname}" itemValue="#{person}" forceSelection="true">
                          <pf:column>
-                            <h:outputText value="#{person.label}" />
+                            <h:outputText value="#{person.firstname} #{person.lastname}" />
                         </pf:column>
                     </pf:autoComplete>
                     <h:message for="persons"/> 
