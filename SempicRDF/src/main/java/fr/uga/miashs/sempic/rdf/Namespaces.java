@@ -25,7 +25,7 @@ public class Namespaces {
         return photoNS+personId;
     }
     
-    public static String getPersonUri(long personId) {
-        return personNS+personId;
+    public static String getPersonUri(String firstname, String lastname) {
+        return personNS+firstname+lastname;
     }
 }

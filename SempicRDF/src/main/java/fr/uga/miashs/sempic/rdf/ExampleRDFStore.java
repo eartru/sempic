@@ -21,13 +21,22 @@ import org.apache.jena.vocabulary.RDFS;
 public class ExampleRDFStore {
     public static void main(String[] args) {
         RDFStore s = new RDFStore();
+        String firstname = "Truc";
+        String lastname = "lala";
+        String gender = "femme";
         
-        List<Resource> list = new ArrayList<>();
-        list = s.getPersons("Dup");
+        try {
+            s.createPerson(firstname, lastname, gender);
+        } catch (Exception e) {
+            System.out.println("error " + e);
+        }
         
-        list.forEach(listItem -> {
-            System.out.println(listItem.getProperty(RDFS.label).getObject().toString());
-        });
+//        List<Resource> list = new ArrayList<>();
+//        list = s.getPersons("Dup");
+//        
+//        list.forEach(listItem -> {
+//            System.out.println(listItem.getProperty(RDFS.label).getObject().toString());
+//        });
         
         
 //        Resource pRes = s.createPhoto(2, 1, 1);
