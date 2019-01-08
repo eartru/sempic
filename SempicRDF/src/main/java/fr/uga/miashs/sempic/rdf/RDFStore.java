@@ -15,6 +15,7 @@ import org.apache.jena.graph.Triple;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdfconnection.RDFConnection;
@@ -190,6 +191,18 @@ public class RDFStore {
         Model m = cnx.queryConstruct(s);
         return m.getResource(pUri);
     }
-
     
+    public Resource createPerson(long personId) {
+        // create an empty RDF graph
+        Model m = ModelFactory.createDefaultModel();
+        // create an instance of Photo in Model m
+        Resource pRes = m.createResource(Namespaces.getPersonUri(personId));
+        pRes.addProperty(RDF.type, SempicOnto.Person);
+
+        pRes.addLiteral(RDFS.label, "Mémé:"+personId);
+
+        saveModel(m);
+
+        return pRes;
+    }
 }
