@@ -127,14 +127,14 @@ public class EditAccount implements Serializable {
                     friendRes.addLiteral(RDFS.label, listFriend.get(i));
                     Resource someoneRes = m.createResource(SempicOnto.Person);
                     someoneRes.addLiteral(RDFS.label, current.getId());*/
-                    long number = listFriend.get(i).getId();
-                    Resource friendRes = rdfStore.createPerson(number);
-                    System.out.println("friendRes:");
-                    System.out.println(friendRes);
-                    Resource someoneRes = rdfStore.createPerson(current.getId());
-                    System.out.println(someoneRes);
-                    
-                    m.add(someoneRes, SempicOnto.isFriendOf, friendRes);
+//                    long number = listFriend.get(i).getId();
+//                    Resource friendRes = rdfStore.createPerson(number);
+//                    System.out.println("friendRes:");
+//                    System.out.println(friendRes);
+//                    Resource someoneRes = rdfStore.createPerson(current.getId());
+//                    System.out.println(someoneRes);
+//                    
+//                    m.add(someoneRes, SempicOnto.isFriendOf, friendRes);
 
                      //m.write(System.out, "turtle");
 

@@ -52,6 +52,12 @@ public class Person implements Serializable {
        this.gender = gender;
     }
     
+    public Person(String uri, String firstname, String lastname) {
+       this.uri = uri;
+       this.firstname = firstname;
+       this.lastname = lastname;
+    }
+    
     public String getUri() {
         return uri;
     }
