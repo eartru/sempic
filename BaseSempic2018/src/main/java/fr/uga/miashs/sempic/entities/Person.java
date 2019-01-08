@@ -37,21 +37,51 @@ import javax.validation.constraints.*;
 
 public class Person implements Serializable {
         
-    private String label;
+    private long Id;
+    private String firstname;
+    private String lastname;
+    private String gender;
 
     public Person() {
     }
     
-    public Person(String label) {
-       this.label = label;
+    public Person(long id, String firstname, String lastname, String gender) {
+       this.Id = id;
+       this.firstname = firstname;
+       this.lastname = lastname;
+       this.gender = gender;
     }
     
-    public String getLabel() {
-        return label;
+    public long getId() {
+        return Id;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setId(long id) {
+        this.Id = id;
+    }
+    
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+    
+     public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+    
+     public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
 }
