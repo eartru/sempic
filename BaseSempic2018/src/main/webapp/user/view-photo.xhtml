@@ -38,9 +38,15 @@
                     <h:inputText id="what" value="what"/>
                     <h:message for="what"/>
                     <!--will contains value for a ontology-->
-                    <label for="where">Where was the picture taken ?</label>
-                    <h:inputText id="where"  value="where"/>
-                    <h:message for="where"/>
+                    <pf:outputLabel value="Where was the picture taken ?" for="country" />
+                    <label>Pays</label>
+                    <pf:autoComplete id="country" multiple="true" value="#{viewPhoto.perso}" completeMethod="#{viewPhoto.completePerson}" 
+                                     var="person" itemLabel="#{person.firstname} #{person.lastname}" itemValue="#{person}" forceSelection="true">
+                         <pf:column>
+                            <h:outputText value="#{person.firstname} #{person.lastname}" />
+                        </pf:column>
+                    </pf:autoComplete>
+                    <h:message for="country"/> 
                     <!--will contains value for a ontology-->
                     <label for="when">When was the picture taken ?</label>
                     <h:inputText id="when"  value="when"/>
