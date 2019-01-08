@@ -47,7 +47,7 @@
                     
                     <pf:outputLabel value="Enfants" for="listChild" />
                     <pf:autoComplete id="listChild" multiple="true" value="#{editAccount.listChild}" completeMethod="#{editAccount.completeText}"
-                                     var="child" itemLabel="#{child.email}" itemValue="#{child.lastname}"  forceSelection="true">
+                                     var="child" itemLabel="#{child.email}" itemValue="#{child.id}"  forceSelection="true">
                         <h:outputText value="#{child}" />
                     </pf:autoComplete>
                     <h:message for="listChild"/> 
