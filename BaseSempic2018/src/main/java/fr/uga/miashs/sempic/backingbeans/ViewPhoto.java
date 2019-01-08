@@ -97,11 +97,11 @@ public class ViewPhoto implements Serializable {
         List<Resource> list = s.getPersons(query);
         
         list.forEach(c -> {
-            Person p = new Person(c.getProperty(RDFS.label).getObject().toString());
+            //Person p = new Person(c.getProperty(RDFS.label).getObject().toString());
             
-            personList.add(p);
+            //personList.add(p);
             
-            System.out.println(p.getLabel());
+            //System.out.println(p.getLabel());
         });
         
         
