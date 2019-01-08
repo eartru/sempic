@@ -34,10 +34,10 @@ public class ExampleRDFStore {
 //
 //        Model m = ModelFactory.createDefaultModel();
 //
-//        String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/PaulDupond"; 
+//        String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond"; 
 //          
 //        Resource someone = m.createResource(personURI);
-//        someone.addLiteral(RDFS.label, "Paul Dupond");
+//        someone.addLiteral(RDFS.label, "Jeff Dupond");
 //        someone.addProperty(RDF.type, SempicOnto.Person);
 //        m.add(pRes, SempicOnto.depicts, someone);
 //        

@@ -51,13 +51,6 @@ public class ViewPhoto implements Serializable {
     
     private List<Person> persons;
     
-     public ViewPhoto() {
-    }
-    
-    @PostConstruct
-    public void init() {
-    }
-    
     public String annotate() {
         RDFStore s = new RDFStore();
         boolean partiallyFailed = false;
@@ -85,7 +78,6 @@ public class ViewPhoto implements Serializable {
              return "failure";
         }
         else {
-            init();
             return "success";
         }
     }
@@ -120,8 +112,8 @@ public class ViewPhoto implements Serializable {
         return perso;
     }
 
-    public void setPerso(String p) {
-        this.perso = p;
+    public void setPerso(String perso) {
+        this.perso = perso;
     }
      
      public List<Person> getPersons() {
