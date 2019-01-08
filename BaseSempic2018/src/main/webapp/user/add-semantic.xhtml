@@ -22,11 +22,11 @@
                     <h:inputText id="firstname" value="#{addSemantic.firstname}"/>
                     <h:message for="firstname"/>
                     
-                    <label for="gender">Genre :</label>
-                    <pf:selectOneMenu id="gender" value="#{addSemantic.gender}">
+                    <label for="gender">Genre : #{addSemantic.gender} </label>
+                    <pf:selectOneRadio id="gender" value="#{addSemantic.gender}">
                         <f:selectItem itemLabel="femme" itemValue="femme"/>
                         <f:selectItem itemLabel="homme" itemValue="homme"/>
-                    </pf:selectOneMenu>
+                    </pf:selectOneRadio>
                     <h:message for="gender"/>
                     
                     <h:commandButton value="Ajouter" action="#{addSemantic.add()}"/>

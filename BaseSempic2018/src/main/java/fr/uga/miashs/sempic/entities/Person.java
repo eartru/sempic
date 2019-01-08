@@ -37,7 +37,7 @@ import javax.validation.constraints.*;
 
 public class Person implements Serializable {
         
-    private long Id;
+    private String uri;
     private String firstname;
     private String lastname;
     private String gender;
@@ -45,19 +45,19 @@ public class Person implements Serializable {
     public Person() {
     }
     
-    public Person(long id, String firstname, String lastname, String gender) {
-       this.Id = id;
+    public Person(String uri, String firstname, String lastname, String gender) {
+       this.uri = uri;
        this.firstname = firstname;
        this.lastname = lastname;
        this.gender = gender;
     }
     
-    public long getId() {
-        return Id;
+    public String getUri() {
+        return uri;
     }
 
-    public void setId(long id) {
-        this.Id = id;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
     
     public String getFirstname() {

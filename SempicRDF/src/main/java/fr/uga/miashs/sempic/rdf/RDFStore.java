@@ -206,35 +206,27 @@ public class RDFStore {
                 + "?p a <" + SempicOnto.Person + "> ; <" + RDFS.label +"> ?label. FILTER (regex(?label, \"" + q +"\", \"i\"))}");
         
         return m.listSubjects().toList();
-        
-        //String queryString = "SELECT ?p ?label WHERE { ?p a <" + SempicOnto.Person + "> ; <" + RDFS.label +"> ?label. FILTER (regex(?label, \"" + q +"\", \"i\"))}";
-//        String queryString = "SELECT ?s ?p ?o WHERE { ?s ?p ?o }";
-//        Query query = QueryFactory.create(queryString) ;
-//        System.out.println(queryString);
-//        QueryExecution qexec = QueryExecutionFactory.create(queryString, model) ;
-//        try {
-//          ResultSet results = qexec.execSelect() ;
-//          for ( ; results.hasNext() ; )
-//          {
-//            QuerySolution soln = results.nextSolution() ;
-//            Literal l = soln.getLiteral("label") ;
-// 
-//            list.add(l.getString());
-//          }
-//        } finally { qexec.close() ; }
     }
     
-    public Resource createPerson(long personId) {
-        // create an empty RDF graph
-        Model m = ModelFactory.createDefaultModel();
-        // create an instance of Photo in Model m
-        Resource pRes = m.createResource(Namespaces.getPersonUri(personId));
-        pRes.addProperty(RDF.type, SempicOnto.Person);
+    public Resource createPerson(String firstname, String lastname, String gender) {
 
-        pRes.addLiteral(RDFS.label, "Mémé:"+personId);
+        Model m = ModelFactory.createDefaultModel(); 
+        String personURI = Namespaces.getPersonUri(firstname, lastname);
+        
+        Resource someone = m.createResource(personURI);
+        someone.addLiteral(RDFS.label, firstname + " " + lastname);
+        if (gender.equals("femme")) {
+            someone.addProperty(RDF.type, SempicOnto.Female);
+        } 
+        if (gender.equals("homme")) {
+            someone.addProperty(RDF.type, SempicOnto.Male);
+        }
+        someone.addProperty(RDF.type, SempicOnto.Person);
+
+        m.write(System.out, "turtle");
 
         saveModel(m);
 
-        return pRes;
+        return someone;
     }
 }
