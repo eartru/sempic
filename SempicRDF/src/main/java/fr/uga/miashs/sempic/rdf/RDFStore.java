@@ -4,6 +4,7 @@
  */
 package fr.uga.miashs.sempic.rdf;
 
+import fr.uga.miashs.sempic.model.rdf.GeoNames;
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -228,5 +229,18 @@ public class RDFStore {
         saveModel(m);
 
         return someone;
+    }
+    
+    public List<Resource> getCountry(String q) {
+        
+        Model m = cnx.queryConstruct("CONSTRUCT { ?uri <"+ RDFS.label +"> ?name } "
+        + " WHERE { SERVICE <http://linkedgeodata.org/sparql> " 
+	+ " { SELECT DISTINCT ?uri ?name "
+	+ "	WHERE { "
+	+ "	?uri <http://www.geonames.org/ontology#featureCode> <"+ GeoNames.A_PCLI +"> ; "
+	+ "	<http://www.geonames.org/ontology#name> ?name . "
+	+ "	FILTER (regex(?name, \"" + q +"\", \"i\")) } } } ");
+        
+        return m.listSubjects().toList();
     }
 }
