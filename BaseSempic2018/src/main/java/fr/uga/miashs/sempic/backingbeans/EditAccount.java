@@ -117,28 +117,24 @@ public class EditAccount implements Serializable {
             
             for (int i = 0; i < listFriend.size(); i++) {
                 try {
-                System.out.println("i = " +listFriend.get(i));
-                    
-                    //Resource pRes = rdfStore.createPhoto(1, 1, 1);
+                    SempicUser friend = listFriend.get(i);
+                    System.out.println("i = " +listFriend.get(i));
+                    List<Resource> list = new ArrayList<>();
+                    list = rdfStore.getPersons(friend.getLastname());
+                
+                    list.forEach(listItem -> {
+                        System.out.println(listItem.getProperty(RDFS.label).getObject().toString());
+                        String label = listItem.getProperty(RDFS.label).getObject().toString();
+                        
+                        if ((friend.getFirstname() + friend.getLastname()) == label){
+                            Model m = ModelFactory.createDefaultModel();
+                            String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/"+current.getFirstname() + current.getLastname();
+                            Resource currentRes = m.createResource(personURI);
+                            m.add(currentRes, SempicOnto.isFriendOf, friend.getFirstname() + friend.getLastname());
+                            rdfStore.saveModel(m);
+                        }
+                    });
 
-                    Model m = ModelFactory.createDefaultModel();
-
-                    /*Resource friendRes = m.createResource(SempicOnto.Person);
-                    friendRes.addLiteral(RDFS.label, listFriend.get(i));
-                    Resource someoneRes = m.createResource(SempicOnto.Person);
-                    someoneRes.addLiteral(RDFS.label, current.getId());*/
-                    long number = listFriend.get(i).getId();
-                    Resource friendRes = rdfStore.createPerson(number);
-                    System.out.println("friendRes:");
-                    System.out.println(friendRes);
-                    Resource someoneRes = rdfStore.createPerson(current.getId());
-                    System.out.println(someoneRes);
-                    
-                    m.add(someoneRes, SempicOnto.isFriendOf, friendRes);
-
-                     //m.write(System.out, "turtle");
-
-                     rdfStore.saveModel(m);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
