@@ -6,6 +6,7 @@
 package fr.uga.miashs.sempic.rdf;
 
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -21,20 +22,28 @@ public class ExampleRDFStore {
     public static void main(String[] args) {
         RDFStore s = new RDFStore();
         
-        Resource pRes = s.createPhoto(2, 1, 1);
-
-            Model m = ModelFactory.createDefaultModel();
-
-            String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/TomDupond"; 
-            
-            Resource someone = m.createResource(personURI);
-            someone.addLiteral(RDFS.label, "Jules Dupond");
-            someone.addProperty(RDF.type, SempicOnto.Person);
-            m.add(pRes, SempicOnto.depicts, someone);
-
-            m.write(System.out, "turtle");
-            
-            s.saveModel(m);
+        List<Resource> list = new ArrayList<>();
+        list = s.getPersons("Dup");
+        
+        list.forEach(listItem -> {
+            System.out.println(listItem.getProperty(RDFS.label).getObject().toString());
+        });
+        
+        
+//        Resource pRes = s.createPhoto(2, 1, 1);
+//
+//        Model m = ModelFactory.createDefaultModel();
+//
+//        String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/PaulDupond"; 
+//          
+//        Resource someone = m.createResource(personURI);
+//        someone.addLiteral(RDFS.label, "Paul Dupond");
+//        someone.addProperty(RDF.type, SempicOnto.Person);
+//        m.add(pRes, SempicOnto.depicts, someone);
+//        
+//        m.write(System.out, "turtle");
+//            
+//        s.saveModel(m);
 
 //        Resource pRes = s.createPhoto(1, 1, 1);
 //

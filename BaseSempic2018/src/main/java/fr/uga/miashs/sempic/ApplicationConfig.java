@@ -55,7 +55,7 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 @FacesConfig( version = FacesConfig.Version.JSF_2_3)
 
-@ApplicationScoped
+@javax.ejb.Singleton
 @Startup
 public class ApplicationConfig {
     

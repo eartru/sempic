@@ -42,8 +42,6 @@ public class CreatePhoto implements Serializable {
     
     private List<Part> files;
 
-    
-    
     @Inject
     private PhotoFacade service;
     
@@ -84,7 +82,6 @@ public class CreatePhoto implements Serializable {
             } catch (IOException ex) {
                  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
                  partiallyFailed=true;
-                
             }
         }
         if (partiallyFailed) {

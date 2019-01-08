@@ -182,6 +182,14 @@
     
 
 
+    <!-- http://www.geonames.org/ontology#locatedIn -->
+
+    <rdf:Description rdf:about="http://www.geonames.org/ontology#locatedIn">
+        <rdfs:domain rdf:resource="http://xmlns.com/foaf/0.1/Image"/>
+    </rdf:Description>
+    
+
+
     <!-- http://xmlns.com/foaf/0.1/depicts -->
 
     <owl:ObjectProperty rdf:about="http://xmlns.com/foaf/0.1/depicts">
