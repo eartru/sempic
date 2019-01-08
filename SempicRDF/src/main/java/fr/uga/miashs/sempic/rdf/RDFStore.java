@@ -233,11 +233,11 @@ public class RDFStore {
     
     public List<Resource> getCountry(String q) {
         
-        Model m = cnx.queryConstruct("CONSTRUCT { ?uri <http://www.geonames.org/ontology#name> ?name } "
+        Model m = cnx.queryConstruct("CONSTRUCT { ?uri <"+ RDFS.label +"> ?name } "
         + " WHERE { SERVICE <http://linkedgeodata.org/sparql> " 
 	+ " { SELECT DISTINCT ?uri ?name "
 	+ "	WHERE { "
-	+ "	?uri <http://www.geonames.org/ontology#featureCode> <http://www.geonames.org/ontology#A.PCLI> ; "
+	+ "	?uri <http://www.geonames.org/ontology#featureCode> <"+ GeoNames.A_PCLI +"> ; "
 	+ "	<http://www.geonames.org/ontology#name> ?name . "
 	+ "	FILTER (regex(?name, \"" + q +"\", \"i\")) } } } ");
         
