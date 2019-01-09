@@ -7,6 +7,7 @@ package fr.uga.miashs.sempic.backingbeans;
 
 import fr.uga.miashs.sempic.entities.Person;
 import fr.uga.miashs.sempic.entities.Photo;
+import fr.uga.miashs.sempic.entities.Place;
 import fr.uga.miashs.sempic.qualifiers.SelectedPhoto;
 import fr.uga.miashs.sempic.rdf.RDFStore;
 import fr.uga.miashs.sempic.services.PhotoFacade;
@@ -16,6 +17,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
+import javax.ejb.EJB;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
@@ -28,6 +30,9 @@ import org.apache.jena.vocabulary.RDFS;
 @Named
 @ViewScoped
 public class ViewPhoto implements Serializable {
+
+    @EJB
+    private RDFStore rDFStore;
     
     @Inject
     @SelectedPhoto
@@ -38,7 +43,7 @@ public class ViewPhoto implements Serializable {
     
     private Person perso;
     
-    private List<Person> persons;
+    private Place country;
     
     public String annotate() {
         RDFStore s = new RDFStore();
@@ -73,9 +78,8 @@ public class ViewPhoto implements Serializable {
     
     public List<Person> completePerson(String query) {
         List<Person> personList = new ArrayList<>();
-        RDFStore s = new RDFStore();
         
-        List<Resource> list = s.getPersons(query);
+        List<Resource> list = rDFStore.getPersons(query);
 
         list.forEach(c -> {    
             String[] labelSplit = c.getProperty(RDFS.label).getObject().toString().split("\\s+");
@@ -87,6 +91,19 @@ public class ViewPhoto implements Serializable {
         });        
         return personList;
     }
+    
+    public List<Place> completeCountry(String query) {
+        List<Place> countryList = new ArrayList<>();
+        
+        List<Resource> list = rDFStore.getCountry(query);
+
+        list.forEach(c -> {    
+            country = new Place(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
+            
+            countryList.add(country);
+        });        
+        return countryList;
+    }
 
     public Photo getCurrent() {
         return current;
@@ -96,7 +113,7 @@ public class ViewPhoto implements Serializable {
         this.current = current;
     }
     
-     public Person getPerso() {
+    public Person getPerso() {
         return perso;
     }
 
@@ -104,13 +121,12 @@ public class ViewPhoto implements Serializable {
         this.perso = perso;
     }
      
-     public List<Person> getPersons() {
-        return persons;
-    }
- 
-    public void setPersons(List<Person> p) {
-        this.persons = p;
+    public Place getCountry() {
+        return country;
     }
 
+    public void setCountry(Place country) {
+        this.country = country;
+    }
     
 }
