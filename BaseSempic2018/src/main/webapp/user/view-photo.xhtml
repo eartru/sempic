@@ -40,10 +40,10 @@
                     <!--will contains value for a ontology-->
                     <pf:outputLabel value="Where was the picture taken ?" for="country" />
                     <label>Pays</label>
-                    <pf:autoComplete id="country" multiple="true" value="#{viewPhoto.perso}" completeMethod="#{viewPhoto.completePerson}" 
-                                     var="person" itemLabel="#{person.firstname} #{person.lastname}" itemValue="#{person}" forceSelection="true">
+                    <pf:autoComplete id="country" multiple="true" value="#{viewPhoto.country}" completeMethod="#{viewPhoto.completeCountry}" 
+                                     var="country" itemLabel="#{country.label}" itemValue="#{country}" forceSelection="true">
                          <pf:column>
-                            <h:outputText value="#{person.firstname} #{person.lastname}" />
+                            <h:outputText value="#{country.label}" />
                         </pf:column>
                     </pf:autoComplete>
                     <h:message for="country"/> 
