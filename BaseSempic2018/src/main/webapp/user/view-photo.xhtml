@@ -28,7 +28,6 @@
                     
                     <pf:row>
                         <pf:column>
-                        <!--will contains value for a ontology-->
                         <pf:outputLabel value="Qui est présent sur la photo ?" for="persons" />
                         <pf:autoComplete id="persons" multiple="true" value="#{viewPhoto.perso}" completeMethod="#{viewPhoto.completePerson}" 
                                          var="person" itemLabel="#{person.firstname} #{person.lastname}" itemValue="#{person}" forceSelection="true">
@@ -42,10 +41,14 @@
                     
                     <pf:row>
                         <pf:column>
-                            <!--will contains value for a ontology-->
-                            <pf:outputLabel value="Qu'est ce qu'il y a dans la photo ?" for="what" />
-                            <pf:inputText id="what" value="what"/>
-                            <h:message for="what"/>
+                            <pf:outputLabel value="Qu'est ce qu'il y a dans la photo ?" for="object" />
+                            <pf:autoComplete id="object" multiple="true" value="#{viewPhoto.object}" completeMethod="#{viewPhoto.completeObject}" 
+                                             var="object" itemLabel="#{object.label}" itemValue="#{object}" forceSelection="true">
+                                 <pf:column>
+                                    <h:outputText value="#{object.label}" />
+                                </pf:column>
+                            </pf:autoComplete>
+                            <h:message for="object"/>
                         </pf:column>
                     </pf:row>    
                         

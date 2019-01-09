@@ -285,4 +285,15 @@ public class RDFStore {
         
         return m.listSubjects().toList();
     }
+    
+    public List<Resource> getObject(String q) {
+        
+        Model m = cnx.queryConstruct("CONSTRUCT { ?p <" + RDFS.label + "> ?label "
+                + "} WHERE {"
+                + "?p a ?type ; "
+                + "<" + RDFS.label +"> ?label. "
+                + "FILTER ( ?type IN ( <"+SempicOnto.Object+">, <" +SempicOnto.Animal+">) && regex(?label, \"" + q +"\", \"i\"))}");
+        
+        return m.listSubjects().toList();
+    }
 }

@@ -12,15 +12,15 @@ import java.io.Serializable;
  *
  */
 
-public class Place implements Serializable {
+public class GenericSemantic implements Serializable {
         
     private String uri;
     private String label;
 
-    public Place() {
+    public GenericSemantic() {
     }
     
-    public Place(String uri, String label) {
+    public GenericSemantic(String uri, String label) {
        this.uri = uri;
        this.label = label;
     }
