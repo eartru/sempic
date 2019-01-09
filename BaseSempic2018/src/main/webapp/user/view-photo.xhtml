@@ -99,10 +99,23 @@
                     
                     <pf:row>
                         <pf:column>
-                            <!--will contains value for a ontology-->
-                            <pf:outputLabel value="Quand a été prise la photo ?" for="when" />
-                            <pf:inputText id="when" value="when"/>
-                            <h:message for="when"/>
+                            <pf:outputLabel value="Quand a été prise la photo ?" for="event" />
+                        </pf:column>
+                    </pf:row>
+                    <pf:row>
+                        <pf:column>
+                            <pf:outputLabel value="Evénement" for="event" />
+                            <pf:autoComplete id="event" value="#{viewPhoto.event}" completeMethod="#{viewPhoto.completeEvent}" 
+                                             var="event" itemLabel="#{event.label}" itemValue="#{event}" forceSelection="true">
+                                 <pf:column>
+                                    <h:outputText value="#{event.label}" />
+                                </pf:column>
+                            </pf:autoComplete>
+                        </pf:column>
+                        <pf:column>
+                            <pf:outputLabel value="Date" for="date" />
+                            <pf:calendar id="date" value="#{viewPhoto.date}" showOn="button" />
+                            <h:message for="date"/>
                         </pf:column>
                     </pf:row> 
                 </h:panelGrid>

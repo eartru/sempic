@@ -17,6 +17,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.ejb.EJB;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -48,6 +49,8 @@ public class ViewPhoto implements Serializable {
     private GenericSemantic department;
     private GenericSemantic city;
     private GenericSemantic object;
+    private GenericSemantic event;
+    private Date date;
     
     public String annotate() {
         RDFStore s = new RDFStore();
@@ -160,6 +163,19 @@ public class ViewPhoto implements Serializable {
         });        
         return objectList;
     }
+    
+    public List<GenericSemantic> completeEvent(String query) {
+        List<GenericSemantic> eventList = new ArrayList<>();
+        
+        List<Resource> list = rDFStore.getEvent(query);
+
+        list.forEach(c -> {    
+            event = new GenericSemantic(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
+            
+            eventList.add(event);
+        });        
+        return eventList;
+    }
 
     public String getTitle() {
         return title;
@@ -224,5 +240,23 @@ public class ViewPhoto implements Serializable {
     public void setObject(GenericSemantic object) {
         this.object = object;
     }
+
+    public GenericSemantic getEvent() {
+        return event;
+    }
+
+    public void setEvent(GenericSemantic event) {
+        this.event = event;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
+    
        
 }

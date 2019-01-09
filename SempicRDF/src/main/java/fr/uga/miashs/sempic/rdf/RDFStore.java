@@ -296,4 +296,16 @@ public class RDFStore {
         
         return m.listSubjects().toList();
     }
+    
+    public List<Resource> getEvent(String q) {
+        
+        Model m = cnx.queryConstruct("CONSTRUCT { ?p <" + RDFS.label + "> ?name "
+                + "} WHERE {"
+                + "?p a <"+SempicOnto.Event +"> ; "
+                + "<" + RDFS.label +"> ?label. "
+                + "FILTER (regex(?label, \"" + q +"\", \"i\"))"
+                        + "BIND (STR(?label)  AS ?name) }");
+        
+        return m.listSubjects().toList();
+    }
 }
