@@ -243,4 +243,46 @@ public class RDFStore {
         
         return m.listSubjects().toList();
     }
+    
+    public List<Resource> getRegion(String q, String country) {
+        
+        Model m = cnx.queryConstruct("CONSTRUCT { ?uri <"+ RDFS.label +"> ?name } "
+        + " WHERE { SERVICE <http://linkedgeodata.org/sparql> " 
+	+ " { SELECT DISTINCT ?uri ?name "
+	+ "	WHERE { "
+	+ "	?uri <http://www.geonames.org/ontology#featureCode> <"+ GeoNames.A_ADM1 +"> ; "
+	+ "	<http://www.geonames.org/ontology#name> ?name ; "
+        + "	<http://www.geonames.org/ontology#parentFeature> <"+ country +">  . "
+	+ "	FILTER (regex(?name, \"" + q +"\", \"i\")) } } } ");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getDepartment(String q, String region) {
+        
+        Model m = cnx.queryConstruct("CONSTRUCT { ?uri <"+ RDFS.label +"> ?name } "
+        + " WHERE { SERVICE <http://linkedgeodata.org/sparql> " 
+	+ " { SELECT DISTINCT ?uri ?name "
+	+ "	WHERE { "
+	+ "	?uri <http://www.geonames.org/ontology#featureCode> <"+ GeoNames.A_ADM2 +"> ; "
+	+ "	<http://www.geonames.org/ontology#name> ?name ; "
+        + "	<http://www.geonames.org/ontology#parentFeature> <"+ region +">  . "
+	+ "	FILTER (regex(?name, \"" + q +"\", \"i\")) } } } ");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getCity(String q, String department) {
+        
+        Model m = cnx.queryConstruct("CONSTRUCT { ?uri <"+ RDFS.label +"> ?name } "
+        + " WHERE { SERVICE <http://linkedgeodata.org/sparql> " 
+	+ " { SELECT DISTINCT ?uri ?name "
+	+ "	WHERE { "
+	+ "	?uri <http://www.geonames.org/ontology#featureCode> <"+ GeoNames.P_PPLA2 +"> ; "
+	+ "	<http://www.geonames.org/ontology#name> ?name ; "
+        + "	<http://www.geonames.org/ontology#parentADM2> <"+ department +">  . "
+	+ "	FILTER (regex(?name, \"" + q +"\", \"i\")) } } } ");
+        
+        return m.listSubjects().toList();
+    }
 }

@@ -20,9 +20,8 @@
                 <h:panelGrid>
                     <pf:row>
                         <pf:column>
-                            <!--will contains value for title ontology-->
-                            <label for="title">Titre</label>
-                            <h:inputText id="title" value="title"/>
+                            <pf:outputLabel value="Titre" for="title" />
+                            <pf:inputText id="title" value="title"/>
                             <h:message for="title"/>
                         </pf:column>
                     </pf:row>
@@ -44,8 +43,8 @@
                     <pf:row>
                         <pf:column>
                             <!--will contains value for a ontology-->
-                            <label for="what">Qu'est ce qu'il y a dans la photo ?</label>
-                            <h:inputText id="what" value="what"/>
+                            <pf:outputLabel value="Qu'est ce qu'il y a dans la photo ?" for="what" />
+                            <pf:inputText id="what" value="what"/>
                             <h:message for="what"/>
                         </pf:column>
                     </pf:row>    
@@ -57,8 +56,8 @@
                     </pf:row> 
                     <pf:row>
                         <pf:column>
-                            <label>Pays</label>
-                            <pf:autoComplete id="country" multiple="true" value="#{viewPhoto.country}" completeMethod="#{viewPhoto.completeCountry}" 
+                            <pf:outputLabel value="Pays" for="country" />
+                            <pf:autoComplete id="country" value="#{viewPhoto.country}" completeMethod="#{viewPhoto.completeCountry}" 
                                              var="country" itemLabel="#{country.label}" itemValue="#{country}" forceSelection="true">
                                  <pf:column>
                                     <h:outputText value="#{country.label}" />
@@ -67,8 +66,8 @@
                             <h:message for="country"/> 
                         </pf:column>
                         <pf:column>
-                            <label>Région</label>
-                            <pf:autoComplete id="region" multiple="true" value="#{viewPhoto.country}" completeMethod="#{viewPhoto.completeCountry}" 
+                            <pf:outputLabel value="Région" for="region" />
+                            <pf:autoComplete id="region" value="#{viewPhoto.region}" completeMethod="#{viewPhoto.completeRegion}" 
                                              var="region" itemLabel="#{region.label}" itemValue="#{region}" forceSelection="true">
                                  <pf:column>
                                     <h:outputText value="#{region.label}" />
@@ -76,8 +75,8 @@
                             </pf:autoComplete>
                         </pf:column>
                         <pf:column>
-                            <label>Département</label>
-                            <pf:autoComplete id="department" multiple="true" value="#{viewPhoto.country}" completeMethod="#{viewPhoto.completeCountry}" 
+                            <pf:outputLabel value="Département" for="department" />
+                            <pf:autoComplete id="department" value="#{viewPhoto.department}" completeMethod="#{viewPhoto.completeDepartment}" 
                                              var="department" itemLabel="#{department.label}" itemValue="#{department}" forceSelection="true">
                                  <pf:column>
                                     <h:outputText value="#{department.label}" />
@@ -85,8 +84,8 @@
                             </pf:autoComplete>
                         </pf:column>
                         <pf:column>
-                            <label>Ville</label>
-                            <pf:autoComplete id="city" multiple="true" value="#{viewPhoto.country}" completeMethod="#{viewPhoto.completeCountry}" 
+                            <pf:outputLabel value="Ville" for="city" />
+                            <pf:autoComplete id="city" value="#{viewPhoto.city}" completeMethod="#{viewPhoto.completeCity}" 
                                              var="city" itemLabel="#{city.label}" itemValue="#{city}" forceSelection="true">
                                  <pf:column>
                                     <h:outputText value="#{city.label}" />
@@ -98,8 +97,8 @@
                     <pf:row>
                         <pf:column>
                             <!--will contains value for a ontology-->
-                            <label for="when">Quand a été prise la photo ?</label>
-                            <h:inputText id="when"  value="when"/>
+                            <pf:outputLabel value="Quand a été prise la photo ?" for="when" />
+                            <pf:inputText id="when" value="when"/>
                             <h:message for="when"/>
                         </pf:column>
                     </pf:row> 

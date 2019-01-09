@@ -41,9 +41,12 @@ public class ViewPhoto implements Serializable {
     @Inject
     private PhotoFacade service;
     
-    private Person perso;
-    
+    private String title;
+    private Person perso; 
     private Place country;
+    private Place region;
+    private Place department;
+    private Place city;
     
     public String annotate() {
         RDFStore s = new RDFStore();
@@ -104,7 +107,54 @@ public class ViewPhoto implements Serializable {
         });        
         return countryList;
     }
+    
+    public List<Place> completeRegion(String query) {
+        List<Place> regionList = new ArrayList<>();
+        
+        List<Resource> list = rDFStore.getRegion(query, country.getUri());
 
+        list.forEach(c -> {    
+            region = new Place(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
+            
+            regionList.add(region);
+        });        
+        return regionList;
+    }
+    
+    public List<Place> completeDepartment(String query) {
+        List<Place> departmentList = new ArrayList<>();
+        
+        List<Resource> list = rDFStore.getDepartment(query, region.getUri());
+
+        list.forEach(c -> {    
+            department = new Place(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
+            
+            departmentList.add(department);
+        });        
+        return departmentList;
+    }
+    
+    public List<Place> completeCity(String query) {
+        List<Place> cityList = new ArrayList<>();
+        
+        List<Resource> list = rDFStore.getCity(query, department.getUri());
+
+        list.forEach(c -> {    
+            city = new Place(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
+            
+            cityList.add(city);
+        });        
+        return cityList;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
     public Photo getCurrent() {
         return current;
     }
@@ -127,6 +177,30 @@ public class ViewPhoto implements Serializable {
 
     public void setCountry(Place country) {
         this.country = country;
+    }
+
+    public Place getRegion() {
+        return region;
+    }
+
+    public void setRegion(Place region) {
+        this.region = region;
+    }
+
+    public Place getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Place department) {
+        this.department = department;
+    }
+
+    public Place getCity() {
+        return city;
+    }
+
+    public void setCity(Place city) {
+        this.city = city;
     }
     
 }
