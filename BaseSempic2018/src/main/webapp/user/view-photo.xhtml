@@ -17,40 +17,92 @@
             <h1><h:outputText value="#{viewPhoto.current}"/></h1>
             <h:graphicImage value="/webapi/picture/#{viewPhoto.current.path}?width=200"/>
             <h:form>
-                <h:panelGrid columns = "3">
-                    <!--will contains value for title ontology-->
-                    <label for="title">Titre</label>
-                    <h:inputText id="title" value="title"/>
-                    <h:message for="title"/>
-                    
-                    <!--will contains value for a ontology-->
-                    <pf:outputLabel value="Who is in the picture ?" for="persons" />
-                    <pf:autoComplete id="persons" multiple="true" value="#{viewPhoto.perso}" completeMethod="#{viewPhoto.completePerson}" 
-                                     var="person" itemLabel="#{person.firstname} #{person.lastname}" itemValue="#{person}" forceSelection="true">
-                         <pf:column>
-                            <h:outputText value="#{person.firstname} #{person.lastname}" />
+                <h:panelGrid>
+                    <pf:row>
+                        <pf:column>
+                            <!--will contains value for title ontology-->
+                            <label for="title">Titre</label>
+                            <h:inputText id="title" value="title"/>
+                            <h:message for="title"/>
                         </pf:column>
-                    </pf:autoComplete>
-                    <h:message for="persons"/> 
+                    </pf:row>
                     
-                    <!--will contains value for a ontology-->
-                    <label for="what">What is in the picture ?</label>
-                    <h:inputText id="what" value="what"/>
-                    <h:message for="what"/>
-                    <!--will contains value for a ontology-->
-                    <pf:outputLabel value="Where was the picture taken ?" for="country" />
-                    <label>Pays</label>
-                    <pf:autoComplete id="country" multiple="true" value="#{viewPhoto.country}" completeMethod="#{viewPhoto.completeCountry}" 
-                                     var="country" itemLabel="#{country.label}" itemValue="#{country}" forceSelection="true">
-                         <pf:column>
-                            <h:outputText value="#{country.label}" />
+                    <pf:row>
+                        <pf:column>
+                        <!--will contains value for a ontology-->
+                        <pf:outputLabel value="Qui est présent sur la photo ?" for="persons" />
+                        <pf:autoComplete id="persons" multiple="true" value="#{viewPhoto.perso}" completeMethod="#{viewPhoto.completePerson}" 
+                                         var="person" itemLabel="#{person.firstname} #{person.lastname}" itemValue="#{person}" forceSelection="true">
+                             <pf:column>
+                                <h:outputText value="#{person.firstname} #{person.lastname}" />
+                            </pf:column>
+                        </pf:autoComplete>
+                        <h:message for="persons"/> 
                         </pf:column>
-                    </pf:autoComplete>
-                    <h:message for="country"/> 
-                    <!--will contains value for a ontology-->
-                    <label for="when">When was the picture taken ?</label>
-                    <h:inputText id="when"  value="when"/>
-                    <h:message for="when"/>
+                    </pf:row>
+                    
+                    <pf:row>
+                        <pf:column>
+                            <!--will contains value for a ontology-->
+                            <label for="what">Qu'est ce qu'il y a dans la photo ?</label>
+                            <h:inputText id="what" value="what"/>
+                            <h:message for="what"/>
+                        </pf:column>
+                    </pf:row>    
+                        
+                    <pf:row>
+                        <pf:column>
+                            <pf:outputLabel value="Où a été prise la photo ?" for="country" />
+                        </pf:column>
+                    </pf:row> 
+                    <pf:row>
+                        <pf:column>
+                            <label>Pays</label>
+                            <pf:autoComplete id="country" multiple="true" value="#{viewPhoto.country}" completeMethod="#{viewPhoto.completeCountry}" 
+                                             var="country" itemLabel="#{country.label}" itemValue="#{country}" forceSelection="true">
+                                 <pf:column>
+                                    <h:outputText value="#{country.label}" />
+                                </pf:column>
+                            </pf:autoComplete>
+                            <h:message for="country"/> 
+                        </pf:column>
+                        <pf:column>
+                            <label>Région</label>
+                            <pf:autoComplete id="region" multiple="true" value="#{viewPhoto.country}" completeMethod="#{viewPhoto.completeCountry}" 
+                                             var="region" itemLabel="#{region.label}" itemValue="#{region}" forceSelection="true">
+                                 <pf:column>
+                                    <h:outputText value="#{region.label}" />
+                                </pf:column>
+                            </pf:autoComplete>
+                        </pf:column>
+                        <pf:column>
+                            <label>Département</label>
+                            <pf:autoComplete id="department" multiple="true" value="#{viewPhoto.country}" completeMethod="#{viewPhoto.completeCountry}" 
+                                             var="department" itemLabel="#{department.label}" itemValue="#{department}" forceSelection="true">
+                                 <pf:column>
+                                    <h:outputText value="#{department.label}" />
+                                </pf:column>
+                            </pf:autoComplete>
+                        </pf:column>
+                        <pf:column>
+                            <label>Ville</label>
+                            <pf:autoComplete id="city" multiple="true" value="#{viewPhoto.country}" completeMethod="#{viewPhoto.completeCountry}" 
+                                             var="city" itemLabel="#{city.label}" itemValue="#{city}" forceSelection="true">
+                                 <pf:column>
+                                    <h:outputText value="#{city.label}" />
+                                </pf:column>
+                            </pf:autoComplete>
+                        </pf:column>
+                    </pf:row> 
+                    
+                    <pf:row>
+                        <pf:column>
+                            <!--will contains value for a ontology-->
+                            <label for="when">Quand a été prise la photo ?</label>
+                            <h:inputText id="when"  value="when"/>
+                            <h:message for="when"/>
+                        </pf:column>
+                    </pf:row> 
                 </h:panelGrid>
                 <h:commandButton value="Update" action="#{viewPhoto.annotate()}"> 
                     <f:param name="photoId" value="#{viewPhoto.current.id}" />
