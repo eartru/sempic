@@ -7,7 +7,7 @@ package fr.uga.miashs.sempic.backingbeans;
 
 import fr.uga.miashs.sempic.entities.Person;
 import fr.uga.miashs.sempic.entities.Photo;
-import fr.uga.miashs.sempic.entities.Place;
+import fr.uga.miashs.sempic.entities.GenericSemantic;
 import fr.uga.miashs.sempic.qualifiers.SelectedPhoto;
 import fr.uga.miashs.sempic.rdf.RDFStore;
 import fr.uga.miashs.sempic.services.PhotoFacade;
@@ -17,6 +17,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.ejb.EJB;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -41,9 +42,15 @@ public class ViewPhoto implements Serializable {
     @Inject
     private PhotoFacade service;
     
-    private Person perso;
-    
-    private Place country;
+    private String title;
+    private Person perso; 
+    private GenericSemantic country;
+    private GenericSemantic region;
+    private GenericSemantic department;
+    private GenericSemantic city;
+    private GenericSemantic object;
+    private GenericSemantic event;
+    private Date date;
     
     public String annotate() {
         RDFStore s = new RDFStore();
@@ -92,19 +99,92 @@ public class ViewPhoto implements Serializable {
         return personList;
     }
     
-    public List<Place> completeCountry(String query) {
-        List<Place> countryList = new ArrayList<>();
+    public List<GenericSemantic> completeCountry(String query) {
+        List<GenericSemantic> countryList = new ArrayList<>();
         
         List<Resource> list = rDFStore.getCountry(query);
 
         list.forEach(c -> {    
-            country = new Place(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
+            country = new GenericSemantic(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
             
             countryList.add(country);
         });        
         return countryList;
     }
+    
+    public List<GenericSemantic> completeRegion(String query) {
+        List<GenericSemantic> regionList = new ArrayList<>();
+        
+        List<Resource> list = rDFStore.getRegion(query, country.getUri());
 
+        list.forEach(c -> {    
+            region = new GenericSemantic(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
+            
+            regionList.add(region);
+        });        
+        return regionList;
+    }
+    
+    public List<GenericSemantic> completeDepartment(String query) {
+        List<GenericSemantic> departmentList = new ArrayList<>();
+        
+        List<Resource> list = rDFStore.getDepartment(query, region.getUri());
+
+        list.forEach(c -> {    
+            department = new GenericSemantic(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
+            
+            departmentList.add(department);
+        });        
+        return departmentList;
+    }
+    
+    public List<GenericSemantic> completeCity(String query) {
+        List<GenericSemantic> cityList = new ArrayList<>();
+        
+        List<Resource> list = rDFStore.getCity(query, department.getUri());
+
+        list.forEach(c -> {    
+            city = new GenericSemantic(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
+            
+            cityList.add(city);
+        });        
+        return cityList;
+    }
+    
+    public List<GenericSemantic> completeObject(String query) {
+        List<GenericSemantic> objectList = new ArrayList<>();
+        
+        List<Resource> list = rDFStore.getObject(query);
+
+        list.forEach(c -> {    
+            object = new GenericSemantic(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
+            
+            objectList.add(object);
+        });        
+        return objectList;
+    }
+    
+    public List<GenericSemantic> completeEvent(String query) {
+        List<GenericSemantic> eventList = new ArrayList<>();
+        
+        List<Resource> list = rDFStore.getEvent(query);
+
+        list.forEach(c -> {    
+            event = new GenericSemantic(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
+            
+            eventList.add(event);
+        });        
+        return eventList;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
     public Photo getCurrent() {
         return current;
     }
@@ -121,12 +201,62 @@ public class ViewPhoto implements Serializable {
         this.perso = perso;
     }
      
-    public Place getCountry() {
+    public GenericSemantic getCountry() {
         return country;
     }
 
-    public void setCountry(Place country) {
+    public void setCountry(GenericSemantic country) {
         this.country = country;
     }
+
+    public GenericSemantic getRegion() {
+        return region;
+    }
+
+    public void setRegion(GenericSemantic region) {
+        this.region = region;
+    }
+
+    public GenericSemantic getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(GenericSemantic department) {
+        this.department = department;
+    }
+
+    public GenericSemantic getCity() {
+        return city;
+    }
+
+    public void setCity(GenericSemantic city) {
+        this.city = city;
+    }
+
+    public GenericSemantic getObject() {
+        return object;
+    }
+
+    public void setObject(GenericSemantic object) {
+        this.object = object;
+    }
+
+    public GenericSemantic getEvent() {
+        return event;
+    }
+
+    public void setEvent(GenericSemantic event) {
+        this.event = event;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
     
+    
+       
 }
