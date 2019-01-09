@@ -7,6 +7,7 @@ package fr.uga.miashs.sempic.backingbeans;
 
 import fr.uga.miashs.sempic.SempicModelException;
 import fr.uga.miashs.sempic.entities.Album;
+import fr.uga.miashs.sempic.entities.Person;
 import fr.uga.miashs.sempic.entities.Photo;
 import fr.uga.miashs.sempic.entities.SempicUser;
 import fr.uga.miashs.sempic.qualifiers.SelectedAlbum;
@@ -149,14 +150,12 @@ public class EditAccount implements Serializable {
         return "success";
     }
     
-    public List<SempicUser> completeText(String query) {
-        /*List<SempicUser> users = userService.findAll();
-        List<String> results = new ArrayList<String>();
-        for(int i = 0; i < users.size(); i++) {
-            results.add(users.get(i).getEmail());
-        }
-         
-        return results;*/
-        return userService.findAll();
+    public List<Person> completePerson(String query) {
+        List<Person> personList = new ArrayList<>();
+        RDFStore s = new RDFStore();
+        
+        List<Resource> list = s.getPersons(query);
+
+        return personList;
     }
 }

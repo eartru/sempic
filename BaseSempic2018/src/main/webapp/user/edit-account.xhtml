@@ -38,24 +38,26 @@
                     <h:message for="password"/>
                     
                     <pf:outputLabel value="Parent 1" for="parent1" />
-                    <pf:autoComplete id="parent1" dropdown="true" value="#{editAccount.parent1}" completeMethod="#{editAccount.completeText}" var="user" itemLabel="#{user.email}" itemValue="#{user.id}"/>
+                    <pf:autoComplete id="parent1" dropdown="true" value="#{editAccount.parent1}" completeMethod="#{editAccount.completePerson}" 
+                                     var="user" itemLabel="#{user.label}" itemValue="#{user}"/>
                     <h:message for="parent1"/> 
                     
                     <pf:outputLabel value="Parent 2" for="parent2" />
-                    <pf:autoComplete id="parent2" dropdown="true" value="#{editAccount.parent2}" completeMethod="#{editAccount.completeText}" var="user" itemLabel="#{user.email}" itemValue="#{user.id}"/>
+                    <pf:autoComplete id="parent2" dropdown="true" value="#{editAccount.parent2}" completeMethod="#{editAccount.completePerson}" 
+                                     var="user" itemLabel="#{user.label}" itemValue="#{user}"/>
                     <h:message for="parent2"/>
                     
                     <pf:outputLabel value="Enfants" for="listChild" />
-                    <pf:autoComplete id="listChild" multiple="true" value="#{editAccount.listChild}" completeMethod="#{editAccount.completeText}"
-                                     var="child" itemLabel="#{child.email}" itemValue="#{child.id}"  forceSelection="true">
-                        <h:outputText value="#{child}" />
+                    <pf:autoComplete id="listChild" multiple="true" value="#{editAccount.listChild}" completeMethod="#{editAccount.completePerson}"
+                                     var="child" itemLabel="#{child.label}" itemValue="#{child}"  forceSelection="true">
+                        <h:outputText value="#{child.label}" />
                     </pf:autoComplete>
                     <h:message for="listChild"/> 
                     
                     <pf:outputLabel value="Amis" for="listFriend" />
-                    <pf:autoComplete id="listFriend" multiple="true" value="#{editAccount.listFriend}" completeMethod="#{editAccount.completeText}"
-                                     var="friend" itemLabel="#{friend.email}" itemValue="#{friend.id}"  forceSelection="true">
-                        <h:outputText value="#{friend}" />
+                    <pf:autoComplete id="listFriend" multiple="true" value="#{editAccount.listFriend}" completeMethod="#{editAccount.completePerson}"
+                                     var="friend" itemLabel="#{friend.label}" itemValue="#{friend}"  forceSelection="true">
+                        <h:outputText value="#{friend.label}" />
                     </pf:autoComplete>
                     <h:message for="listFriend"/> 
                     
