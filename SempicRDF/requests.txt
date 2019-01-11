@@ -1,0 +1,165 @@
+pssword hash test : PBKDF2WithHmacSHA256:2048:W5VSC3TD5r5pYd2EVvnhC6ssAf8aHOxTcf0dCCkTUSE=:vrSK6WXbz5XHY1lEwSCZt4RxXdSQ6MpIKpX5KqDVTB4=
+
+PREFIX geonames: <http://www.geonames.org/ontology#>
+
+SELECT DISTINCT ?uri ?name
+
+WHERE {
+	SERVICE <http://linkedgeodata.org/sparql>
+	
+{
+		SELECT DISTINCT ?uri ?name
+		WHERE {
+		?uri geonames:featureCode geonames:A.PCLI ;
+		geonames:name ?name .
+		FILTER (regex(?name, "france", "i"))
+		}
+	}
+}
+ORDER BY ?name
+
+Documentation :
+http://www.geonames.org/source-code/javadoc/org/geonames/FeatureClass.html
+
+geonames:featureClass :
+P (populated place) 
+A (area)
+
+geonames:featureCode :
+A.PCLI => Pays
+A.ADM1 => Région
+A.ADM2 => Département
+P.PPLA2 => Ville
+
+geonames:A a geonames:Class
+<URIgeonames/Country/1> a geonames:Feature
+<URIgeonames/Country/1> geonames:featureClass geonames:A
+<URIgeonames/Country/1> geonames:featureCode geonames:featureCode:A.PCLI
+
+foaf:Image/1 sempic:takenIn <URIgeonames/Country/1>
+foaf:Image/1 geonames:locatedIn <URIgeonames/Country/1>
+foaf:Image/1 foaf:depicts sempic:Cat
+foaf:Image/1 sempic:albumId "22"
+foaf:Image/1 sempic:ownerId "16"
+foaf:Image/1 sempic:photoId "154"
+
+
+
+
+
+SELECT distinct ?x ?y ?z WHERE {?x ?y ?z}
+
+PREFIX sempic: <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?p ?label
+WHERE { ?p a sempic:Person ;
+     rdfs:label ?label.
+}
+
+
+PREFIX sempic: <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?p ?label ?gender
+WHERE { ?p a sempic:Person ;
+    rdfs:label ?label;
+     rdf:type ?gender.
+ FILTER (regex(?label, "Dup", "i"))
+}
+
+
+CONSTRUCT { ?uri geonames:name ?name }
+WHERE { SERVICE <http://linkedgeodata.org/sparql>
+    {
+        SELECT DISTINCT ?uri ?name
+        WHERE {
+        ?uri geonames:featureCode geonames:A.PCLI ;
+        geonames:name ?name .
+        FILTER (regex(?name, "ran", "i"))
+        }
+    }
+}
+
+Toutes les connaissances (avec un J dans leur label) de JeffDupond
+PREFIX sempic: <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX person: <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/>
+
+SELECT ?x ?know
+WHERE { 
+  ?know a sempic:Person;
+  rdfs:label ?label.
+  person:JeffDupond ?x ?know. 
+  
+  FILTER (regex(?label, "J", "i"))
+}
+
+Photo depic someone :
+PREFIX sempic: <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX person: <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/>
+
+SELECT ?x
+WHERE { 
+    <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/2> sempic:depicts ?x.
+  ?x a sempic:Person;
+   rdfs:label ?label;
+  FILTER (regex(?label, "Paul", "i"))
+}
+
+Poto de qq'un, par qq'un, à une année donnée :
+PREFIX sempic: <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX person: <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?photo ?x ?y
+WHERE { 
+    ?photo a sempic:Photo.
+    
+    ?photo sempic:depicts ?x.
+    ?x rdfs:label ?xLabel.
+    FILTER (regex(?xLabel, "marco", "i"))
+    
+    ?photo sempic:takenBy ?y.
+    ?y rdfs:label ?yLabel.
+    FILTER (regex(?yLabel, "", "i"))
+  
+}
+
+
+    /*?photo sempic:takenOn ?date.
+    ?date xsd:dateTime ?date.
+    FILTER (year (?date) = 2019) */
+
+
+
+
+
+Photo en France
+PREFIX geonames: <http://www.geonames.org/ontology#>
+PREFIX sempic: <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#>
+
+SELECT DISTINCT ?photo ?name
+
+WHERE {
+  ?photo a sempic:Photo;
+  geonames:locatedIn ?location.
+	SERVICE <http://linkedgeodata.org/sparql>
+	
+{
+		SELECT DISTINCT ?location
+		WHERE {
+		?location geonames:featureCode geonames:A.PCLI ;
+		geonames:name ?name .
+		FILTER (regex(?name, "france", "i"))
+		}
+	}
+}
+ORDER BY ?name
+
+
+
