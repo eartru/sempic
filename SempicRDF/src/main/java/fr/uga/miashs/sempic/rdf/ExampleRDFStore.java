@@ -22,28 +22,32 @@ public class ExampleRDFStore {
     public static void main(String[] args) {
         RDFStore s = new RDFStore();
         
-        List<Resource> list = new ArrayList<>();
-        list = s.getPersons("Dup");
-        
-        list.forEach(listItem -> {
-            System.out.println(listItem.getProperty(RDFS.label).getObject().toString());
-        });
-        
-        
+//        List<Resource> list = s.getCountry("fra");
+//        
+//        list.forEach(listItem -> {
+//            System.out.println(listItem.getProperty(RDFS.label).getObject().toString());
+//        });
+             
 //        Resource pRes = s.createPhoto(2, 1, 1);
 //
-//        Model m = ModelFactory.createDefaultModel();
-//
-//        String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond"; 
-//          
-//        Resource someone = m.createResource(personURI);
-//        someone.addLiteral(RDFS.label, "Jeff Dupond");
-//        someone.addProperty(RDF.type, SempicOnto.Person);
-//        m.add(pRes, SempicOnto.depicts, someone);
-//        
-//        m.write(System.out, "turtle");
-//            
-//        s.saveModel(m);
+        Model m = ModelFactory.createDefaultModel();
+
+        String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise"; 
+          
+        Resource someone = m.createResource(personURI);
+        someone.addLiteral(RDFS.label, "Chaise");
+        someone.addProperty(RDF.type, SempicOnto.Object);
+        
+        String aURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Chevre"; 
+          
+        Resource truc = m.createResource(aURI);
+        truc.addLiteral(RDFS.label, "Chevre");
+        truc.addProperty(RDF.type, SempicOnto.Animal);
+        //m.add(pRes, SempicOnto.depicts, someone);
+        
+        m.write(System.out, "turtle");
+            
+        s.saveModel(m);
 
 //        Resource pRes = s.createPhoto(1, 1, 1);
 //

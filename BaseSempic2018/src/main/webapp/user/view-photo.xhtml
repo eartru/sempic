@@ -17,34 +17,107 @@
             <h1><h:outputText value="#{viewPhoto.current}"/></h1>
             <h:graphicImage value="/webapi/picture/#{viewPhoto.current.path}?width=200"/>
             <h:form>
-                <h:panelGrid columns = "3">
-                    <!--will contains value for title ontology-->
-                    <label for="title">Titre</label>
-                    <h:inputText id="title" value="title"/>
-                    <h:message for="title"/>
-                    
-                    <!--will contains value for a ontology-->
-                    <pf:outputLabel value="Who is in the picture ?" for="persons" />
-                    <pf:autoComplete id="persons" multiple="true" value="#{viewPhoto.perso}" completeMethod="#{viewPhoto.completePerson}" 
-                                     var="person" itemLabel="#{person.label}" itemValue="#{person}" forceSelection="true">
-                         <pf:column>
-                            <h:outputText value="#{person.label}" />
+                <h:panelGrid>
+                    <pf:row>
+                        <pf:column>
+                            <pf:outputLabel value="Titre" for="title" />
+                            <pf:inputText id="title" value="title"/>
+                            <h:message for="title"/>
                         </pf:column>
-                    </pf:autoComplete>
-                    <h:message for="persons"/> 
+                    </pf:row>
                     
-                    <!--will contains value for a ontology-->
-                    <label for="what">What is in the picture ?</label>
-                    <h:inputText id="what" value="what"/>
-                    <h:message for="what"/>
-                    <!--will contains value for a ontology-->
-                    <label for="where">Where was the picture taken ?</label>
-                    <h:inputText id="where"  value="where"/>
-                    <h:message for="where"/>
-                    <!--will contains value for a ontology-->
-                    <label for="when">When was the picture taken ?</label>
-                    <h:inputText id="when"  value="when"/>
-                    <h:message for="when"/>
+                    <pf:row>
+                        <pf:column>
+                        <pf:outputLabel value="Qui est présent sur la photo ?" for="persons" />
+                        <pf:autoComplete id="persons" multiple="true" value="#{viewPhoto.perso}" completeMethod="#{viewPhoto.completePerson}" 
+                                         var="person" itemLabel="#{person.firstname} #{person.lastname}" itemValue="#{person}" forceSelection="true">
+                             <pf:column>
+                                <h:outputText value="#{person.firstname} #{person.lastname}" />
+                            </pf:column>
+                        </pf:autoComplete>
+                        <h:message for="persons"/> 
+                        </pf:column>
+                    </pf:row>
+                    
+                    <pf:row>
+                        <pf:column>
+                            <pf:outputLabel value="Qu'est ce qu'il y a dans la photo ?" for="object" />
+                            <pf:autoComplete id="object" multiple="true" value="#{viewPhoto.object}" completeMethod="#{viewPhoto.completeObject}" 
+                                             var="object" itemLabel="#{object.label}" itemValue="#{object}" forceSelection="true">
+                                 <pf:column>
+                                    <h:outputText value="#{object.label}" />
+                                </pf:column>
+                            </pf:autoComplete>
+                            <h:message for="object"/>
+                        </pf:column>
+                    </pf:row>    
+                        
+                    <pf:row>
+                        <pf:column>
+                            <pf:outputLabel value="Où a été prise la photo ?" for="country" />
+                        </pf:column>
+                    </pf:row> 
+                    <pf:row>
+                        <pf:column>
+                            <pf:outputLabel value="Pays" for="country" />
+                            <pf:autoComplete id="country" value="#{viewPhoto.country}" completeMethod="#{viewPhoto.completeCountry}" 
+                                             var="country" itemLabel="#{country.label}" itemValue="#{country}" forceSelection="true">
+                                 <pf:column>
+                                    <h:outputText value="#{country.label}" />
+                                </pf:column>
+                            </pf:autoComplete>
+                            <h:message for="country"/> 
+                        </pf:column>
+                        <pf:column>
+                            <pf:outputLabel value="Région" for="region" />
+                            <pf:autoComplete id="region" value="#{viewPhoto.region}" completeMethod="#{viewPhoto.completeRegion}" 
+                                             var="region" itemLabel="#{region.label}" itemValue="#{region}" forceSelection="true">
+                                 <pf:column>
+                                    <h:outputText value="#{region.label}" />
+                                </pf:column>
+                            </pf:autoComplete>
+                        </pf:column>
+                        <pf:column>
+                            <pf:outputLabel value="Département" for="department" />
+                            <pf:autoComplete id="department" value="#{viewPhoto.department}" completeMethod="#{viewPhoto.completeDepartment}" 
+                                             var="department" itemLabel="#{department.label}" itemValue="#{department}" forceSelection="true">
+                                 <pf:column>
+                                    <h:outputText value="#{department.label}" />
+                                </pf:column>
+                            </pf:autoComplete>
+                        </pf:column>
+                        <pf:column>
+                            <pf:outputLabel value="Ville" for="city" />
+                            <pf:autoComplete id="city" value="#{viewPhoto.city}" completeMethod="#{viewPhoto.completeCity}" 
+                                             var="city" itemLabel="#{city.label}" itemValue="#{city}" forceSelection="true">
+                                 <pf:column>
+                                    <h:outputText value="#{city.label}" />
+                                </pf:column>
+                            </pf:autoComplete>
+                        </pf:column>
+                    </pf:row> 
+                    
+                    <pf:row>
+                        <pf:column>
+                            <pf:outputLabel value="Quand a été prise la photo ?" for="event" />
+                        </pf:column>
+                    </pf:row>
+                    <pf:row>
+                        <pf:column>
+                            <pf:outputLabel value="Evénement" for="event" />
+                            <pf:autoComplete id="event" value="#{viewPhoto.event}" completeMethod="#{viewPhoto.completeEvent}" 
+                                             var="event" itemLabel="#{event.label}" itemValue="#{event}" forceSelection="true">
+                                 <pf:column>
+                                    <h:outputText value="#{event.label}" />
+                                </pf:column>
+                            </pf:autoComplete>
+                        </pf:column>
+                        <pf:column>
+                            <pf:outputLabel value="Date" for="date" />
+                            <pf:calendar id="date" value="#{viewPhoto.date}" showOn="button" />
+                            <h:message for="date"/>
+                        </pf:column>
+                    </pf:row> 
                 </h:panelGrid>
                 <h:commandButton value="Update" action="#{viewPhoto.annotate()}"> 
                     <f:param name="photoId" value="#{viewPhoto.current.id}" />

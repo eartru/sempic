@@ -4,6 +4,7 @@
  */
 package fr.uga.miashs.sempic.rdf;
 
+import fr.uga.miashs.sempic.model.rdf.GeoNames;
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -206,35 +207,105 @@ public class RDFStore {
                 + "?p a <" + SempicOnto.Person + "> ; <" + RDFS.label +"> ?label. FILTER (regex(?label, \"" + q +"\", \"i\"))}");
         
         return m.listSubjects().toList();
-        
-        //String queryString = "SELECT ?p ?label WHERE { ?p a <" + SempicOnto.Person + "> ; <" + RDFS.label +"> ?label. FILTER (regex(?label, \"" + q +"\", \"i\"))}";
-//        String queryString = "SELECT ?s ?p ?o WHERE { ?s ?p ?o }";
-//        Query query = QueryFactory.create(queryString) ;
-//        System.out.println(queryString);
-//        QueryExecution qexec = QueryExecutionFactory.create(queryString, model) ;
-//        try {
-//          ResultSet results = qexec.execSelect() ;
-//          for ( ; results.hasNext() ; )
-//          {
-//            QuerySolution soln = results.nextSolution() ;
-//            Literal l = soln.getLiteral("label") ;
-// 
-//            list.add(l.getString());
-//          }
-//        } finally { qexec.close() ; }
     }
     
-    public Resource createPerson(long personId) {
-        // create an empty RDF graph
-        Model m = ModelFactory.createDefaultModel();
-        // create an instance of Photo in Model m
-        Resource pRes = m.createResource(Namespaces.getPersonUri(personId));
-        pRes.addProperty(RDF.type, SempicOnto.Person);
+    public Resource createPerson(String firstname, String lastname, String gender) {
 
-        pRes.addLiteral(RDFS.label, "Mémé:"+personId);
+        Model m = ModelFactory.createDefaultModel(); 
+        String personURI = Namespaces.getPersonUri(firstname, lastname);
+        
+        Resource someone = m.createResource(personURI);
+        someone.addLiteral(RDFS.label, firstname + " " + lastname);
+        if (gender.equals("femme")) {
+            someone.addProperty(RDF.type, SempicOnto.Female);
+        } 
+        if (gender.equals("homme")) {
+            someone.addProperty(RDF.type, SempicOnto.Male);
+        }
+        someone.addProperty(RDF.type, SempicOnto.Person);
+
+        m.write(System.out, "turtle");
 
         saveModel(m);
 
-        return pRes;
+        return someone;
+    }
+    
+    public List<Resource> getCountry(String q) {
+        
+        Model m = cnx.queryConstruct("CONSTRUCT { ?uri <"+ RDFS.label +"> ?name } "
+        + " WHERE { SERVICE <http://linkedgeodata.org/sparql> " 
+	+ " { SELECT DISTINCT ?uri ?name "
+	+ "	WHERE { "
+	+ "	?uri <http://www.geonames.org/ontology#featureCode> <"+ GeoNames.A_PCLI +"> ; "
+	+ "	<http://www.geonames.org/ontology#name> ?name . "
+	+ "	FILTER (regex(?name, \"" + q +"\", \"i\")) } } } ");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getRegion(String q, String country) {
+        
+        Model m = cnx.queryConstruct("CONSTRUCT { ?uri <"+ RDFS.label +"> ?name } "
+        + " WHERE { SERVICE <http://linkedgeodata.org/sparql> " 
+	+ " { SELECT DISTINCT ?uri ?name "
+	+ "	WHERE { "
+	+ "	?uri <http://www.geonames.org/ontology#featureCode> <"+ GeoNames.A_ADM1 +"> ; "
+	+ "	<http://www.geonames.org/ontology#name> ?name ; "
+        + "	<http://www.geonames.org/ontology#parentFeature> <"+ country +">  . "
+	+ "	FILTER (regex(?name, \"" + q +"\", \"i\")) } } } ");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getDepartment(String q, String region) {
+        
+        Model m = cnx.queryConstruct("CONSTRUCT { ?uri <"+ RDFS.label +"> ?name } "
+        + " WHERE { SERVICE <http://linkedgeodata.org/sparql> " 
+	+ " { SELECT DISTINCT ?uri ?name "
+	+ "	WHERE { "
+	+ "	?uri <http://www.geonames.org/ontology#featureCode> <"+ GeoNames.A_ADM2 +"> ; "
+	+ "	<http://www.geonames.org/ontology#name> ?name ; "
+        + "	<http://www.geonames.org/ontology#parentFeature> <"+ region +">  . "
+	+ "	FILTER (regex(?name, \"" + q +"\", \"i\")) } } } ");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getCity(String q, String department) {
+        
+        Model m = cnx.queryConstruct("CONSTRUCT { ?uri <"+ RDFS.label +"> ?name } "
+        + " WHERE { SERVICE <http://linkedgeodata.org/sparql> " 
+	+ " { SELECT DISTINCT ?uri ?name "
+	+ "	WHERE { "
+	+ "	?uri <http://www.geonames.org/ontology#featureCode> <"+ GeoNames.P_PPLA2 +"> ; "
+	+ "	<http://www.geonames.org/ontology#name> ?name ; "
+        + "	<http://www.geonames.org/ontology#parentADM2> <"+ department +">  . "
+	+ "	FILTER (regex(?name, \"" + q +"\", \"i\")) } } } ");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getObject(String q) {
+        
+        Model m = cnx.queryConstruct("CONSTRUCT { ?p <" + RDFS.label + "> ?label "
+                + "} WHERE {"
+                + "?p a ?type ; "
+                + "<" + RDFS.label +"> ?label. "
+                + "FILTER ( ?type IN ( <"+SempicOnto.Object+">, <" +SempicOnto.Animal+">) && regex(?label, \"" + q +"\", \"i\"))}");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getEvent(String q) {
+        
+        Model m = cnx.queryConstruct("CONSTRUCT { ?p <" + RDFS.label + "> ?name "
+                + "} WHERE {"
+                + "?p a <"+SempicOnto.Event +"> ; "
+                + "<" + RDFS.label +"> ?label. "
+                + "FILTER (regex(?label, \"" + q +"\", \"i\"))"
+                        + "BIND (STR(?label)  AS ?name) }");
+        
+        return m.listSubjects().toList();
     }
 }
