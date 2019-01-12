@@ -4,6 +4,7 @@
  */
 package fr.uga.miashs.sempic.rdf;
 
+import fr.uga.miashs.sempic.model.rdf.Dbpedia;
 import fr.uga.miashs.sempic.model.rdf.GeoNames;
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
 import java.util.ArrayList;
@@ -359,12 +360,12 @@ public class RDFStore {
     }
     
     public List<Resource> getFamilyPhotos(String self){
-        Model m = cnx.queryConstruct("CONSTRUCT { ?photo rdfs:label ?label . }\n" +
-                " WHERE   { ?photo a "+FOAF.Image +" ; \n" +
-                RDFS.label +" ?label ; \n" +
-                SempicOnto.depicts +" ?someone . \n" +
-                "   <"+ Namespaces.personNS + self +"> ?lien ?someone. \n" +
-                "  FILTER (?lien IN (dbo:sibling, dbo:parent, dbo:child)) }");
+        Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+RDFS.label+"> ?label . }\n" +
+                " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+RDFS.label +"> ?label ; \n" +
+                "<"+SempicOnto.depicts +"> ?someone . \n" +
+                "<"+ Namespaces.personNS + self +"> ?lien ?someone. \n" +
+                "  FILTER (?lien IN (<"+Dbpedia.sibling+">, <"+Dbpedia.parent+">, <"+Dbpedia.child+">)) }");
         
         return m.listSubjects().toList();
     }

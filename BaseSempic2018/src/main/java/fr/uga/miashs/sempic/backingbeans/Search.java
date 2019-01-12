@@ -49,11 +49,10 @@ public class Search implements Serializable{
         boolean partiallyFailed = false;
         List<Resource> list = new ArrayList<>();
         //String self = current.getFirstname()+current.getLastname();
-        RDFStore s = new RDFStore();
         String self = "JeffDupond";
         try {
             if (requete.equals("1"))
-                list = s.getFamilyPhotos(self);
+                list = rDFStore.getFamilyPhotos(self);
             if (requete.equals("2"))
                 list = rDFStore.getFriendPhotos(current.getId());
             if (requete.equals("3"))
