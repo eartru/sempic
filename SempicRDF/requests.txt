@@ -181,4 +181,19 @@ WHERE   { ?x sempic:takenOn ?e ;
              rdfs:label ?label .
       }  
 
+Photo with family :
+CONSTRUCT    {  ?photo rdfs:label ?label . }
+WHERE   { ?photo a foaf:Image ; 
+  rdfs:label ?label ;
+  sempic:depicts ?someone .
+   <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond> ?lien ?someone.      
+  FILTER (?lien IN (dbo:sibling, dbo:parent, dbo:child))
+           }  
 
+Photo with path :
+ CONSTRUCT    {  ?photo sempic:albumId ?z ;
+	sempic:path ?p .}
+WHERE   { ?photo a sempic:Photo;
+        sempic:albumId ?z.
+  OPTIONAL {?photo sempic:path ?p}
+           }  

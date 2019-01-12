@@ -32,6 +32,7 @@ import org.apache.jena.rdfconnection.RDFConnectionFactory;
 import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.modify.request.QuadAcc;
 import org.apache.jena.sparql.modify.request.UpdateDeleteWhere;
+import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.update.Update;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
@@ -157,16 +158,24 @@ public class RDFStore {
         return res;
     }
 
-    
+    /**
+     *
+     * @param photoId
+     * @param albumId
+     * @param ownerId
+     * @param path
+     * @return
+     */
     public Resource createPhoto(long photoId, long albumId, long ownerId) {
         // create an empty RDF graph
         Model m = ModelFactory.createDefaultModel();
         // create an instance of Photo in Model m
         Resource pRes = m.createResource(Namespaces.getPhotoUri(photoId));
-        pRes.addProperty(RDF.type, SempicOnto.Photo);
+        pRes.addProperty(RDF.type, FOAF.Image);
 
         pRes.addLiteral(SempicOnto.albumId, albumId);
         pRes.addLiteral(SempicOnto.ownerId, ownerId);
+        pRes.addLiteral(SempicOnto.path, albumId+"/"+photoId);
 
         saveModel(m);
 
@@ -253,10 +262,10 @@ public class RDFStore {
         Resource evt = m.getResource(event);
    
         perso.forEach(p -> {
-            m.add(photo, SempicOnto.depicts, p);
+            m.add(photo, FOAF.depicts, p);
         });
         obj.forEach(o -> {
-            m.add(photo, SempicOnto.depicts, o);
+            m.add(photo, FOAF.depicts, o);
         });
         m.add(photo, SempicOnto.takenIn, ctry);
         //m.add(photo, SempicOnto.takenIn, rgn);
@@ -345,6 +354,48 @@ public class RDFStore {
                 + "<" + RDFS.label +"> ?label. "
                 + "FILTER (regex(?label, \"" + q +"\", \"i\"))"
                         + "BIND (STR(?label)  AS ?name) }");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getFamilyPhotos(String self){
+        Model m = cnx.queryConstruct("CONSTRUCT { ?photo rdfs:label ?label . }\n" +
+                " WHERE   { ?photo a "+FOAF.Image +" ; \n" +
+                RDFS.label +" ?label ; \n" +
+                SempicOnto.depicts +" ?someone . \n" +
+                "   <"+ Namespaces.personNS + self +"> ?lien ?someone. \n" +
+                "  FILTER (?lien IN (dbo:sibling, dbo:parent, dbo:child)) }");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getFriendPhotos(long self){
+        Model m = cnx.queryConstruct("CONSTRUCT {  }");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getPhotosPeople(long self){
+        Model m = cnx.queryConstruct("CONSTRUCT {  }");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getPhotosNoPeople(long self){
+        Model m = cnx.queryConstruct("CONSTRUCT { }");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getSelfies(long self){
+        Model m = cnx.queryConstruct("CONSTRUCT {  }");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getAdvancedSearchPhotos(long self, String label, List<String> persons, List<String> objects, 
+            List<String> countries, List<String> events){
+        Model m = cnx.queryConstruct("CONSTRUCT { }");
         
         return m.listSubjects().toList();
     }
