@@ -81,6 +81,7 @@
             <groupId>fr.uga.miashs.sempic</groupId>
             <artifactId>SempicRDF</artifactId>
             <version>1.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
