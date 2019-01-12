@@ -5,24 +5,16 @@
  */
 package fr.uga.miashs.sempic.backingbeans;
 
-import fr.uga.miashs.sempic.SempicModelException;
-import fr.uga.miashs.sempic.entities.Album;
 import fr.uga.miashs.sempic.entities.Photo;
-import fr.uga.miashs.sempic.entities.SempicGroup;
 import fr.uga.miashs.sempic.entities.SempicUser;
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
 import fr.uga.miashs.sempic.qualifiers.SelectedUser;
 import fr.uga.miashs.sempic.rdf.RDFStore;
-import fr.uga.miashs.sempic.services.AlbumFacade;
-import fr.uga.miashs.sempic.services.GroupFacade;
-import fr.uga.miashs.sempic.services.SempicUserFacade;
+import fr.uga.miashs.sempic.services.PhotoFacade;
 import java.io.Serializable;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -46,14 +38,35 @@ public class Search implements Serializable{
     @SelectedUser
     private SempicUser current;
     
+    @Inject
+    private PhotoFacade service;
+    
+    private List<String> photos;
+    
     private String requete;
     
     public String searchS() {
-         boolean partiallyFailed = false;
-
+        boolean partiallyFailed = false;
+        List<Resource> list = new ArrayList<>();
+        //String self = current.getFirstname()+current.getLastname();
+        RDFStore s = new RDFStore();
+        String self = "JeffDupond";
         try {
+            if (requete.equals("1"))
+                list = s.getFamilyPhotos(self);
+            if (requete.equals("2"))
+                list = rDFStore.getFriendPhotos(current.getId());
+            if (requete.equals("3"))
+                list = rDFStore.getPhotosPeople(current.getId());
+            if (requete.equals("4"))
+                list = rDFStore.getPhotosNoPeople(current.getId());
+            if (requete.equals("5"))
+                list = rDFStore.getSelfies(current.getId());
             
-            
+            //photos = list
+            list.forEach(p -> {
+                photos.add(p.getProperty(SempicOnto.path).toString());
+            });
         } catch (Exception e) {
             partiallyFailed = true;
         }
@@ -69,17 +82,15 @@ public class Search implements Serializable{
         boolean partiallyFailed = false;
 
         try {
-            Resource pRes = rDFStore.createPhoto(1, 1, 1);
-
-            Model m = ModelFactory.createDefaultModel();
-
-            Resource someone = m.createResource(SempicOnto.Person);
-            someone.addLiteral(RDFS.label, "Georges");
-            m.add(pRes, SempicOnto.depicts, someone);
+//            Model m = ModelFactory.createDefaultModel();
+//
+//            Resource someone = m.createResource(SempicOnto.Person);
+//            someone.addLiteral(RDFS.label, "Georges");
+//            m.add(pRes, SempicOnto.depicts, someone);
 
             //m.write(System.out, "turtle");
 
-            rDFStore.saveModel(m);
+//            rDFStore.saveModel(m);
         } catch (Exception e) {
             partiallyFailed = true;
         }
@@ -91,13 +102,12 @@ public class Search implements Serializable{
         }
     }
 
-    public List<Photo> getPhotos() {
-        try {
-            
-        } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cannot retrieve the photos",ex.getMessage()));
-        }
-        return Collections.emptyList();
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
     }
     
     public SempicUser getCurrent() {
