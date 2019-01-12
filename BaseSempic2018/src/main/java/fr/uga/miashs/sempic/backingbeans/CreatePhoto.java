@@ -11,6 +11,7 @@ import fr.uga.miashs.sempic.entities.Album;
 import fr.uga.miashs.sempic.entities.Photo;
 import fr.uga.miashs.sempic.qualifiers.SelectedUser;
 import fr.uga.miashs.sempic.entities.SempicUser;
+import fr.uga.miashs.sempic.rdf.RDFStore;
 import fr.uga.miashs.sempic.services.AlbumFacade;
 import fr.uga.miashs.sempic.services.PhotoFacade;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -39,6 +41,8 @@ public class CreatePhoto implements Serializable {
     @SelectedAlbum
     private Album selectedAlbum;
     
+    @EJB
+    private RDFStore rDFStore;
     
     private List<Part> files;
 
@@ -75,6 +79,7 @@ public class CreatePhoto implements Serializable {
             current.setAlbum(selectedAlbum);
             try {
                 service.create(current,p.getInputStream());
+                rDFStore.createPhoto(current.getId(), current.getAlbum().getId(), current.getAlbum().getOwner().getId());
             } catch (SempicModelException ex) {
                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
                partiallyFailed=true; 
