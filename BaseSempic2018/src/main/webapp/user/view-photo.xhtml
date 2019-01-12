@@ -21,7 +21,7 @@
                     <pf:row>
                         <pf:column>
                             <pf:outputLabel value="Titre" for="title" />
-                            <pf:inputText id="title" value="title"/>
+                            <pf:inputText id="title" value="#{viewPhoto.title}"/>
                             <h:message for="title"/>
                         </pf:column>
                     </pf:row>
@@ -29,10 +29,10 @@
                     <pf:row>
                         <pf:column>
                         <pf:outputLabel value="Qui est présent sur la photo ?" for="persons" />
-                        <pf:autoComplete id="persons" multiple="true" value="#{viewPhoto.perso}" completeMethod="#{viewPhoto.completePerson}" 
-                                         var="person" itemLabel="#{person.firstname} #{person.lastname}" itemValue="#{person}" forceSelection="true">
+                        <pf:autoComplete id="persons" multiple="true" value="#{viewPhoto.persons}" completeMethod="#{viewPhoto.completePerson}" 
+                                         var="person" itemLabel="#{person.getProperty(RDFS.label).getObject().toString()}" itemValue="#{person}" forceSelection="true">
                              <pf:column>
-                                <h:outputText value="#{person.firstname} #{person.lastname}" />
+                                <h:outputText value="#{person.getProperty(RDFS.label).getObject().toString()}" />
                             </pf:column>
                         </pf:autoComplete>
                         <h:message for="persons"/> 
@@ -42,10 +42,10 @@
                     <pf:row>
                         <pf:column>
                             <pf:outputLabel value="Qu'est ce qu'il y a dans la photo ?" for="object" />
-                            <pf:autoComplete id="object" multiple="true" value="#{viewPhoto.object}" completeMethod="#{viewPhoto.completeObject}" 
-                                             var="object" itemLabel="#{object.label}" itemValue="#{object}" forceSelection="true">
+                            <pf:autoComplete id="object" multiple="true" value="#{viewPhoto.objects}" completeMethod="#{viewPhoto.completeObject}" 
+                                             var="object" itemLabel="#{object.getProperty(RDFS.label).getObject().toString()}" itemValue="#{object}" forceSelection="true">
                                  <pf:column>
-                                    <h:outputText value="#{object.label}" />
+                                    <h:outputText value="#{object.getProperty(RDFS.label).getObject().toString()}" />
                                 </pf:column>
                             </pf:autoComplete>
                             <h:message for="object"/>
@@ -61,9 +61,9 @@
                         <pf:column>
                             <pf:outputLabel value="Pays" for="country" />
                             <pf:autoComplete id="country" value="#{viewPhoto.country}" completeMethod="#{viewPhoto.completeCountry}" 
-                                             var="country" itemLabel="#{country.label}" itemValue="#{country}" forceSelection="true">
+                                             var="country" itemLabel="#{country.getProperty(RDFS.label).getObject().toString()}" itemValue="#{country}" forceSelection="true">
                                  <pf:column>
-                                    <h:outputText value="#{country.label}" />
+                                    <h:outputText value="#{country.getProperty(RDFS.label).getObject().toString()}" />
                                 </pf:column>
                             </pf:autoComplete>
                             <h:message for="country"/> 
@@ -106,11 +106,12 @@
                         <pf:column>
                             <pf:outputLabel value="Evénement" for="event" />
                             <pf:autoComplete id="event" value="#{viewPhoto.event}" completeMethod="#{viewPhoto.completeEvent}" 
-                                             var="event" itemLabel="#{event.label}" itemValue="#{event}" forceSelection="true">
+                                             var="event" itemLabel="#{event.getProperty(RDFS.label).getObject().toString()}" itemValue="#{event}" forceSelection="true">
                                  <pf:column>
-                                    <h:outputText value="#{event.label}" />
+                                    <h:outputText value="#{event.getProperty(RDFS.label).getObject().toString()}" />
                                 </pf:column>
                             </pf:autoComplete>
+                            <h:message for="event"/>
                         </pf:column>
                         <pf:column>
                             <pf:outputLabel value="Date" for="date" />

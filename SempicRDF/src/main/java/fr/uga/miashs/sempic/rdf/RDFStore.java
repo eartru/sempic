@@ -7,6 +7,7 @@ package fr.uga.miashs.sempic.rdf;
 import fr.uga.miashs.sempic.model.rdf.GeoNames;
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -229,6 +230,45 @@ public class RDFStore {
         saveModel(m);
 
         return someone;
+    }
+    
+    public void annotatePhoto(long id, String label, List<String> persons, List<String> objects, String country, String event, Date date) {
+        
+        Model m = ModelFactory.createDefaultModel();
+
+        Resource photo = m.getResource(Namespaces.getPhotoUri(id));
+        
+        List<Resource> perso = new ArrayList();
+        persons.forEach(p -> {
+            perso.add(m.getResource(p));
+        });
+        List<Resource> obj = new ArrayList();
+        objects.forEach(o -> {
+            obj.add(m.getResource(o));
+        });
+        Resource ctry = m.getResource(country);
+       // Resource rgn = m.getResource(region);
+       // Resource dpt = m.getResource(department);
+       // Resource cty = m.getResource(city);
+        Resource evt = m.getResource(event);
+   
+        perso.forEach(p -> {
+            m.add(photo, SempicOnto.depicts, p);
+        });
+        obj.forEach(o -> {
+            m.add(photo, SempicOnto.depicts, o);
+        });
+        m.add(photo, SempicOnto.takenIn, ctry);
+        //m.add(photo, SempicOnto.takenIn, rgn);
+        //m.add(photo, SempicOnto.takenIn, dpt);
+        //m.add(photo, SempicOnto.takenIn, cty);
+        m.add(photo, SempicOnto.takenOn, evt);
+        m.add(photo, SempicOnto.takenOn, date.toString());
+        m.add(photo, RDFS.label, label);
+
+        m.write(System.out, "turtle");
+
+        saveModel(m);
     }
     
     public List<Resource> getCountry(String q) {

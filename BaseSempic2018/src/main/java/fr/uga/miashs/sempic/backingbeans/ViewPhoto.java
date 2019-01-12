@@ -5,7 +5,6 @@
  */
 package fr.uga.miashs.sempic.backingbeans;
 
-import fr.uga.miashs.sempic.entities.Person;
 import fr.uga.miashs.sempic.entities.Photo;
 import fr.uga.miashs.sempic.entities.GenericSemantic;
 import fr.uga.miashs.sempic.qualifiers.SelectedPhoto;
@@ -18,6 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -43,34 +43,23 @@ public class ViewPhoto implements Serializable {
     private PhotoFacade service;
     
     private String title;
-    private Person perso; 
-    private GenericSemantic country;
+    private String person;
+    private List<String> persons;
+    private String country;
     private GenericSemantic region;
     private GenericSemantic department;
     private GenericSemantic city;
-    private GenericSemantic object;
-    private GenericSemantic event;
+    private List<String> objects;
+    private String object;
+    private String event;
     private Date date;
     
     public String annotate() {
-        RDFStore s = new RDFStore();
         boolean partiallyFailed = false;
-
-        try {
-            Resource pRes = s.createPhoto(current.getId(), current.getAlbum().getId(), current.getAlbum().getOwner().getId());
-
-            Model m = ModelFactory.createDefaultModel();
             
-            //String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/"; 
-          
-//            Resource someone = m.createResource(personURI);
-//            someone.addLiteral(RDFS.label, "Jeff Dupond");
-//            someone.addProperty(RDF.type, SempicOnto.Person);
-//            m.add(pRes, SempicOnto.depicts, someone);
-
-            m.write(System.out, "turtle");
-
-            s.saveModel(m);
+        try {
+            // (current.getId(), current.getAlbum().getId(), current.getAlbum().getOwner().getId());
+            rDFStore.annotatePhoto(current.getId(), title, persons, objects, country, event, date);
 
         } catch (Exception e) {
             partiallyFailed = true;
@@ -83,39 +72,25 @@ public class ViewPhoto implements Serializable {
         }
     }
     
-    public List<Person> completePerson(String query) {
-        List<Person> personList = new ArrayList<>();
-        
+    public List<Resource> completePerson(String query) {     
         List<Resource> list = rDFStore.getPersons(query);
-
-        list.forEach(c -> {    
-            String[] labelSplit = c.getProperty(RDFS.label).getObject().toString().split("\\s+");
-            perso = new Person(c.getURI()
-                    , labelSplit[0]
-                    , labelSplit[1]);
-            
-            personList.add(perso);
-        });        
-        return personList;
+    
+        return list;
     }
     
-    public List<GenericSemantic> completeCountry(String query) {
-        List<GenericSemantic> countryList = new ArrayList<>();
-        
+    public List<Resource> completeCountry(String query) { 
         List<Resource> list = rDFStore.getCountry(query);
-
-        list.forEach(c -> {    
-            country = new GenericSemantic(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
-            
-            countryList.add(country);
-        });        
-        return countryList;
+   
+        return list;
     }
     
+    // La recherche de region, departement et ville fonctionne avec les objets générique
+    // Mais une erreur survient lorsque l'on essaie de récupérer le contenu des Input ...
+    // A l'inverse on peut récupérer ce qui vient des Input avec String mais la recherche ne marche plus
     public List<GenericSemantic> completeRegion(String query) {
         List<GenericSemantic> regionList = new ArrayList<>();
         
-        List<Resource> list = rDFStore.getRegion(query, country.getUri());
+        List<Resource> list = rDFStore.getRegion(query, country);
 
         list.forEach(c -> {    
             region = new GenericSemantic(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
@@ -151,30 +126,16 @@ public class ViewPhoto implements Serializable {
         return cityList;
     }
     
-    public List<GenericSemantic> completeObject(String query) {
-        List<GenericSemantic> objectList = new ArrayList<>();
-        
+    public List<Resource> completeObject(String query) {
         List<Resource> list = rDFStore.getObject(query);
-
-        list.forEach(c -> {    
-            object = new GenericSemantic(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
-            
-            objectList.add(object);
-        });        
-        return objectList;
+        
+        return list;
     }
     
-    public List<GenericSemantic> completeEvent(String query) {
-        List<GenericSemantic> eventList = new ArrayList<>();
-        
+    public List<Resource> completeEvent(String query) {
         List<Resource> list = rDFStore.getEvent(query);
-
-        list.forEach(c -> {    
-            event = new GenericSemantic(c.getURI(), c.getProperty(RDFS.label).getObject().toString());
-            
-            eventList.add(event);
-        });        
-        return eventList;
+     
+        return list;
     }
 
     public String getTitle() {
@@ -192,20 +153,12 @@ public class ViewPhoto implements Serializable {
     public void setCurrent(Photo current) {
         this.current = current;
     }
-    
-    public Person getPerso() {
-        return perso;
-    }
-
-    public void setPerso(Person perso) {
-        this.perso = perso;
-    }
      
-    public GenericSemantic getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(GenericSemantic country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 
@@ -233,19 +186,19 @@ public class ViewPhoto implements Serializable {
         this.city = city;
     }
 
-    public GenericSemantic getObject() {
+    public String getObject() {
         return object;
     }
 
-    public void setObject(GenericSemantic object) {
+    public void setObject(String object) {
         this.object = object;
     }
 
-    public GenericSemantic getEvent() {
+    public String getEvent() {
         return event;
     }
 
-    public void setEvent(GenericSemantic event) {
+    public void setEvent(String event) {
         this.event = event;
     }
 
@@ -255,8 +208,31 @@ public class ViewPhoto implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }   
+
+    public String getPerson() {
+        return person;
     }
+
+    public void setPerson(String person) {
+        this.person = person;
+    }
+
+    public List<String> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(List<String> persons) {
+        this.persons = persons;
+    }
+
+    public List<String> getObjects() {
+        return objects;
+    }
+
+    public void setObjects(List<String> objects) {
+        this.objects = objects;
+    }
+  
     
-    
-       
 }
