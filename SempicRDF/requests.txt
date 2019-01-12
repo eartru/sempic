@@ -161,5 +161,24 @@ WHERE {
 }
 ORDER BY ?name
 
+Info d'une photo :
+PREFIX sempic: <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geonames: <http://www.geonames.org/ontology#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX sem: <http://semanticweb.cs.vu.nl/2009/11/sem/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace/>
+
+ CONSTRUCT    {  ?x rdfs:label ?label ; 
+    sempic:depicts ?p ;
+    sempic:takenOn ?e ;
+	sempic:takenIn ?place .} 
+WHERE   { ?x sempic:takenOn ?e ;
+             sempic:depicts ?p ;
+             sempic:takenIn ?place ;
+             rdfs:label ?label .
+      }  
 
 
