@@ -59,7 +59,6 @@ public class EditAccount implements Serializable {
     private ArrayList<SempicUser> listChild;
     private ArrayList<String> listFriend;
     private Person perso; 
-    List<Person> personList = new ArrayList<>();
     
     public SempicUser getUser() {
         return current;
@@ -112,14 +111,6 @@ public class EditAccount implements Serializable {
     public void setPerso(Person perso) {
         this.perso = perso;
     }
-
-    public List<Person> getPersonList() {
-        return personList;
-    }
-
-    public void setPersonList(List<Person> personList) {
-        this.personList = personList;
-    }
     
     
 
@@ -162,17 +153,10 @@ public class EditAccount implements Serializable {
         return "success";
     }
     
-    public List<Person> completePerson(String query) {       
+    public List<Resource> completePerson(String query) {       
         List<Resource> list = rDFStore.getPersons(query);
-
-        list.forEach(c -> {    
-            String[] labelSplit = c.getProperty(RDFS.label).getObject().toString().split("\\s+");
-            perso = new Person(c.getURI()
-                    , labelSplit[0]
-                    , labelSplit[1]);
-            
-            this.personList.add(perso);
-        });        
-        return this.personList;
+        System.out.println("personList:");
+        System.out.println(list);
+        return list;
     }
 }

@@ -358,7 +358,7 @@ public class RDFStore {
         System.out.println("test:");
         System.out.println(p);
         System.out.println(f);
-        //m.add(m.getResource(person), SempicOnto.isFriendOf, m.getResource(friend));
+        m.add(m.getResource(person), SempicOnto.isFriendOf, m.getResource(friend));
         
         m.write(System.out, "turtle");
 
