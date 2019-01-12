@@ -56,8 +56,8 @@
                     
                     <pf:outputLabel value="Amis" for="listFriend" />
                     <pf:autoComplete id="listFriend" multiple="true" value="#{editAccount.listFriend}" completeMethod="#{editAccount.completePerson}"
-                                     var="friend" itemLabel="#{friend.label}" itemValue="#{friend}"  forceSelection="true">
-                        <h:outputText value="#{friend.label}" />
+                                     var="friend" itemLabel="#{friend.firstname} #{friend.lastname}" itemValue="#{friend.firstname}#{friend.lastname}"  forceSelection="true">
+                        <h:outputText value="#{friend.firstname} #{friend.lastname}" />
                     </pf:autoComplete>
                     <h:message for="listFriend"/> 
                     

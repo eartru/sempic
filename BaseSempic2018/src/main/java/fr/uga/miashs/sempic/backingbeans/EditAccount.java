@@ -34,6 +34,7 @@ import fr.uga.miashs.sempic.entities.SempicUser;
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
 import fr.uga.miashs.sempic.qualifiers.SelectedUser;
 import fr.uga.miashs.sempic.rdf.RDFStore;
+import javax.ejb.EJB;
 import org.apache.jena.rdf.model.Property;
 
 /**
@@ -43,6 +44,8 @@ import org.apache.jena.rdf.model.Property;
 @Named
 @ViewScoped
 public class EditAccount implements Serializable {
+    @EJB
+    private RDFStore rDFStore;
     
     @Inject
     @SelectedUser
@@ -54,7 +57,9 @@ public class EditAccount implements Serializable {
     private String parent1;
     private String parent2;
     private ArrayList<SempicUser> listChild;
-    private ArrayList<SempicUser> listFriend;
+    private ArrayList<String> listFriend;
+    private Person perso; 
+    List<Person> personList = new ArrayList<>();
     
     public SempicUser getUser() {
         return current;
@@ -92,57 +97,64 @@ public class EditAccount implements Serializable {
         this.listChild = listChild;
     }
 
-    public ArrayList<SempicUser> getListFriend() {
+    public ArrayList<String> getListFriend() {
         return listFriend;
     }
 
-    public void setListFriend(ArrayList<SempicUser> listFriend) {
+    public void setListFriend(ArrayList<String> listFriend) {
         this.listFriend = listFriend;
     }
+
+    public Person getPerso() {
+        return perso;
+    }
+
+    public void setPerso(Person perso) {
+        this.perso = perso;
+    }
+
+    public List<Person> getPersonList() {
+        return personList;
+    }
+
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
+    }
+    
+    
 
     
     
     
     public String edit() {
-        
+        System.out.println("Edit methode");
         //System.out.println(current);
         //System.out.println(parent1);
         //System.out.println(parent2);
         //System.out.println(listChild);
         //System.out.println(listFriend);
         
+        
         if (listFriend != null){
             System.out.println(listFriend);
             RDFStore rdfStore = new RDFStore();
             boolean partiallyFailed = false;
-            
-            for (int i = 0; i < listFriend.size(); i++) {
+ 
                 try {
-                    SempicUser friend = listFriend.get(i);
-                    System.out.println("i = " +listFriend.get(i));
-                    List<Resource> list = new ArrayList<>();
-                    list = rdfStore.getPersons(friend.getLastname());
-                
-                    list.forEach(listItem -> {
-                        System.out.println(listItem.getProperty(RDFS.label).getObject().toString());
-                        String label = listItem.getProperty(RDFS.label).getObject().toString();
-                        
-                        if ((friend.getFirstname() + friend.getLastname()) == label){
-                            Model m = ModelFactory.createDefaultModel();
-                            String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/"+current.getFirstname() + current.getLastname();
-                            Resource currentRes = m.createResource(personURI);
-                            m.add(currentRes, SempicOnto.isFriendOf, friend.getFirstname() + friend.getLastname());
-                            rdfStore.saveModel(m);
-                        }
+                    listFriend.forEach(friend ->{
+                        System.out.println(friend);
+                        rDFStore.addFriend("JeanDupond", friend);
                     });
-
                 } catch (Exception e) {
-                    System.out.println(e);
+                    partiallyFailed = true;
                 }
-                
-                
-                System.out.println(listFriend); 
-            }
+                if (partiallyFailed) {
+                     return "failure";
+                }
+                else {
+                    return "success";
+                }
+            
         }else{
             System.out.println("nullllllllll !!");
         }
@@ -150,12 +162,17 @@ public class EditAccount implements Serializable {
         return "success";
     }
     
-    public List<Person> completePerson(String query) {
-        List<Person> personList = new ArrayList<>();
-        RDFStore s = new RDFStore();
-        
-        List<Resource> list = s.getPersons(query);
+    public List<Person> completePerson(String query) {       
+        List<Resource> list = rDFStore.getPersons(query);
 
-        return personList;
+        list.forEach(c -> {    
+            String[] labelSplit = c.getProperty(RDFS.label).getObject().toString().split("\\s+");
+            perso = new Person(c.getURI()
+                    , labelSplit[0]
+                    , labelSplit[1]);
+            
+            this.personList.add(perso);
+        });        
+        return this.personList;
     }
 }

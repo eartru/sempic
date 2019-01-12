@@ -58,6 +58,8 @@ public class ViewPhoto implements Serializable {
         boolean partiallyFailed = false;
             
         try {
+                        System.out.println("perso");
+            System.out.println(persons);
             // (current.getId(), current.getAlbum().getId(), current.getAlbum().getOwner().getId());
             rDFStore.annotatePhoto(current.getId(), title, persons, objects, country, event, date);
 

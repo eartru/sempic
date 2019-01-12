@@ -242,6 +242,7 @@ public class RDFStore {
         persons.forEach(p -> {
             perso.add(m.getResource(p));
         });
+        
         List<Resource> obj = new ArrayList();
         objects.forEach(o -> {
             obj.add(m.getResource(o));
@@ -347,5 +348,20 @@ public class RDFStore {
                         + "BIND (STR(?label)  AS ?name) }");
         
         return m.listSubjects().toList();
+    }
+    
+    public void addFriend(String person, String friend) {
+        
+        Model m = ModelFactory.createDefaultModel();
+        Resource p = m.getResource(person);
+        Resource f = m.getResource(friend);
+        System.out.println("test:");
+        System.out.println(p);
+        System.out.println(f);
+        //m.add(m.getResource(person), SempicOnto.isFriendOf, m.getResource(friend));
+        
+        m.write(System.out, "turtle");
+
+        saveModel(m);
     }
 }
