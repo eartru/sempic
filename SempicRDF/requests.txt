@@ -46,9 +46,7 @@ foaf:Image/1 sempic:photoId "154"
 
 
 
-
-SELECT distinct ?x ?y ?z WHERE {?x ?y ?z}
-
+Affiche toutes les personnes
 PREFIX sempic: <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
