@@ -9,6 +9,7 @@ import fr.uga.miashs.sempic.SempicModelException;
 import fr.uga.miashs.sempic.SempicModelUniqueException;
 import fr.uga.miashs.sempic.services.SempicUserFacade;
 import fr.uga.miashs.sempic.entities.SempicUser;
+import fr.uga.miashs.sempic.rdf.RDFStore;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -75,6 +76,8 @@ public class CreateUser implements Serializable {
         
         try {
             service.create(current);
+            RDFStore s = new RDFStore();
+            s.createPerson(current.getFirstname(), current.getLastname(), current.getGender());
         } 
         catch (SempicModelUniqueException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("un utilisateur avec cette adresse mail existe déjà"));
