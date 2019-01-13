@@ -4,8 +4,6 @@
  */
 package fr.uga.miashs.sempic.rdf;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.uga.miashs.sempic.model.rdf.Dbpedia;
 import fr.uga.miashs.sempic.model.rdf.GeoNames;
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
@@ -35,6 +33,7 @@ import org.apache.jena.rdfconnection.RDFConnectionFactory;
 import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.modify.request.QuadAcc;
 import org.apache.jena.sparql.modify.request.UpdateDeleteWhere;
+import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.update.Update;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
@@ -160,16 +159,24 @@ public class RDFStore {
         return res;
     }
 
-    
+    /**
+     *
+     * @param photoId
+     * @param albumId
+     * @param ownerId
+     * @param path
+     * @return
+     */
     public Resource createPhoto(long photoId, long albumId, long ownerId) {
         // create an empty RDF graph
         Model m = ModelFactory.createDefaultModel();
         // create an instance of Photo in Model m
         Resource pRes = m.createResource(Namespaces.getPhotoUri(photoId));
-        pRes.addProperty(RDF.type, SempicOnto.Photo);
+        pRes.addProperty(RDF.type, FOAF.Image);
 
         pRes.addLiteral(SempicOnto.albumId, albumId);
         pRes.addLiteral(SempicOnto.ownerId, ownerId);
+        pRes.addLiteral(SempicOnto.path, albumId+"/"+photoId);
 
         saveModel(m);
 
@@ -197,7 +204,7 @@ public class RDFStore {
                 + "OPTIONAL {"
                 + "<" + pUri + "> ?p1 ?o1 ."
                 + "?o1 <" + RDFS.label + "> ?o2 ."
-                + "FILTER (?p1 IN (<" + SempicOnto.depicts + ">,<" + SempicOnto.takenIn + ">,<" + SempicOnto.takenBy + ">)) "
+                + "FILTER (?p1 IN (<" + FOAF.depicts + ">,<" + SempicOnto.takenIn + ">,<" + SempicOnto.takenBy + ">)) "
                 + "}"
                 + "}";
         Model m = cnx.queryConstruct(s);
@@ -257,10 +264,10 @@ public class RDFStore {
         Resource evt = m.getResource(event);
    
         perso.forEach(p -> {
-            m.add(photo, SempicOnto.depicts, p);
+            m.add(photo, FOAF.depicts, p);
         });
         obj.forEach(o -> {
-            m.add(photo, SempicOnto.depicts, o);
+            m.add(photo, FOAF.depicts, o);
         });
         m.add(photo, SempicOnto.takenIn, ctry);
         //m.add(photo, SempicOnto.takenIn, rgn);
@@ -353,7 +360,66 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
-    public void addFriend(String personFirstName, String personLasteName, String friend) {
+    public List<Resource> getFamilyPhotos(String self){
+        Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
+                " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.path+"> ?path ; \n" +
+                "<"+FOAF.depicts +"> ?someone . \n" +
+                "<"+ Namespaces.personNS + self +"> ?lien ?someone. \n" +
+                "  FILTER (?lien IN (<"+Dbpedia.sibling+">, <"+Dbpedia.parent+">, <"+Dbpedia.child+">)) }");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getFriendPhotos(String self){
+          Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
+                " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.path+"> ?path ; \n" +
+                "<"+FOAF.depicts +"> ?someone . \n" +
+                "<"+ Namespaces.personNS + self +"> <"+SempicOnto.isFriendOf+"> ?someone. }");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getPhotosPeople(String self){
+         Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
+                " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.path+"> ?path ; \n" +
+                "<"+FOAF.depicts +"> ?someone . \n" +
+                "?someone a <"+Dbpedia.Person+"> . }");
+        
+        return m.listSubjects().toList();
+    }
+    
+    // Ne retourne pas le résultat voulu
+    public List<Resource> getPhotosNoPeople(String self){
+         Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
+                " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.path+"> ?path ; \n" +
+                "<"+FOAF.depicts +"> ?someone . \n" +
+                "FILTER not exists { ?someone a <"+Dbpedia.Person+"> . } }");
+        
+        return m.listSubjects().toList();
+    }
+    
+    // Ne retourne pas le résultat voulu
+    public List<Resource> getSelfies(String self){
+         Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
+                " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.path+"> ?path ; \n" +
+                "<"+FOAF.depicts +"> <"+self+"> . }");
+        
+        return m.listSubjects().toList();
+    }
+    
+    public List<Resource> getAdvancedSearchPhotos(long self, String label, List<String> persons, List<String> objects, 
+            List<String> countries, List<String> events){
+        Model m = cnx.queryConstruct("CONSTRUCT { }");
+        
+        return m.listSubjects().toList();
+    }
+  
+  public void addFriend(String personFirstName, String personLasteName, String friend) {
         
         Model m = ModelFactory.createDefaultModel();
         Resource person = m.getResource(Namespaces.getPersonUri(personFirstName, personLasteName));

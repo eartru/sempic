@@ -32,23 +32,19 @@ public class ExampleRDFStore {
 //
         Model m = ModelFactory.createDefaultModel();
 
-        String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeanDupond"; 
+        String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond"; 
+        String pFriend = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/PierreCarré";
+        String pFamily = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/CaroleDupond";
+        String photo = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/151";
           
-        Resource someone = m.createResource(personURI);
-        someone.addLiteral(RDFS.label, "Jean Dupond");
-        someone.addProperty(RDF.type, SempicOnto.Person);
-        
-        String oURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise"; 
-          
-        Resource object = m.createResource(oURI);
-        object.addLiteral(RDFS.label, "Chaise");
-        object.addProperty(RDF.type, SempicOnto.Object);
-        
-        String aURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Chevre"; 
-          
-        Resource truc = m.createResource(aURI);
-        truc.addLiteral(RDFS.label, "Chevre");
-        truc.addProperty(RDF.type, SempicOnto.Animal);
+        Resource someone = m.getResource(personURI);
+        Resource friend = m.getResource(pFriend);
+        Resource family = m.getResource(pFamily);
+        Resource p = m.getResource(photo);
+        someone.addProperty(SempicOnto.isFriendOf, friend);
+        someone.addProperty(SempicOnto.hasSister, family);
+        p.addLiteral(SempicOnto.path, "1/151");
+ 
         //m.add(pRes, SempicOnto.depicts, someone);
         
         m.write(System.out, "turtle");

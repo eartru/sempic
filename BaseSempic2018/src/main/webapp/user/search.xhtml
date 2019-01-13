@@ -3,6 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pf="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       >
     
     <ui:composition template="/template/layout.xhtml">
@@ -11,33 +13,72 @@
         </ui:define>
         <ui:define name="content">
 
-            <p>Faire une recherche selon : </p>
-            <h:form>
-                <h:panelGrid columns = "3">
-                    <label for="title">Titre</label>
-                    <h:inputText id="title" value="titi"/>
-                    <h:message for="title"/>
-                    
-                    <label for="who">Quelqu'un</label>
-                    <h:inputText id="who" value="toto"/>
-                    <h:message for="who"/>
+            <pf:tabView>
+                <pf:tab title="Recherche simple">
+                    <h:form>
+                        <pf:outputLabel value="Faire une recherche sur :  " for="reqSimple"/>
+                        <pf:selectOneMenu id="reqSimple" value="#{search.requete}" >
+                            <f:selectItem itemLabel="Photos de famille" itemValue="1" />
+                            <f:selectItem itemLabel="Photos avec des amis " itemValue="2" />
+                            <f:selectItem itemLabel="Photos avec des personnes" itemValue="3" />
+                            <f:selectItem itemLabel="Photos sans personnes" itemValue="4" />
+                            <f:selectItem itemLabel="Selfies" itemValue="5" />
+                        </pf:selectOneMenu>
+                        <h:message for="reqSimple"/>
 
-                    <label for="what">Quoi</label>
-                    <h:inputText id="what" value="tutu"/>
-                    <h:message for="what"/>
+                        <pf:commandButton value="Rechercher" action="#{search.searchS()}"/>
+                    </h:form>
+                </pf:tab>
+                <pf:tab title="Recherche avancée">
+                    <pf:outputLabel value="Faire une recherche selon : "/>
+                    <h:form>
+                        <h:panelGrid style="margin:10px">
+                          <pf:column>
+                                <pf:outputLabel value="Titre " for="title"/>
+                                <h:inputText id="title" value="titi"/>
+                                <h:message for="title"/>
 
-                    <label for="where">Où</label>
-                    <h:inputText id="where"  value="tata"/>
-                    <h:message for="where"/>
+                                <pf:outputLabel value="Quelqu'un " for="who"/>
+                                <h:inputText id="who" value="toto"/>
+                                <h:message for="who"/>
+                            </pf:column>  
 
-                    <label for="when">Quand</label>
-                    <h:inputText id="when"  value="tyty"/>
-                    <h:message for="when"/>
-                </h:panelGrid>
-                <h:commandButton value="Search" action="#{search.search()}"/>
+                            <pf:column>   
+                                <pf:outputLabel value="Quoi " for="what"/>
+                                <h:inputText id="what" value="tutu"/>
+                                <h:message for="what"/>
 
-                <h:messages globalOnly="true"/>
-            </h:form> 
+                                <pf:outputLabel value="Où " for="where"/>
+                                <h:inputText id="where"  value="tata"/>
+                                <h:message for="where"/>    
+                            </pf:column>  
+
+                            <pf:column>
+                                <label for="when">Quand</label>
+                                <h:inputText id="when"  value="tyty"/>
+                                <h:message for="when"/>
+
+                                <pf:commandButton value="Rechercher" action="#{search.searchA()}"/>
+                            </pf:column>  
+                        </h:panelGrid>
+                        <h:messages globalOnly="true"/>
+                    </h:form> 
+                </pf:tab>
+            </pf:tabView>
+
+            <ui:repeat id="listPhotos" value="#{search.photos}" var="photo">
+                <p>#{photo}</p>
+            </ui:repeat>
+            <pf:dataGrid var="photo" value="#{search.photos}" columns="5" layout="grid"
+        rows="12" paginator="false" id="photo">
+                <pf:panelGrid columns="1">
+                    <f:facet name="header">
+                        <a href="#{application.contextPath}/webapi/picture/#{photo}" type="text/html">
+                            <h:graphicImage value="/webapi/picture/#{photo}?width=200"/>
+                        </a>
+                    </f:facet>
+                </pf:panelGrid>
+            </pf:dataGrid>
 
         </ui:define>      
     </ui:composition>
