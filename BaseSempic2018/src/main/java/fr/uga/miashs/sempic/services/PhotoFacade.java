@@ -57,6 +57,12 @@ public class PhotoFacade extends AbstractJpaFacade<Long,Photo> {
         q.setParameter("album", a);
         return q.getResultList();
     }
+        
+    public Photo findPhoto(long id) {
+        Query q = getEntityManager().createNamedQuery("findPhoto");
+        q.setParameter("id", id);
+        return (Photo)q.getSingleResult();
+    }
 
     @Override
     public void delete(Photo p) throws SempicModelException {

@@ -41,8 +41,8 @@ public class ExampleRDFStore {
         Resource friend = m.getResource(pFriend);
         Resource family = m.getResource(pFamily);
         Resource p = m.getResource(photo);
-       // someone.addProperty(SempicOnto.isFriendOf, friend);
-       // someone.addProperty(SempicOnto.hasSister, family);
+        someone.addProperty(SempicOnto.isFriendOf, friend);
+        someone.addProperty(SempicOnto.hasSister, family);
         p.addLiteral(SempicOnto.path, "1/151");
  
         //m.add(pRes, SempicOnto.depicts, someone);

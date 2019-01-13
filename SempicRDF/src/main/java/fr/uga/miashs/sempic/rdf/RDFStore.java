@@ -4,6 +4,7 @@
  */
 package fr.uga.miashs.sempic.rdf;
 
+import fr.uga.miashs.sempic.model.rdf.Dbpedia;
 import fr.uga.miashs.sempic.model.rdf.GeoNames;
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
 import java.util.ArrayList;
@@ -203,7 +204,7 @@ public class RDFStore {
                 + "OPTIONAL {"
                 + "<" + pUri + "> ?p1 ?o1 ."
                 + "?o1 <" + RDFS.label + "> ?o2 ."
-                + "FILTER (?p1 IN (<" + SempicOnto.depicts + ">,<" + SempicOnto.takenIn + ">,<" + SempicOnto.takenBy + ">)) "
+                + "FILTER (?p1 IN (<" + FOAF.depicts + ">,<" + SempicOnto.takenIn + ">,<" + SempicOnto.takenBy + ">)) "
                 + "}"
                 + "}";
         Model m = cnx.queryConstruct(s);
@@ -359,36 +360,53 @@ public class RDFStore {
     }
     
     public List<Resource> getFamilyPhotos(String self){
-        Model m = cnx.queryConstruct("CONSTRUCT { ?photo rdfs:label ?label . }\n" +
-                " WHERE   { ?photo a "+FOAF.Image +" ; \n" +
-                RDFS.label +" ?label ; \n" +
-                SempicOnto.depicts +" ?someone . \n" +
-                "   <"+ Namespaces.personNS + self +"> ?lien ?someone. \n" +
-                "  FILTER (?lien IN (dbo:sibling, dbo:parent, dbo:child)) }");
+        Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
+                " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.path+"> ?path ; \n" +
+                "<"+FOAF.depicts +"> ?someone . \n" +
+                "<"+ Namespaces.personNS + self +"> ?lien ?someone. \n" +
+                "  FILTER (?lien IN (<"+Dbpedia.sibling+">, <"+Dbpedia.parent+">, <"+Dbpedia.child+">)) }");
         
         return m.listSubjects().toList();
     }
     
-    public List<Resource> getFriendPhotos(long self){
-        Model m = cnx.queryConstruct("CONSTRUCT {  }");
+    public List<Resource> getFriendPhotos(String self){
+          Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
+                " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.path+"> ?path ; \n" +
+                "<"+FOAF.depicts +"> ?someone . \n" +
+                "<"+ Namespaces.personNS + self +"> <"+SempicOnto.isFriendOf+"> ?someone. }");
         
         return m.listSubjects().toList();
     }
     
-    public List<Resource> getPhotosPeople(long self){
-        Model m = cnx.queryConstruct("CONSTRUCT {  }");
+    public List<Resource> getPhotosPeople(String self){
+         Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
+                " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.path+"> ?path ; \n" +
+                "<"+FOAF.depicts +"> ?someone . \n" +
+                "?someone a <"+Dbpedia.Person+"> . }");
         
         return m.listSubjects().toList();
     }
     
-    public List<Resource> getPhotosNoPeople(long self){
-        Model m = cnx.queryConstruct("CONSTRUCT { }");
+    // Ne retourne pas le résultat voulu
+    public List<Resource> getPhotosNoPeople(String self){
+         Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
+                " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.path+"> ?path ; \n" +
+                "<"+FOAF.depicts +"> ?someone . \n" +
+                "FILTER not exists { ?someone a <"+Dbpedia.Person+"> . } }");
         
         return m.listSubjects().toList();
     }
     
-    public List<Resource> getSelfies(long self){
-        Model m = cnx.queryConstruct("CONSTRUCT {  }");
+    // Ne retourne pas le résultat voulu
+    public List<Resource> getSelfies(String self){
+         Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
+                " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.path+"> ?path ; \n" +
+                "<"+FOAF.depicts +"> <"+self+"> . }");
         
         return m.listSubjects().toList();
     }
