@@ -430,7 +430,7 @@ public class RDFStore {
         saveModel(m);
     }
     
-    public void addParent(String personFirstName, String personLasteName, String parent) throws JsonProcessingException {
+    public void addParent(String personFirstName, String personLasteName, String parent){
         
         Model m = ModelFactory.createDefaultModel();
         Resource person = m.getResource(Namespaces.getPersonUri(personFirstName, personLasteName));
