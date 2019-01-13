@@ -253,6 +253,7 @@ public class RDFStore {
         persons.forEach(p -> {
             perso.add(m.getResource(p));
         });
+        
         List<Resource> obj = new ArrayList();
         objects.forEach(o -> {
             obj.add(m.getResource(o));
@@ -447,5 +448,51 @@ public class RDFStore {
         Model m = cnx.queryConstruct(query);
         
         return m.listSubjects().toList();
+    }
+  
+  public void addFriend(String personFirstName, String personLasteName, String friend) {
+        
+        Model m = ModelFactory.createDefaultModel();
+        Resource person = m.getResource(Namespaces.getPersonUri(personFirstName, personLasteName));
+        m.add(person, SempicOnto.isFriendOf, m.getResource(friend));
+        
+        m.write(System.out, "turtle");
+
+        saveModel(m);
+    }
+    
+    public void addParent(String personFirstName, String personLasteName, String parent){
+        
+        Model m = ModelFactory.createDefaultModel();
+        Resource person = m.getResource(Namespaces.getPersonUri(personFirstName, personLasteName));
+        Property existingParent = (Property) m.getProperty(person, Dbpedia.parent);
+        boolean existingParent2 =  m.contains(person, Dbpedia.parent);
+        
+        /*String toString = person.getProperty(RDFS.label).toString();
+        String obj = person.getProperty(RDFS.label).getObject().toString();
+        
+        System.out.println("existingParent:");
+        System.out.println(existingParent2);
+        System.out.println(toString);
+        System.out.println(obj);
+        System.out.println(person);
+        System.out.println(person.getProperty(RDFS.label).toString());
+        System.out.println(person.getProperty(Dbpedia.parent).getObject().toString());*/
+        m.add(person, Dbpedia.parent, m.getResource(parent));
+        
+        m.write(System.out, "turtle");
+
+        saveModel(m);
+    }
+    
+    public void addChild(String personFirstName, String personLasteName, String child) {
+        
+        Model m = ModelFactory.createDefaultModel();
+        Resource person = m.getResource(Namespaces.getPersonUri(personFirstName, personLasteName));
+        m.add(person, Dbpedia.child, m.getResource(child));
+        
+        m.write(System.out, "turtle");
+
+        saveModel(m);
     }
 }

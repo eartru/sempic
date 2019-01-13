@@ -5,8 +5,8 @@
         <Node id="template/layout.xhtml" x="399" y="274" zoom="true"/>
         <Node id="template/footer.xhtml" x="650" y="150" zoom="true"/>
         <Node id="login-error.html" x="150" y="300" zoom="true"/>
-        <Node id="user/search.xhtml" x="697" y="265" zoom="true"/>
         <Node id="user/view-album.xhtml" x="571" y="453" zoom="true"/>
+        <Node id="user/search.xhtml" x="650" y="300" zoom="true"/>
         <Node id="user/create-group.xhtml" x="355" y="238" zoom="true"/>
         <Node id="user/create-photo.xhtml" x="941" y="245" zoom="true"/>
         <Node id="user/view-photo.xhtml" x="83" y="207" zoom="true"/>

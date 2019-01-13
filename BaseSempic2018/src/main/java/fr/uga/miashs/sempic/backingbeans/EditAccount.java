@@ -7,6 +7,7 @@ package fr.uga.miashs.sempic.backingbeans;
 
 import fr.uga.miashs.sempic.SempicModelException;
 import fr.uga.miashs.sempic.entities.Album;
+import fr.uga.miashs.sempic.entities.GenericSemantic;
 import fr.uga.miashs.sempic.entities.Person;
 import fr.uga.miashs.sempic.entities.Photo;
 import fr.uga.miashs.sempic.entities.SempicUser;
@@ -34,6 +35,7 @@ import fr.uga.miashs.sempic.entities.SempicUser;
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
 import fr.uga.miashs.sempic.qualifiers.SelectedUser;
 import fr.uga.miashs.sempic.rdf.RDFStore;
+import javax.ejb.EJB;
 import org.apache.jena.rdf.model.Property;
 
 /**
@@ -43,6 +45,8 @@ import org.apache.jena.rdf.model.Property;
 @Named
 @ViewScoped
 public class EditAccount implements Serializable {
+    @EJB
+    private RDFStore rDFStore;
     
     @Inject
     @SelectedUser
@@ -53,8 +57,8 @@ public class EditAccount implements Serializable {
     
     private String parent1;
     private String parent2;
-    private ArrayList<SempicUser> listChild;
-    private ArrayList<SempicUser> listFriend;
+    private ArrayList<String> listChild;
+    private ArrayList<String> listFriend;
     
     public SempicUser getUser() {
         return current;
@@ -84,65 +88,85 @@ public class EditAccount implements Serializable {
         this.parent2 = parent2;
     }
 
-    public ArrayList<SempicUser> getListChild() {
+    public ArrayList<String> getListChild() {
         return listChild;
     }
 
-    public void setListChild(ArrayList<SempicUser> listChild) {
+    public void setListChild(ArrayList<String> listChild) {
         this.listChild = listChild;
     }
 
-    public ArrayList<SempicUser> getListFriend() {
+    public ArrayList<String> getListFriend() {
         return listFriend;
     }
 
-    public void setListFriend(ArrayList<SempicUser> listFriend) {
+    public void setListFriend(ArrayList<String> listFriend) {
         this.listFriend = listFriend;
     }
+    
+    
 
     
     
     
     public String edit() {
-        
+        System.out.println("Edit methode");
         //System.out.println(current);
         //System.out.println(parent1);
         //System.out.println(parent2);
         //System.out.println(listChild);
         //System.out.println(listFriend);
         
+        
+        
+        if (parent1 != null){
+            System.out.println(parent1);
+            RDFStore rdfStore = new RDFStore();
+
+            try {
+                rDFStore.addParent(current.getFirstname(), current.getLastname(), parent1);
+            } catch (Exception e) {
+                System.out.println(e);
+            }    
+        }
+        
+        if (parent2 != null){
+            System.out.println(parent2);
+            RDFStore rdfStore = new RDFStore();
+ 
+            try {
+                rDFStore.addParent(current.getFirstname(), current.getLastname(), parent2);
+            } catch (Exception e) {
+                System.out.println(e);
+            }     
+        }
+        
+        if (listChild != null){
+            System.out.println(listChild);
+            RDFStore rdfStore = new RDFStore();
+
+            try {
+                listChild.forEach(child ->{
+                    System.out.println(child);
+                    rDFStore.addChild(current.getFirstname(), current.getLastname(), child);
+                });
+            } catch (Exception e) {
+                System.out.println(e);
+            }     
+        }
+        
         if (listFriend != null){
             System.out.println(listFriend);
             RDFStore rdfStore = new RDFStore();
-            boolean partiallyFailed = false;
-            
-            for (int i = 0; i < listFriend.size(); i++) {
-                try {
-                    SempicUser friend = listFriend.get(i);
-                    System.out.println("i = " +listFriend.get(i));
-                    List<Resource> list = new ArrayList<>();
-                    list = rdfStore.getPersons(friend.getLastname());
-                
-                    list.forEach(listItem -> {
-                        System.out.println(listItem.getProperty(RDFS.label).getObject().toString());
-                        String label = listItem.getProperty(RDFS.label).getObject().toString();
-                        
-                        if ((friend.getFirstname() + friend.getLastname()) == label){
-                            Model m = ModelFactory.createDefaultModel();
-                            String personURI = "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/"+current.getFirstname() + current.getLastname();
-                            Resource currentRes = m.createResource(personURI);
-                            m.add(currentRes, SempicOnto.isFriendOf, friend.getFirstname() + friend.getLastname());
-                            rdfStore.saveModel(m);
-                        }
-                    });
 
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-                
-                
-                System.out.println(listFriend); 
-            }
+            try {
+                listFriend.forEach(friend ->{
+                    System.out.println(friend);
+                    rDFStore.addFriend(current.getFirstname(), current.getLastname(), friend);
+                });
+            } catch (Exception e) {
+                System.out.println(e);
+            }     
         }else{
             System.out.println("nullllllllll !!");
         }
@@ -150,12 +174,10 @@ public class EditAccount implements Serializable {
         return "success";
     }
     
-    public List<Person> completePerson(String query) {
-        List<Person> personList = new ArrayList<>();
-        RDFStore s = new RDFStore();
-        
-        List<Resource> list = s.getPersons(query);
-
-        return personList;
+    public List<Resource> completePerson(String query) {       
+        List<Resource> list = rDFStore.getPersons(query);
+        System.out.println("personList:");
+        System.out.println(list);
+        return list;
     }
 }
