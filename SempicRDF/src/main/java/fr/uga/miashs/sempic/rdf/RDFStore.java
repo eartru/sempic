@@ -4,6 +4,8 @@
  */
 package fr.uga.miashs.sempic.rdf;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.uga.miashs.sempic.model.rdf.Dbpedia;
 import fr.uga.miashs.sempic.model.rdf.GeoNames;
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
@@ -362,10 +364,23 @@ public class RDFStore {
         saveModel(m);
     }
     
-    public void addParent(String personFirstName, String personLasteName, String parent) {
+    public void addParent(String personFirstName, String personLasteName, String parent) throws JsonProcessingException {
         
         Model m = ModelFactory.createDefaultModel();
         Resource person = m.getResource(Namespaces.getPersonUri(personFirstName, personLasteName));
+        Property existingParent = (Property) m.getProperty(person, Dbpedia.parent);
+        boolean existingParent2 =  m.contains(person, Dbpedia.parent);
+        
+        /*String toString = person.getProperty(RDFS.label).toString();
+        String obj = person.getProperty(RDFS.label).getObject().toString();
+        
+        System.out.println("existingParent:");
+        System.out.println(existingParent2);
+        System.out.println(toString);
+        System.out.println(obj);
+        System.out.println(person);
+        System.out.println(person.getProperty(RDFS.label).toString());
+        System.out.println(person.getProperty(Dbpedia.parent).getObject().toString());*/
         m.add(person, Dbpedia.parent, m.getResource(parent));
         
         m.write(System.out, "turtle");

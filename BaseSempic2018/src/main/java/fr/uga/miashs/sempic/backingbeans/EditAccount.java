@@ -7,6 +7,7 @@ package fr.uga.miashs.sempic.backingbeans;
 
 import fr.uga.miashs.sempic.SempicModelException;
 import fr.uga.miashs.sempic.entities.Album;
+import fr.uga.miashs.sempic.entities.GenericSemantic;
 import fr.uga.miashs.sempic.entities.Person;
 import fr.uga.miashs.sempic.entities.Photo;
 import fr.uga.miashs.sempic.entities.SempicUser;
@@ -115,6 +116,7 @@ public class EditAccount implements Serializable {
         //System.out.println(parent2);
         //System.out.println(listChild);
         //System.out.println(listFriend);
+        
         
         
         if (parent1 != null){
