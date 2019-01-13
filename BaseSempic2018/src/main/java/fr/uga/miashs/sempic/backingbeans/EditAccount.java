@@ -122,7 +122,7 @@ public class EditAccount implements Serializable {
             RDFStore rdfStore = new RDFStore();
 
             try {
-                rDFStore.addParent("JeanDupond", parent1);
+                rDFStore.addParent(current.getFirstname(), current.getLastname(), parent1);
             } catch (Exception e) {
                 System.out.println(e);
             }    
@@ -133,7 +133,7 @@ public class EditAccount implements Serializable {
             RDFStore rdfStore = new RDFStore();
  
             try {
-                rDFStore.addParent("JeanDupond", parent2);
+                rDFStore.addParent(current.getFirstname(), current.getLastname(), parent2);
             } catch (Exception e) {
                 System.out.println(e);
             }     
@@ -146,7 +146,7 @@ public class EditAccount implements Serializable {
             try {
                 listChild.forEach(child ->{
                     System.out.println(child);
-                    rDFStore.addChild("JeanDupond", child);
+                    rDFStore.addChild(current.getFirstname(), current.getLastname(), child);
                 });
             } catch (Exception e) {
                 System.out.println(e);
@@ -160,7 +160,7 @@ public class EditAccount implements Serializable {
             try {
                 listFriend.forEach(friend ->{
                     System.out.println(friend);
-                    rDFStore.addFriend("JeanDupond", friend);
+                    rDFStore.addFriend(current.getFirstname(), current.getLastname(), friend);
                 });
             } catch (Exception e) {
                 System.out.println(e);

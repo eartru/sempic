@@ -351,45 +351,33 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
-    public void addFriend(String person, String friend) {
+    public void addFriend(String personFirstName, String personLasteName, String friend) {
         
         Model m = ModelFactory.createDefaultModel();
-        Resource p = m.getResource(person);
-        Resource f = m.getResource(friend);
-        System.out.println("test:");
-        System.out.println(p);
-        System.out.println(f);
-        m.add(m.getResource(person), SempicOnto.isFriendOf, m.getResource(friend));
+        Resource person = m.getResource(Namespaces.getPersonUri(personFirstName, personLasteName));
+        m.add(person, SempicOnto.isFriendOf, m.getResource(friend));
         
         m.write(System.out, "turtle");
 
         saveModel(m);
     }
     
-    public void addParent(String person, String parent) {
+    public void addParent(String personFirstName, String personLasteName, String parent) {
         
         Model m = ModelFactory.createDefaultModel();
-        Resource p = m.getResource(person);
-        Resource c = m.getResource(parent);
-        System.out.println("test:");
-        System.out.println(p);
-        System.out.println(c);
-        m.add(m.getResource(person), Dbpedia.parent, m.getResource(parent));
+        Resource person = m.getResource(Namespaces.getPersonUri(personFirstName, personLasteName));
+        m.add(person, Dbpedia.parent, m.getResource(parent));
         
         m.write(System.out, "turtle");
 
         saveModel(m);
     }
     
-    public void addChild(String person, String child) {
+    public void addChild(String personFirstName, String personLasteName, String child) {
         
         Model m = ModelFactory.createDefaultModel();
-        Resource p = m.getResource(person);
-        Resource c = m.getResource(child);
-        System.out.println("test:");
-        System.out.println(p);
-        System.out.println(c);
-        m.add(m.getResource(person), Dbpedia.child, m.getResource(child));
+        Resource person = m.getResource(Namespaces.getPersonUri(personFirstName, personLasteName));
+        m.add(person, Dbpedia.child, m.getResource(child));
         
         m.write(System.out, "turtle");
 
