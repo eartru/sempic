@@ -2,10 +2,13 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:pf="http://primefaces.org/ui">
 
-    <pf:menubar>
-        <pf:menuitem value="Accueil" url="./home.xhtml" />
-        <pf:menuitem value="Mon compte" url="./view-account.xhtml" />
-        <pf:menuitem value="Semantic" url="./add-semantic.xhtml" />
-        <pf:menuitem value="Recherche" url="./search.xhtml" />
-    </pf:menubar>
+        <h:form id="menuForm">
+            <pf:menubar>
+                <pf:menuitem value="Accueil" url="./home.xhtml" id="accueil"/>
+                <pf:menuitem value="Mon compte" url="./view-account.xhtml" id="account"/>
+                <pf:menuitem value="Semantic" url="./add-semantic.xhtml" id="semantic"/>
+                <pf:menuitem value="Recherche" url="./search.xhtml" id="search"/>
+                <pf:menuitem value="Deconnexion" action="#{sessionTools.logout}" id="logout" />
+            </pf:menubar>
+        </h:form>
 </html>
