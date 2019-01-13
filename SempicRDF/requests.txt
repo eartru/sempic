@@ -195,3 +195,69 @@ WHERE   { ?photo a sempic:Photo;
         sempic:albumId ?z.
   OPTIONAL {?photo sempic:path ?p}
            }  
+
+OU simple sur une catégorie:
+CONSTRUCT    {  ?photo sempic:depicts ?something . }
+WHERE   { ?photo a foaf:Image ; 
+  sempic:path ?path ;
+  foaf:depicts ?something . 
+  FILTER (?something IN (<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulieDugdale>, <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/AliceCaporali>) )
+           }  
+
+
+ET entre objet de meme catégorie
+CONSTRUCT    {  ?photo sempic:depicts ?s . }
+WHERE   { ?photo a foaf:Image ; 
+  sempic:path ?path ;
+  foaf:depicts ?s;
+  foaf:depicts <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulieDugdale> ;
+  foaf:depicts  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/AliceCaporali> . 
+
+           }  
+
+ET entre différente catégorie : 
+CONSTRUCT    {  ?photo sempic:depicts ?something ; sempic:depicts ?someone .}
+WHERE   { ?photo a foaf:Image ; 
+  sempic:path ?path .
+  OPTIONAL { ?photo sempic:depicts ?someone . }
+  FILTER (?someone in( <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulieDugdale>, <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/AliceCaporali>) )
+  OPTIONAL { ?photo sempic:depicts ?something . }
+  FILTER (?something in( <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise>) )
+}  
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/402>
+        sempic:depicts  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulieDugdale> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/AliceCaporali> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise> .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/403>
+        sempic:depicts  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/AliceCaporali> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise> .
+
+OU entre objet de meme catégorie
+CONSTRUCT    {  ?photo sempic:depicts ?something ; sempic:depicts ?someone .}
+WHERE   { {?photo a foaf:Image ; 
+  sempic:path ?path .
+  OPTIONAL { ?photo sempic:depicts ?someone . }
+  FILTER (?someone in( <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulieDugdale>, <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/AliceCaporali>) )
+} UNION {
+  OPTIONAL { ?photo sempic:depicts ?something . }
+  FILTER (?something in( <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise>) )
+}  }
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/403>
+        sempic:depicts  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/AliceCaporali> .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/51>
+        sempic:depicts  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise> .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/401>
+        sempic:depicts  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise> .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/151>
+        sempic:depicts  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise> .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/101>
+        sempic:depicts  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise> .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/2>
+        sempic:depicts  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise> .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/402>
+        sempic:depicts  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulieDugdale> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/AliceCaporali> .

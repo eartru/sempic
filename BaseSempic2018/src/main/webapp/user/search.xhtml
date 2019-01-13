@@ -35,28 +35,48 @@
                         <h:panelGrid style="margin:10px">
                           <pf:column>
                                 <pf:outputLabel value="Titre " for="title"/>
-                                <h:inputText id="title" value="titi"/>
+                                <h:inputText id="title" value="#{search.title}"/>
                                 <h:message for="title"/>
 
-                                <pf:outputLabel value="Quelqu'un " for="who"/>
-                                <h:inputText id="who" value="toto"/>
-                                <h:message for="who"/>
+                                <pf:outputLabel value="Quelqu'un " for="persons"/>
+                                <pf:autoComplete id="persons" multiple="true" value="#{search.persons}" completeMethod="#{search.completePerson}" 
+                                         var="person" itemLabel="#{person.getProperty(RDFS.label).getObject().toString()}" itemValue="#{person}" forceSelection="true">
+                                    <pf:column>
+                                       <h:outputText value="#{person.getProperty(RDFS.label).getObject().toString()}" />
+                                   </pf:column>
+                                </pf:autoComplete>
+                                <h:message for="persons"/>
                             </pf:column>  
 
                             <pf:column>   
-                                <pf:outputLabel value="Quoi " for="what"/>
-                                <h:inputText id="what" value="tutu"/>
-                                <h:message for="what"/>
+                                <pf:outputLabel value="Quoi " for="object"/>
+                                <pf:autoComplete id="object" multiple="true" value="#{search.objects}" completeMethod="#{search.completeObject}" 
+                                             var="object" itemLabel="#{object.getProperty(RDFS.label).getObject().toString()}" itemValue="#{object}" forceSelection="true">
+                                    <pf:column>
+                                       <h:outputText value="#{object.getProperty(RDFS.label).getObject().toString()}" />
+                                   </pf:column>
+                                </pf:autoComplete>
+                                <h:message for="object"/>
 
-                                <pf:outputLabel value="Où " for="where"/>
-                                <h:inputText id="where"  value="tata"/>
-                                <h:message for="where"/>    
+                                <pf:outputLabel value="Où " for="country"/>
+                                <pf:autoComplete id="country" value="#{search.country}" completeMethod="#{search.completeCountry}" 
+                                             var="country" itemLabel="#{country.getProperty(RDFS.label).getObject().toString()}" itemValue="#{country}" forceSelection="true">
+                                    <pf:column>
+                                       <h:outputText value="#{country.getProperty(RDFS.label).getObject().toString()}" />
+                                   </pf:column>
+                                </pf:autoComplete>
+                                <h:message for="country"/>    
                             </pf:column>  
 
                             <pf:column>
-                                <label for="when">Quand</label>
-                                <h:inputText id="when"  value="tyty"/>
-                                <h:message for="when"/>
+                                <pf:outputLabel value="Quand " for="event"/>
+                                <pf:autoComplete id="event" value="#{search.event}" completeMethod="#{search.completeEvent}" 
+                                             var="event" itemLabel="#{event.getProperty(RDFS.label).getObject().toString()}" itemValue="#{event}" forceSelection="true">
+                                    <pf:column>
+                                       <h:outputText value="#{event.getProperty(RDFS.label).getObject().toString()}" />
+                                   </pf:column>
+                                </pf:autoComplete>
+                                <h:message for="event"/>
 
                                 <pf:commandButton value="Rechercher" action="#{search.searchA()}"/>
                             </pf:column>  
@@ -70,14 +90,14 @@
                 <p>#{photo}</p>
             </ui:repeat>
             <pf:dataGrid var="photo" value="#{search.photos}" columns="5" layout="grid"
-        rows="12" paginator="false" id="photo">
+                rows="12" paginator="false" id="photo">
                 <pf:panelGrid columns="1">
                     <f:facet name="header">
                         <a href="#{application.contextPath}/webapi/picture/#{photo}" type="text/html">
                             <h:graphicImage value="/webapi/picture/#{photo}?width=200"/>
                         </a>
                     </f:facet>
-                </pf:panelGrid>
+                </pf:panelGrid> 
             </pf:dataGrid>
 
         </ui:define>      

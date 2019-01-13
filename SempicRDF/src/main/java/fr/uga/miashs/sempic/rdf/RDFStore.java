@@ -37,6 +37,7 @@ import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.update.Update;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
+import org.apache.jena.vocabulary.XSD;
 
 /**
  *
@@ -360,9 +361,10 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
-    public List<Resource> getFamilyPhotos(String self){
+    public List<Resource> getFamilyPhotos(long selfId, String self){
         Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^xsd:long ; \n" +
                 "<"+SempicOnto.path+"> ?path ; \n" +
                 "<"+FOAF.depicts +"> ?someone . \n" +
                 "<"+ Namespaces.personNS + self +"> ?lien ?someone. \n" +
@@ -371,9 +373,10 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
-    public List<Resource> getFriendPhotos(String self){
+    public List<Resource> getFriendPhotos(long selfId, String self){
           Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^xsd:long ; \n" +
                 "<"+SempicOnto.path+"> ?path ; \n" +
                 "<"+FOAF.depicts +"> ?someone . \n" +
                 "<"+ Namespaces.personNS + self +"> <"+SempicOnto.isFriendOf+"> ?someone. }");
@@ -381,9 +384,10 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
-    public List<Resource> getPhotosPeople(String self){
+    public List<Resource> getPhotosPeople(long selfId){
          Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^xsd:long ; \n" +
                 "<"+SempicOnto.path+"> ?path ; \n" +
                 "<"+FOAF.depicts +"> ?someone . \n" +
                 "?someone a <"+Dbpedia.Person+"> . }");
@@ -392,9 +396,10 @@ public class RDFStore {
     }
     
     // Ne retourne pas le résultat voulu
-    public List<Resource> getPhotosNoPeople(String self){
+    public List<Resource> getPhotosNoPeople(long selfId){
          Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^xsd:long ; \n" +
                 "<"+SempicOnto.path+"> ?path ; \n" +
                 "<"+FOAF.depicts +"> ?someone . \n" +
                 "FILTER not exists { ?someone a <"+Dbpedia.Person+"> . } }");
@@ -403,18 +408,44 @@ public class RDFStore {
     }
     
     // Ne retourne pas le résultat voulu
-    public List<Resource> getSelfies(String self){
+    public List<Resource> getSelfies(long selfId, String self){
          Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^xsd:long ; \n" +
                 "<"+SempicOnto.path+"> ?path ; \n" +
                 "<"+FOAF.depicts +"> <"+self+"> . }");
         
         return m.listSubjects().toList();
     }
     
-    public List<Resource> getAdvancedSearchPhotos(long self, String label, List<String> persons, List<String> objects, 
-            List<String> countries, List<String> events){
-        Model m = cnx.queryConstruct("CONSTRUCT { }");
+    public List<Resource> getAdvancedSearchPhotos(long selfId, String self, String label, List<String> persons, List<String> objects, 
+            String country, String event){
+        String query = "CONSTRUCT {  ?photo <"+SempicOnto.path+"> ?path . }\n" +
+                "WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^<"+XSD.xlong+">; \n" +
+                "<"+SempicOnto.path+">  ?path ; \n" ;
+        if(!label.equals("")) {
+            query += " <"+RDFS.label+"> <"+label+"> ; \n";
+        }
+        if (persons != null) {
+            for(String p: persons) {
+                query += "<"+ FOAF.depicts+"> <"+p+"> ; \n" ;
+            }
+        }
+        if (objects != null) {
+            for(String o: objects) {
+                query += "<"+ FOAF.depicts+"> <"+o+"> ; \n" ;
+            }
+        }
+        if (country != null) {
+            query += "<"+ SempicOnto.takenIn+"> <"+country+"> ; \n" ;
+        }
+        if (event != null) {
+            query += "<"+ SempicOnto.takenOn+"> <"+event+"> ; \n" ;
+        }
+
+        query = query + " }";
+        Model m = cnx.queryConstruct(query);
         
         return m.listSubjects().toList();
     }
