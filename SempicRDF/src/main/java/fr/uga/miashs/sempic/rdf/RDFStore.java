@@ -364,7 +364,7 @@ public class RDFStore {
     public List<Resource> getFamilyPhotos(long selfId, String self){
         Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
-                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^xsd:long ; \n" +
+                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^<"+XSD.xlong+">; \n" +
                 "<"+SempicOnto.path+"> ?path ; \n" +
                 "<"+FOAF.depicts +"> ?someone . \n" +
                 "<"+ Namespaces.personNS + self +"> ?lien ?someone. \n" +
@@ -376,7 +376,7 @@ public class RDFStore {
     public List<Resource> getFriendPhotos(long selfId, String self){
           Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
-                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^xsd:long ; \n" +
+               "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^<"+XSD.xlong+">; \n" +
                 "<"+SempicOnto.path+"> ?path ; \n" +
                 "<"+FOAF.depicts +"> ?someone . \n" +
                 "<"+ Namespaces.personNS + self +"> <"+SempicOnto.isFriendOf+"> ?someone. }");
@@ -387,7 +387,7 @@ public class RDFStore {
     public List<Resource> getPhotosPeople(long selfId){
          Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
-                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^xsd:long ; \n" +
+                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^<"+XSD.xlong+">; \n" +
                 "<"+SempicOnto.path+"> ?path ; \n" +
                 "<"+FOAF.depicts +"> ?someone . \n" +
                 "?someone a <"+Dbpedia.Person+"> . }");
@@ -395,11 +395,10 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
-    // Ne retourne pas le résultat voulu
     public List<Resource> getPhotosNoPeople(long selfId){
          Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
-                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^xsd:long ; \n" +
+                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^<"+XSD.xlong+">; \n" +
                 "<"+SempicOnto.path+"> ?path ; \n" +
                 "<"+FOAF.depicts +"> ?someone . \n" +
                 "FILTER not exists { ?someone a <"+Dbpedia.Person+"> . } }");
@@ -407,11 +406,10 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
-    // Ne retourne pas le résultat voulu
     public List<Resource> getSelfies(long selfId, String self){
          Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
-                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^xsd:long ; \n" +
+                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^<"+XSD.xlong+">; \n" +
                 "<"+SempicOnto.path+"> ?path ; \n" +
                 "<"+FOAF.depicts +"> <"+self+"> . }");
         
