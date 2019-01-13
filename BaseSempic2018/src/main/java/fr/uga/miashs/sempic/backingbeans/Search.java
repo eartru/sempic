@@ -48,23 +48,23 @@ public class Search implements Serializable{
     public String searchS() {
         boolean partiallyFailed = false;
         List<Resource> list = new ArrayList<>();
-        //String self = current.getFirstname()+current.getLastname();
-        String self = "JeffDupond";
+        String self = current.getFirstname()+current.getLastname();
+        //String self = "JeffDupond";
+        photos = new ArrayList<>();
         try {
             if (requete.equals("1"))
                 list = rDFStore.getFamilyPhotos(self);
             if (requete.equals("2"))
-                list = rDFStore.getFriendPhotos(current.getId());
+                list = rDFStore.getFriendPhotos(self);
             if (requete.equals("3"))
-                list = rDFStore.getPhotosPeople(current.getId());
+                list = rDFStore.getPhotosPeople(self);
             if (requete.equals("4"))
-                list = rDFStore.getPhotosNoPeople(current.getId());
+                list = rDFStore.getPhotosNoPeople(self);
             if (requete.equals("5"))
-                list = rDFStore.getSelfies(current.getId());
+                list = rDFStore.getSelfies(self);
             
-            //photos = list
             list.forEach(p -> {
-                photos.add(p.getProperty(SempicOnto.path).toString());
+                photos.add(p.getProperty(SempicOnto.path).getObject().toString());
             });
         } catch (Exception e) {
             partiallyFailed = true;

@@ -25,6 +25,10 @@ import javax.persistence.Transient;
 @NamedQuery(
         name = "findPhotoAlbum",
         query = "SELECT DISTINCT p FROM Photo p WHERE p.album=:album"
+),
+    @NamedQuery(
+        name = "findPhoto",
+        query = "SELECT DISTINCT p FROM Photo p WHERE p.id=:id"
 )
 })        
 @Entity
