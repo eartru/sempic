@@ -4,6 +4,7 @@
  */
 package fr.uga.miashs.sempic.rdf;
 
+import fr.uga.miashs.sempic.model.rdf.Dbpedia;
 import fr.uga.miashs.sempic.model.rdf.GeoNames;
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
 import java.util.ArrayList;
@@ -359,6 +360,36 @@ public class RDFStore {
         System.out.println(p);
         System.out.println(f);
         m.add(m.getResource(person), SempicOnto.isFriendOf, m.getResource(friend));
+        
+        m.write(System.out, "turtle");
+
+        saveModel(m);
+    }
+    
+    public void addParent(String person, String parent) {
+        
+        Model m = ModelFactory.createDefaultModel();
+        Resource p = m.getResource(person);
+        Resource c = m.getResource(parent);
+        System.out.println("test:");
+        System.out.println(p);
+        System.out.println(c);
+        m.add(m.getResource(person), Dbpedia.parent, m.getResource(parent));
+        
+        m.write(System.out, "turtle");
+
+        saveModel(m);
+    }
+    
+    public void addChild(String person, String child) {
+        
+        Model m = ModelFactory.createDefaultModel();
+        Resource p = m.getResource(person);
+        Resource c = m.getResource(child);
+        System.out.println("test:");
+        System.out.println(p);
+        System.out.println(c);
+        m.add(m.getResource(person), Dbpedia.child, m.getResource(child));
         
         m.write(System.out, "turtle");
 

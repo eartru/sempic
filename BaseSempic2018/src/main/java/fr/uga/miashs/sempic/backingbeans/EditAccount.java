@@ -56,9 +56,8 @@ public class EditAccount implements Serializable {
     
     private String parent1;
     private String parent2;
-    private ArrayList<SempicUser> listChild;
+    private ArrayList<String> listChild;
     private ArrayList<String> listFriend;
-    private Person perso; 
     
     public SempicUser getUser() {
         return current;
@@ -88,11 +87,11 @@ public class EditAccount implements Serializable {
         this.parent2 = parent2;
     }
 
-    public ArrayList<SempicUser> getListChild() {
+    public ArrayList<String> getListChild() {
         return listChild;
     }
 
-    public void setListChild(ArrayList<SempicUser> listChild) {
+    public void setListChild(ArrayList<String> listChild) {
         this.listChild = listChild;
     }
 
@@ -102,14 +101,6 @@ public class EditAccount implements Serializable {
 
     public void setListFriend(ArrayList<String> listFriend) {
         this.listFriend = listFriend;
-    }
-
-    public Person getPerso() {
-        return perso;
-    }
-
-    public void setPerso(Person perso) {
-        this.perso = perso;
     }
     
     
@@ -126,26 +117,54 @@ public class EditAccount implements Serializable {
         //System.out.println(listFriend);
         
         
+        if (parent1 != null){
+            System.out.println(parent1);
+            RDFStore rdfStore = new RDFStore();
+
+            try {
+                rDFStore.addParent("JeanDupond", parent1);
+            } catch (Exception e) {
+                System.out.println(e);
+            }    
+        }
+        
+        if (parent2 != null){
+            System.out.println(parent2);
+            RDFStore rdfStore = new RDFStore();
+ 
+            try {
+                rDFStore.addParent("JeanDupond", parent2);
+            } catch (Exception e) {
+                System.out.println(e);
+            }     
+        }
+        
+        if (listChild != null){
+            System.out.println(listChild);
+            RDFStore rdfStore = new RDFStore();
+
+            try {
+                listChild.forEach(child ->{
+                    System.out.println(child);
+                    rDFStore.addChild("JeanDupond", child);
+                });
+            } catch (Exception e) {
+                System.out.println(e);
+            }     
+        }
+        
         if (listFriend != null){
             System.out.println(listFriend);
             RDFStore rdfStore = new RDFStore();
-            boolean partiallyFailed = false;
- 
-                try {
-                    listFriend.forEach(friend ->{
-                        System.out.println(friend);
-                        rDFStore.addFriend("JeanDupond", friend);
-                    });
-                } catch (Exception e) {
-                    partiallyFailed = true;
-                }
-                if (partiallyFailed) {
-                     return "failure";
-                }
-                else {
-                    return "success";
-                }
-            
+
+            try {
+                listFriend.forEach(friend ->{
+                    System.out.println(friend);
+                    rDFStore.addFriend("JeanDupond", friend);
+                });
+            } catch (Exception e) {
+                System.out.println(e);
+            }     
         }else{
             System.out.println("nullllllllll !!");
         }
