@@ -57,10 +57,6 @@ public class Search implements Serializable{
     private String event;
     private Date date;
     
-    public Search() {
-        
-    }
-    
     public String searchS() {
         boolean partiallyFailed = false;
         List<Resource> list = new ArrayList<>();

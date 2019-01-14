@@ -249,34 +249,49 @@ public class RDFStore {
 
         Resource photo = m.getResource(Namespaces.getPhotoUri(id));
         
-        List<Resource> perso = new ArrayList();
-        persons.forEach(p -> {
-            perso.add(m.getResource(p));
-        });
+        if (persons != null) {
+            List<Resource> perso = new ArrayList();
+            persons.forEach(p -> {
+                perso.add(m.getResource(p));
+            });
+            perso.forEach(p -> {
+                m.add(photo, FOAF.depicts, p);
+            });
+        }
         
-        List<Resource> obj = new ArrayList();
-        objects.forEach(o -> {
-            obj.add(m.getResource(o));
-        });
-        Resource ctry = m.getResource(country);
-       // Resource rgn = m.getResource(region);
-       // Resource dpt = m.getResource(department);
-       // Resource cty = m.getResource(city);
-        Resource evt = m.getResource(event);
-   
-        perso.forEach(p -> {
-            m.add(photo, FOAF.depicts, p);
-        });
-        obj.forEach(o -> {
-            m.add(photo, FOAF.depicts, o);
-        });
-        m.add(photo, SempicOnto.takenIn, ctry);
+        if (objects != null) {
+            List<Resource> obj = new ArrayList();
+            objects.forEach(o -> {
+                obj.add(m.getResource(o));
+            });
+            obj.forEach(o -> {
+                m.add(photo, FOAF.depicts, o);
+            });
+        }
+
+        if (country != null) {
+            Resource ctry = m.getResource(country);
+            m.add(photo, SempicOnto.takenIn, ctry);
+        }
+        
+        if (event != null) {
+            Resource evt = m.getResource(event);
+            m.add(photo, SempicOnto.takenOn, evt);
+        }
+        // Resource rgn = m.getResource(region);
+        // Resource dpt = m.getResource(department);
+        // Resource cty = m.getResource(city);
         //m.add(photo, SempicOnto.takenIn, rgn);
         //m.add(photo, SempicOnto.takenIn, dpt);
         //m.add(photo, SempicOnto.takenIn, cty);
-        m.add(photo, SempicOnto.takenOn, evt);
-        m.add(photo, SempicOnto.takenOn, date.toString());
-        m.add(photo, RDFS.label, label);
+        
+        if (date != null) {
+            m.add(photo, SempicOnto.takenOn, date.toString());
+        }
+        
+        if(!label.equals("")) {
+            m.add(photo, RDFS.label, label);
+        }
 
         m.write(System.out, "turtle");
 
@@ -411,7 +426,7 @@ public class RDFStore {
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
                 "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^<"+XSD.xlong+">; \n" +
                 "<"+SempicOnto.path+"> ?path ; \n" +
-                "<"+FOAF.depicts +"> <"+self+"> . }");
+                "<"+FOAF.depicts +"> <"+Namespaces.personNS+self+"> . }");
         
         return m.listSubjects().toList();
     }
