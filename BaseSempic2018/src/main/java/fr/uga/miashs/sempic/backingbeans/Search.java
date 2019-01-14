@@ -46,6 +46,8 @@ public class Search implements Serializable{
     
     private String requete;
     
+    private String text;
+            
     private String title;
     private String person;
     private List<String> persons;
@@ -55,11 +57,15 @@ public class Search implements Serializable{
     private String event;
     private Date date;
     
+    public Search() {
+        
+    }
+    
     public String searchS() {
         boolean partiallyFailed = false;
         List<Resource> list = new ArrayList<>();
-        String self = current.getFirstname()+current.getLastname();
-        //String self = "JeffDupond";
+        //String self = current.getFirstname()+current.getLastname();
+        String self = "JeffDupond";
         photos = new ArrayList<>();
         try {
             if (requete.equals("1"))
@@ -85,6 +91,11 @@ public class Search implements Serializable{
         else {
             return "success";
         }
+    }
+    
+    public String test() {
+        text = "hello";
+        return "success";
     }
     
     public String searchA() {
@@ -221,6 +232,14 @@ public class Search implements Serializable{
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
     
     

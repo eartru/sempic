@@ -4,11 +4,11 @@
 
         <h:form id="menuForm">
             <pf:menubar>
-                <pf:menuitem value="Accueil" url="./home.xhtml" id="accueil"/>
-                <pf:menuitem value="Mon compte" url="./view-account.xhtml" id="account"/>
-                <pf:menuitem value="Semantic" url="./add-semantic.xhtml" id="semantic"/>
-                <pf:menuitem value="Recherche" url="./search.xhtml" id="search"/>
-                <pf:menuitem value="Deconnexion" action="#{sessionTools.logout}" id="logout" />
+                <pf:menuitem value="Accueil" url="./home.xhtml" id="accueil" style="padding: 10px;"/>
+                <pf:menuitem value="Recherche" url="./search.xhtml" id="search" style="padding: 10px;"/>
+                <pf:menuitem value="Semantic" url="./add-semantic.xhtml" id="semantic" style="padding: 10px;"/>
+                <pf:menuitem value="Mon compte" url="./view-account.xhtml" id="account" style="position: absolute; right: 150px; padding: 10px;"/>
+                <pf:menuitem value="Deconnexion" action="#{sessionTools.logout}" id="logout" style="position: absolute; right: 10px; padding: 10px;"/>
             </pf:menubar>
         </h:form>
 </html>

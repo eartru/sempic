@@ -15,7 +15,7 @@
 
             <pf:tabView>
                 <pf:tab title="Recherche simple">
-                    <h:form>
+                    <h:form id="searchS" enctype="multipart/form-data">
                         <pf:outputLabel value="Faire une recherche sur :  " for="reqSimple"/>
                         <pf:selectOneMenu id="reqSimple" value="#{search.requete}" >
                             <f:selectItem itemLabel="Photos de famille" itemValue="1" />
@@ -26,12 +26,14 @@
                         </pf:selectOneMenu>
                         <h:message for="reqSimple"/>
 
-                        <pf:commandButton value="Rechercher" action="#{search.searchS()}"/>
+                        <pf:commandButton value="Rechercher" action="#{search.searchS()}" >
+                            <f:ajax execute="@form" render="result" />
+                        </pf:commandButton>
                     </h:form>
                 </pf:tab>
                 <pf:tab title="Recherche avancée">
                     <pf:outputLabel value="Faire une recherche selon : "/>
-                    <h:form>
+                    <h:form id="searchA" enctype="multipart/form-data">
                         <h:panelGrid style="margin:10px">
                           <pf:column>
                                 <pf:outputLabel value="Titre " for="title"/>
@@ -78,7 +80,9 @@
                                 </pf:autoComplete>
                                 <h:message for="event"/>
 
-                                <pf:commandButton value="Rechercher" action="#{search.searchA()}"/>
+                                <pf:commandButton value="Rechercher" action="#{search.searchA()}" >
+                                     <f:ajax execute="@form" render="result" />
+                                </pf:commandButton>
                             </pf:column>  
                         </h:panelGrid>
                         <h:messages globalOnly="true"/>
@@ -86,20 +90,18 @@
                 </pf:tab>
             </pf:tabView>
 
-            <ui:repeat id="listPhotos" value="#{search.photos}" var="photo">
-                <p>#{photo}</p>
-            </ui:repeat>
-            <pf:dataGrid var="photo" value="#{search.photos}" columns="5" layout="grid"
-                rows="12" paginator="false" id="photo">
-                <pf:panelGrid columns="1">
-                    <f:facet name="header">
-                        <a href="#{application.contextPath}/webapi/picture/#{photo}" type="text/html">
-                            <h:graphicImage value="/webapi/picture/#{photo}?width=200"/>
-                        </a>
-                    </f:facet>
-                </pf:panelGrid> 
-            </pf:dataGrid>
-
+            <h:panelGroup id="result">
+                <pf:dataGrid var="photo" value="#{search.photos}" columns="5" layout="grid"
+                    rows="12" paginator="false" id="photos">
+                    <pf:panelGrid columns="1">
+                        <f:facet name="header">
+                            <a href="#{application.contextPath}/webapi/picture/#{photo}" type="text/html">
+                                <h:graphicImage value="/webapi/picture/#{photo}?width=200"/>
+                            </a>
+                        </f:facet>
+                    </pf:panelGrid> 
+                </pf:dataGrid>
+            </h:panelGroup>
         </ui:define>      
     </ui:composition>
 </html>
