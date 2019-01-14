@@ -5,42 +5,22 @@
  */
 package fr.uga.miashs.sempic.backingbeans;
 
-import fr.uga.miashs.sempic.SempicModelException;
-import fr.uga.miashs.sempic.entities.Album;
-import fr.uga.miashs.sempic.entities.GenericSemantic;
-import fr.uga.miashs.sempic.entities.Person;
-import fr.uga.miashs.sempic.entities.Photo;
-import fr.uga.miashs.sempic.entities.SempicUser;
-import fr.uga.miashs.sempic.qualifiers.SelectedAlbum;
-import fr.uga.miashs.sempic.qualifiers.SelectedUser;
-import fr.uga.miashs.sempic.services.PhotoFacade;
 import fr.uga.miashs.sempic.services.SempicUserFacade;
-import fr.uga.miashs.sempic.services.SempicUserService;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.vocabulary.RDFS;
 import fr.uga.miashs.sempic.entities.SempicUser;
-import fr.uga.miashs.sempic.model.rdf.SempicOnto;
 import fr.uga.miashs.sempic.qualifiers.SelectedUser;
 import fr.uga.miashs.sempic.rdf.RDFStore;
 import javax.ejb.EJB;
-import org.apache.jena.rdf.model.Property;
 
 /**
  *
- * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
+ *
  */
 @Named
 @ViewScoped

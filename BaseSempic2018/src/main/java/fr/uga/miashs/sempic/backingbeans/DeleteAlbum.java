@@ -8,8 +8,6 @@ package fr.uga.miashs.sempic.backingbeans;
 import fr.uga.miashs.sempic.SempicModelException;
 import fr.uga.miashs.sempic.entities.Album;
 import fr.uga.miashs.sempic.entities.Photo;
-import fr.uga.miashs.sempic.qualifiers.SelectedUser;
-import fr.uga.miashs.sempic.entities.SempicUser;
 import fr.uga.miashs.sempic.services.AlbumFacade;
 import fr.uga.miashs.sempic.services.PhotoFacade;
 import java.io.Serializable;

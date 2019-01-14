@@ -17,10 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
 import javax.ejb.EJB;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDFS;
 
@@ -58,9 +55,7 @@ public class ViewPhoto implements Serializable {
         boolean partiallyFailed = false;
             
         try {
-            // (current.getId(), current.getAlbum().getId(), current.getAlbum().getOwner().getId());
             rDFStore.annotatePhoto(current.getId(), title, persons, objects, country, event, date);
-
         } catch (Exception e) {
             partiallyFailed = true;
         }
