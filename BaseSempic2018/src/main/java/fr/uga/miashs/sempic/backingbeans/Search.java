@@ -5,7 +5,6 @@
  */
 package fr.uga.miashs.sempic.backingbeans;
 
-import fr.uga.miashs.sempic.entities.Photo;
 import fr.uga.miashs.sempic.entities.SempicUser;
 import fr.uga.miashs.sempic.model.rdf.SempicOnto;
 import fr.uga.miashs.sempic.qualifiers.SelectedUser;
@@ -19,10 +18,7 @@ import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.vocabulary.RDFS;
 
 /**
  *
@@ -46,8 +42,6 @@ public class Search implements Serializable{
     
     private String requete;
     
-    private String text;
-            
     private String title;
     private String person;
     private List<String> persons;
@@ -60,8 +54,7 @@ public class Search implements Serializable{
     public String searchS() {
         boolean partiallyFailed = false;
         List<Resource> list = new ArrayList<>();
-        //String self = current.getFirstname()+current.getLastname();
-        String self = "JeffDupond";
+        String self = current.getFirstname()+current.getLastname();
         photos = new ArrayList<>();
         try {
             if (requete.equals("1"))
@@ -89,16 +82,10 @@ public class Search implements Serializable{
         }
     }
     
-    public String test() {
-        text = "hello";
-        return "success";
-    }
-    
     public String searchA() {
         boolean partiallyFailed = false;
         List<Resource> list = new ArrayList<>();
-        //String self = current.getFirstname()+current.getLastname();
-        String self = "JeffDupond";
+        String self = current.getFirstname()+current.getLastname();
         photos = new ArrayList<>();
         try {
             //list = rDFStore.getAdvancedSearchPhotos(current.getId(), self, title, persons, objects, country, event);
@@ -229,15 +216,5 @@ public class Search implements Serializable{
     public void setDate(Date date) {
         this.date = date;
     }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-    
-    
     
 }

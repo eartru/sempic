@@ -6,12 +6,9 @@
 package fr.uga.miashs.sempic.backingbeans;
 
 import fr.uga.miashs.sempic.entities.Album;
-import fr.uga.miashs.sempic.entities.SempicGroup;
 import fr.uga.miashs.sempic.entities.SempicUser;
 import fr.uga.miashs.sempic.qualifiers.SelectedUser;
 import fr.uga.miashs.sempic.services.AlbumFacade;
-import fr.uga.miashs.sempic.services.GroupFacade;
-import fr.uga.miashs.sempic.services.SempicUserFacade;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.view.ViewScoped;
@@ -20,7 +17,7 @@ import javax.inject.Named;
 
 /**
  *
- * @author alice
+ *
  */
 @Named
 @ViewScoped

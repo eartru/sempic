@@ -26,7 +26,7 @@ import javax.validation.constraints.NotBlank;
 
 /**
  *
- * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
+ *
  */
 @Named
 @ViewScoped
@@ -70,7 +70,11 @@ public class CreateUser implements Serializable {
     /*public String generateHash(String s) {
         return hashAlgo.generate(s.toCharArray());
     }*/
-    
+
+    /**
+     * Create a user in database and semanticaly
+     * @return
+     */
     public String create() {
         System.out.println(current);
         

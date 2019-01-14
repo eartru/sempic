@@ -13,8 +13,6 @@
             Détail d'une photo
         </ui:define>
         <ui:define name="content">
-            <!--will contains value for title ontology-->
-            <h1><h:outputText value="#{viewPhoto.current}"/></h1>
             <h:graphicImage value="/webapi/picture/#{viewPhoto.current.path}?width=200"/>
             <h:form>
                 <h:panelGrid>
