@@ -31,10 +31,10 @@ public class Namespaces {
     }
     
     public static String getEventGlobalUri(String name) {
-        return eventNS+"GlobalEvent"+name;
+        return eventNS+"GlobalEvent/"+name;
     }
     
     public static String getEventPartyUri(String name) {
-        return eventNS+"Party"+name;
+        return eventNS+"Party/"+name;
     }
 }

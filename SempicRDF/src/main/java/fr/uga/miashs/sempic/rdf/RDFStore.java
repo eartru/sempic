@@ -539,7 +539,7 @@ public class RDFStore {
         Resource event = m.createResource(eventURI);
         
         event.addLiteral(RDFS.label, name);
-        event.addProperty(RDF.type, SempicOnto.Object);
+        event.addProperty(RDF.type, SempicOnto.Event);
 
         m.write(System.out, "turtle");
 
