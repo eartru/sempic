@@ -34,6 +34,19 @@
     </navigation-rule>
     
     <navigation-rule>
+        <navigation-case>
+            <if>#{sessionTools.isAdmin()}</if>
+            <from-outcome>semantic</from-outcome>
+            <to-view-id>/user/add-semantic.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <if>#{!sessionTools.isAdmin()}</if>
+            <from-outcome>semantic</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
         <from-action>#{createUser.create}</from-action>
         <navigation-case>
             <if>#{sessionTools.isAdmin()}</if>
