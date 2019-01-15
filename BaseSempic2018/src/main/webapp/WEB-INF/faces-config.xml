@@ -37,7 +37,7 @@
         <navigation-case>
             <if>#{sessionTools.isAdmin()}</if>
             <from-outcome>semantic</from-outcome>
-            <to-view-id>/user/add-semantic.xhtml</to-view-id>
+            <to-view-id>/admin/add-semantic.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <if>#{!sessionTools.isAdmin()}</if>
@@ -91,10 +91,10 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/user/add-semantic.xhtml</from-view-id>
+        <from-view-id>/admin/add-semantic.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>success</from-outcome>
-            <to-view-id>/user/add-semantic.xhtml</to-view-id>
+            <to-view-id>/admin/add-semantic.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
