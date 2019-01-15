@@ -516,19 +516,12 @@ public class RDFStore {
         Model m = ModelFactory.createDefaultModel(); 
         String eventURI = "";
         
-        /*if (type.equals("global")) {
-            eventURI = Namespaces.getEventGlobalUri(name);
-        } 
-        if (type.equals("party")) {
-            eventURI = Namespaces.getEventPartyUri(name);
-        }*/
-        
         switch (type){
             case "global":
                 eventURI = Namespaces.getEventGlobalUri(name);
                 break;
             case "party":
-                eventURI = Namespaces.getEventGlobalUri(name);
+                eventURI = Namespaces.getEventPartyUri(name);
                 break;
             default:
                 eventURI = Namespaces.getEventGlobalUri(name);
