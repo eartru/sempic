@@ -8,6 +8,9 @@ package fr.uga.miashs.sempic.backingbeans;
 import fr.uga.miashs.sempic.SempicModelException;
 import fr.uga.miashs.sempic.entities.Album;
 import fr.uga.miashs.sempic.entities.Photo;
+import fr.uga.miashs.sempic.qualifiers.SelectedUser;
+import fr.uga.miashs.sempic.entities.SempicUser;
+import fr.uga.miashs.sempic.rdf.RDFStore;
 import fr.uga.miashs.sempic.services.AlbumFacade;
 import fr.uga.miashs.sempic.services.PhotoFacade;
 import java.io.Serializable;
@@ -44,6 +47,7 @@ public class DeleteAlbum implements Serializable {
     }
 
     public String delete(Album selectedAlbum) {
+        RDFStore s = new RDFStore();
         if (selectedAlbum==null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("parameter album must be given"));
             return "failure";
@@ -65,6 +69,7 @@ public class DeleteAlbum implements Serializable {
             else {
                 try {
                     service.delete(selectedAlbum);
+                    s.askDelete(Long.toString(selectedAlbum.getId()), 'a');
                 } catch (SempicModelException ex) {
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
                         partiallyFailed=true; 

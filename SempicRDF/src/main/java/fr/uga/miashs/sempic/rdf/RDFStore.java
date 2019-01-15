@@ -124,6 +124,28 @@ public class RDFStore {
             cnx.commit();
         }
     }
+    
+    public void askDelete(String s, char b) {
+        Model m = ModelFactory.createDefaultModel();
+        Resource r = null;
+        if (b == 'p') {
+             r = m.getResource(Namespaces.personNS+s);
+             deleteResource(r);
+        }
+        if (b == 'h') {
+             r = m.getResource(Namespaces.photoNS+s);
+            deleteResource(r);
+        }
+        if (b == 'a') {
+            Model mo = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.albumId+"> ?albumId . }\n" +
+                " WHERE   { ?photo <"+SempicOnto.albumId+"> ?albumId . \n" +
+                "FILTER( ?albumId = \""+s+"\"^^<"+XSD.xlong+"> ) }");
+        
+            List<Resource> list = mo.listSubjects().toList();
+            for(Resource item: list)
+                deleteResource(item);
+        }
+    }
 
     /**
      * Retieves all the resources that are subclasses of resource c. To be
@@ -141,7 +163,6 @@ public class RDFStore {
                 + "}");
         return m.listSubjects().toList();
     }
-
     
     /**
      * Create a list of anonymous instances for each of the classes
@@ -161,11 +182,10 @@ public class RDFStore {
     }
 
     /**
-     * Create a resource Photo in semantic
+     * Create a resource photo with properties albumId, ownerId and path.
      * @param photoId
      * @param albumId
      * @param ownerId
-     * @param path
      * @return
      */
     public Resource createPhoto(long photoId, long albumId, long ownerId) {

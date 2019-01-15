@@ -10,12 +10,14 @@ import fr.uga.miashs.sempic.entities.Album;
 import fr.uga.miashs.sempic.entities.Photo;
 import fr.uga.miashs.sempic.qualifiers.SelectedUser;
 import fr.uga.miashs.sempic.entities.SempicUser;
+import fr.uga.miashs.sempic.rdf.RDFStore;
 import fr.uga.miashs.sempic.services.AlbumFacade;
 import fr.uga.miashs.sempic.services.PhotoFacade;
 import fr.uga.miashs.sempic.services.SempicUserFacade;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -29,6 +31,9 @@ import javax.inject.Named;
 @Named
 @ViewScoped
 public class DeleteUser implements Serializable {
+
+    @EJB
+    private RDFStore rDFStore;
       
     @Inject
     private SempicUserFacade service;
@@ -91,6 +96,7 @@ public class DeleteUser implements Serializable {
         else {
             try {
                 service.delete(selectedUser);
+                rDFStore.askDelete(selectedUser.getFirstname()+selectedUser.getLastname(), 'p');
             } catch (SempicModelException ex) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
                     partiallyFailed=true; 
