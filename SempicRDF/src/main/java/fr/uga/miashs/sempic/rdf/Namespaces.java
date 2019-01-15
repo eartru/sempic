@@ -15,8 +15,6 @@ public class Namespaces {
     public final static String personNS =  "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/";
     public final static String objectNS =  "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/";
     public final static String eventNS =  "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/";
-    //public final static String photoNS = "http://http://miashs.univ-grenoble-alpes.fr/photo";
-
     
     public static String getPhotoUri(long photoId) {
         return photoNS+photoId;
