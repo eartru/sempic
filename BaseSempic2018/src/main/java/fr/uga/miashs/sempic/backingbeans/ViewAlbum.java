@@ -13,8 +13,6 @@ import fr.uga.miashs.sempic.services.PhotoFacade;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -23,7 +21,7 @@ import javax.inject.Named;
 
 /**
  *
- * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
+ *
  */
 @Named
 @ViewScoped

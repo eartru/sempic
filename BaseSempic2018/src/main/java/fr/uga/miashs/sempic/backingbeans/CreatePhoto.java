@@ -31,7 +31,7 @@ import javax.servlet.http.Part;
 
 /**
  *
- * @author Jerome David <jerome.david@univ-grenoble-alpes.fr>
+ *
  */
 @Named
 @ViewScoped
@@ -68,6 +68,10 @@ public class CreatePhoto implements Serializable {
         //current.setFilename("");//file.getName());
     }
     
+    /**
+     * Create a photo in database and semanticaly
+     * @return
+     */
     public String create() {
         if (selectedAlbum==null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("parameter albumId must be given"));

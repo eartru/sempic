@@ -232,6 +232,11 @@ public class RDFStore {
         return m.getResource(pUri);
     }
 
+    /**
+     * Get list of persons filtered by their label
+     * @param q
+     * @return
+     */
     public List<Resource> getPersons(String q) {
         
         Model m = cnx.queryConstruct("CONSTRUCT { ?p <" + RDFS.label + "> ?label "
@@ -241,6 +246,13 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
+    /**
+     * Create a resource Person in semantic
+     * @param firstname
+     * @param lastname
+     * @param gender
+     * @return
+     */
     public Resource createPerson(String firstname, String lastname, String gender) {
 
         Model m = ModelFactory.createDefaultModel(); 
@@ -263,46 +275,76 @@ public class RDFStore {
         return someone;
     }
     
+    /**
+     * Annotate a photo depending on what the user choose as annotations
+     * @param id
+     * @param label
+     * @param persons
+     * @param objects
+     * @param country
+     * @param event
+     * @param date
+     */
     public void annotatePhoto(long id, String label, List<String> persons, List<String> objects, String country, String event, Date date) {
         
         Model m = ModelFactory.createDefaultModel();
 
         Resource photo = m.getResource(Namespaces.getPhotoUri(id));
         
-        List<Resource> perso = new ArrayList();
-        persons.forEach(p -> {
-            perso.add(m.getResource(p));
-        });
+        if (persons != null) {
+            List<Resource> perso = new ArrayList();
+            persons.forEach(p -> {
+                perso.add(m.getResource(p));
+            });
+            perso.forEach(p -> {
+                m.add(photo, FOAF.depicts, p);
+            });
+        }
         
-        List<Resource> obj = new ArrayList();
-        objects.forEach(o -> {
-            obj.add(m.getResource(o));
-        });
-        Resource ctry = m.getResource(country);
-       // Resource rgn = m.getResource(region);
-       // Resource dpt = m.getResource(department);
-       // Resource cty = m.getResource(city);
-        Resource evt = m.getResource(event);
-   
-        perso.forEach(p -> {
-            m.add(photo, FOAF.depicts, p);
-        });
-        obj.forEach(o -> {
-            m.add(photo, FOAF.depicts, o);
-        });
-        m.add(photo, SempicOnto.takenIn, ctry);
+        if (objects != null) {
+            List<Resource> obj = new ArrayList();
+            objects.forEach(o -> {
+                obj.add(m.getResource(o));
+            });
+            obj.forEach(o -> {
+                m.add(photo, FOAF.depicts, o);
+            });
+        }
+
+        if (country != null) {
+            Resource ctry = m.getResource(country);
+            m.add(photo, SempicOnto.takenIn, ctry);
+        }
+        
+        if (event != null) {
+            Resource evt = m.getResource(event);
+            m.add(photo, SempicOnto.takenOn, evt);
+        }
+        // Resource rgn = m.getResource(region);
+        // Resource dpt = m.getResource(department);
+        // Resource cty = m.getResource(city);
         //m.add(photo, SempicOnto.takenIn, rgn);
         //m.add(photo, SempicOnto.takenIn, dpt);
         //m.add(photo, SempicOnto.takenIn, cty);
-        m.add(photo, SempicOnto.takenOn, evt);
-        m.add(photo, SempicOnto.takenOn, date.toString());
-        m.add(photo, RDFS.label, label);
+        
+        if (date != null) {
+            m.add(photo, SempicOnto.takenOn, date.toString());
+        }
+        
+        if(!label.equals("")) {
+            m.add(photo, RDFS.label, label);
+        }
 
         m.write(System.out, "turtle");
 
         saveModel(m);
     }
     
+    /**
+     * Get list of country filtered by their label
+     * @param q
+     * @return
+     */
     public List<Resource> getCountry(String q) {
         
         Model m = cnx.queryConstruct("CONSTRUCT { ?uri <"+ RDFS.label +"> ?name } "
@@ -316,6 +358,12 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
+    /**
+     * Get list of region filtered by their label and depending on its country
+     * @param q
+     * @param country
+     * @return
+     */
     public List<Resource> getRegion(String q, String country) {
         
         Model m = cnx.queryConstruct("CONSTRUCT { ?uri <"+ RDFS.label +"> ?name } "
@@ -330,6 +378,12 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
+     /**
+     * Get list of department filtered by their label and depending on its region
+     * @param q
+     * @param region
+     * @return
+     */
     public List<Resource> getDepartment(String q, String region) {
         
         Model m = cnx.queryConstruct("CONSTRUCT { ?uri <"+ RDFS.label +"> ?name } "
@@ -344,6 +398,12 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
+     /**
+     * Get list of city filtered by their label and depending on its department
+     * @param q
+     * @param department
+     * @return
+     */
     public List<Resource> getCity(String q, String department) {
         
         Model m = cnx.queryConstruct("CONSTRUCT { ?uri <"+ RDFS.label +"> ?name } "
@@ -358,6 +418,11 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
+    /**
+     * Get a list of objects filtered by their label
+     * @param q
+     * @return
+     */
     public List<Resource> getObject(String q) {
         
         Model m = cnx.queryConstruct("CONSTRUCT { ?p <" + RDFS.label + "> ?label "
@@ -369,6 +434,11 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
+    /**
+     * Get a list of event filtered by their label
+     * @param q
+     * @return
+     */
     public List<Resource> getEvent(String q) {
         
         Model m = cnx.queryConstruct("CONSTRUCT { ?p <" + RDFS.label + "> ?name "
@@ -381,6 +451,13 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
+    /**
+     * Get a list of resource that represents photos. Photos depicts the family of the connected user
+     * Photos are owned by the connected user.
+     * @param selfId
+     * @param self
+     * @return
+     */
     public List<Resource> getFamilyPhotos(long selfId, String self){
         Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
@@ -393,6 +470,13 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
+    /**
+     * Get a list of resource that represents photos. Photos depicts the friends of the connected user.
+     * Photos are owned by the connected user.
+     * @param selfId
+     * @param self
+     * @return
+     */
     public List<Resource> getFriendPhotos(long selfId, String self){
           Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
@@ -404,6 +488,12 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
+    /**
+     * Get a list of resource that represents photos. Photos depicts persons.
+     * Photos are owned by the connected user.
+     * @param selfId
+     * @return
+     */
     public List<Resource> getPhotosPeople(long selfId){
          Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
@@ -415,6 +505,13 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
+    /**
+     * Get a list of resource that represents photos. Photos depicts everything but a person.
+     * Photos are owned by the connected user.
+     * /!\ Does not work as expected
+     * @param selfId
+     * @return
+     */
     public List<Resource> getPhotosNoPeople(long selfId){
          Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
@@ -426,16 +523,35 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
     
+    /**
+     * Get a list of resource that represents photos. Photos depicts the connected user.
+     * Photos are owned by the connected user.
+     * @param selfId
+     * @param self
+     * @return
+     */
     public List<Resource> getSelfies(long selfId, String self){
          Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
                 "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^<"+XSD.xlong+">; \n" +
                 "<"+SempicOnto.path+"> ?path ; \n" +
-                "<"+FOAF.depicts +"> <"+self+"> . }");
+                "<"+FOAF.depicts +"> <"+Namespaces.personNS+self+"> . }");
         
         return m.listSubjects().toList();
     }
     
+    /**
+     * Get a list of resource that represents photos. Photos depicts whatever the user choose as filter.
+     * Photos are owned by the connected user.
+     * @param selfId
+     * @param self
+     * @param label
+     * @param persons
+     * @param objects
+     * @param country
+     * @param event
+     * @return
+     */
     public List<Resource> getAdvancedSearchPhotos(long selfId, String self, String label, List<String> persons, List<String> objects, 
             String country, String event){
         String query = "CONSTRUCT {  ?photo <"+SempicOnto.path+"> ?path . }\n" +
@@ -468,7 +584,13 @@ public class RDFStore {
         return m.listSubjects().toList();
     }
   
-  public void addFriend(String personFirstName, String personLasteName, String friend) {
+    /**
+     *
+     * @param personFirstName
+     * @param personLasteName
+     * @param friend
+     */
+    public void addFriend(String personFirstName, String personLasteName, String friend) {
         
         Model m = ModelFactory.createDefaultModel();
         Resource person = m.getResource(Namespaces.getPersonUri(personFirstName, personLasteName));
@@ -479,6 +601,12 @@ public class RDFStore {
         saveModel(m);
     }
     
+    /**
+     *
+     * @param personFirstName
+     * @param personLasteName
+     * @param parent
+     */
     public void addParent(String personFirstName, String personLasteName, String parent){
         
         Model m = ModelFactory.createDefaultModel();
@@ -503,6 +631,12 @@ public class RDFStore {
         saveModel(m);
     }
     
+    /**
+     *
+     * @param personFirstName
+     * @param personLasteName
+     * @param child
+     */
     public void addChild(String personFirstName, String personLasteName, String child) {
         
         Model m = ModelFactory.createDefaultModel();
@@ -512,5 +646,52 @@ public class RDFStore {
         m.write(System.out, "turtle");
 
         saveModel(m);
+    }
+    
+    public Resource createObject(String name) {
+
+        Model m = ModelFactory.createDefaultModel(); 
+        String objectURI = Namespaces.getObjectUri(name);
+        
+        Resource object = m.createResource(objectURI);
+        
+        object.addLiteral(RDFS.label, name);
+        object.addProperty(RDF.type, SempicOnto.Object);
+
+        m.write(System.out, "turtle");
+
+        saveModel(m);
+
+        return object;
+    }
+    
+    public Resource createEvent(String name, String type) {
+
+        Model m = ModelFactory.createDefaultModel(); 
+        String eventURI = "";
+        
+        switch (type){
+            case "global":
+                eventURI = Namespaces.getEventGlobalUri(name);
+                break;
+            case "party":
+                eventURI = Namespaces.getEventPartyUri(name);
+                break;
+            default:
+                eventURI = Namespaces.getEventGlobalUri(name);
+                break;
+            
+        }
+        
+        Resource event = m.createResource(eventURI);
+        
+        event.addLiteral(RDFS.label, name);
+        event.addProperty(RDF.type, SempicOnto.Event);
+
+        m.write(System.out, "turtle");
+
+        saveModel(m);
+
+        return event;
     }
 }
