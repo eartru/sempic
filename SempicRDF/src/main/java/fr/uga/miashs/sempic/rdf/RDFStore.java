@@ -585,7 +585,7 @@ public class RDFStore {
     }
   
     /**
-     *
+     * Add property "friend" between two person
      * @param personFirstName
      * @param personLasteName
      * @param friend
@@ -602,7 +602,7 @@ public class RDFStore {
     }
     
     /**
-     *
+     * Add property "parent" between two person
      * @param personFirstName
      * @param personLasteName
      * @param parent
@@ -611,19 +611,7 @@ public class RDFStore {
         
         Model m = ModelFactory.createDefaultModel();
         Resource person = m.getResource(Namespaces.getPersonUri(personFirstName, personLasteName));
-        Property existingParent = (Property) m.getProperty(person, Dbpedia.parent);
-        boolean existingParent2 =  m.contains(person, Dbpedia.parent);
-        
-        /*String toString = person.getProperty(RDFS.label).toString();
-        String obj = person.getProperty(RDFS.label).getObject().toString();
-        
-        System.out.println("existingParent:");
-        System.out.println(existingParent2);
-        System.out.println(toString);
-        System.out.println(obj);
-        System.out.println(person);
-        System.out.println(person.getProperty(RDFS.label).toString());
-        System.out.println(person.getProperty(Dbpedia.parent).getObject().toString());*/
+
         m.add(person, Dbpedia.parent, m.getResource(parent));
         
         m.write(System.out, "turtle");
@@ -632,7 +620,7 @@ public class RDFStore {
     }
     
     /**
-     *
+     * Add property "child" between two person
      * @param personFirstName
      * @param personLasteName
      * @param child
@@ -648,6 +636,10 @@ public class RDFStore {
         saveModel(m);
     }
     
+    /**
+     * Create a resource Object in semantic
+     * @param name
+     */
     public Resource createObject(String name) {
 
         Model m = ModelFactory.createDefaultModel(); 
@@ -665,6 +657,11 @@ public class RDFStore {
         return object;
     }
     
+    /**
+     * Create a resource Event in semantic
+     * @param name
+     * @param type
+     */
     public Resource createEvent(String name, String type) {
 
         Model m = ModelFactory.createDefaultModel(); 
