@@ -30,6 +30,9 @@ public class AddSemantic implements Serializable {
     private String firstname;
     private String lastname;
     private String gender;
+    private String object;
+    private String event;
+    private String eventType = "gloabal";
    
     public SempicUser getUser() {
         return current;
@@ -66,8 +69,33 @@ public class AddSemantic implements Serializable {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    public String getObject() {
+        return object;
+    }
+
+    public void setObject(String object) {
+        this.object = object;
+    }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+    
      
-    public String add() {
+    public String addPerson() {
         boolean partiallyFailed = false;
         
         RDFStore s = new RDFStore();
@@ -82,6 +110,44 @@ public class AddSemantic implements Serializable {
             return "failure";
         } else {
             Person p = new Person(Namespaces.getPersonUri(firstname, lastname), firstname, lastname, gender);
+            return "success";
+        }
+    }
+    
+    public String addObject() {
+        boolean partiallyFailed = false;
+        
+        RDFStore s = new RDFStore();
+        try {
+            s.createObject(object);
+        } catch (Exception e) {
+            partiallyFailed = true;
+        }
+        
+        if (partiallyFailed)
+        {
+            return "failure";
+        } else {
+            return "success";
+        }
+    }
+    
+    public String addEvent() {
+        boolean partiallyFailed = false;
+        
+        RDFStore s = new RDFStore();
+        try {
+            System.err.println(event);
+            System.err.println(eventType);
+            s.createEvent(event, eventType);
+        } catch (Exception e) {
+            partiallyFailed = true;
+        }
+        
+        if (partiallyFailed)
+        {
+            return "failure";
+        } else {
             return "success";
         }
     }

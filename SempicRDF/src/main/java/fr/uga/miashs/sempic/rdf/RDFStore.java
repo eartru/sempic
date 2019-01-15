@@ -627,4 +627,51 @@ public class RDFStore {
 
         saveModel(m);
     }
+    
+    public Resource createObject(String name) {
+
+        Model m = ModelFactory.createDefaultModel(); 
+        String objectURI = Namespaces.getObjectUri(name);
+        
+        Resource object = m.createResource(objectURI);
+        
+        object.addLiteral(RDFS.label, name);
+        object.addProperty(RDF.type, SempicOnto.Object);
+
+        m.write(System.out, "turtle");
+
+        saveModel(m);
+
+        return object;
+    }
+    
+    public Resource createEvent(String name, String type) {
+
+        Model m = ModelFactory.createDefaultModel(); 
+        String eventURI = "";
+        
+        switch (type){
+            case "global":
+                eventURI = Namespaces.getEventGlobalUri(name);
+                break;
+            case "party":
+                eventURI = Namespaces.getEventPartyUri(name);
+                break;
+            default:
+                eventURI = Namespaces.getEventGlobalUri(name);
+                break;
+            
+        }
+        
+        Resource event = m.createResource(eventURI);
+        
+        event.addLiteral(RDFS.label, name);
+        event.addProperty(RDF.type, SempicOnto.Event);
+
+        m.write(System.out, "turtle");
+
+        saveModel(m);
+
+        return event;
+    }
 }

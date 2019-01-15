@@ -9,31 +9,65 @@
     
     <ui:composition template="/template/layout.xhtml">
         <ui:define name="title">
-            Ajouter une personne
+            Semantic
         </ui:define>
         <ui:define name="content">
-            <h:form>
-                <h:panelGrid columns = "3">
-                    <label for="lastname">Nom:</label>
-                    <h:inputText id="lastname" h5:placeholder="Dupond" value="#{addSemantic.lastname}"/>
-                    <h:message for="lastname"/>
+            <pf:tabView>
+                <pf:tab title="Ajouter une personne">
+                    <h:form>
+                        <h:panelGrid columns = "3">
+                            <label for="lastname">Nom:</label>
+                            <h:inputText id="lastname" h5:placeholder="Dupond" value="#{addSemantic.lastname}"/>
+                            <h:message for="lastname"/>
 
-                    <label for="firstname">Prenom:</label>
-                    <h:inputText id="firstname" value="#{addSemantic.firstname}"/>
-                    <h:message for="firstname"/>
-                    
-                    <label for="gender">Genre : #{addSemantic.gender} </label>
-                    <pf:selectOneRadio id="gender" value="#{addSemantic.gender}">
-                        <f:selectItem itemLabel="femme" itemValue="femme"/>
-                        <f:selectItem itemLabel="homme" itemValue="homme"/>
-                    </pf:selectOneRadio>
-                    <h:message for="gender"/>
-                    
-                    <h:commandButton value="Ajouter" action="#{addSemantic.add()}"/>
-                </h:panelGrid>
-                <h:messages globalOnly="true"/>
+                            <label for="firstname">Prenom:</label>
+                            <h:inputText id="firstname" value="#{addSemantic.firstname}"/>
+                            <h:message for="firstname"/>
 
-            </h:form>
+                            <label for="gender">Genre : #{addSemantic.gender} </label>
+                            <pf:selectOneRadio id="gender" value="#{addSemantic.gender}">
+                                <f:selectItem itemLabel="femme" itemValue="femme"/>
+                                <f:selectItem itemLabel="homme" itemValue="homme"/>
+                            </pf:selectOneRadio>
+                            <h:message for="gender"/>
+
+                            <h:commandButton value="Ajouter" action="#{addSemantic.addPerson()}"/>
+                        </h:panelGrid>
+                        <h:messages globalOnly="true"/>
+                    </h:form>
+                </pf:tab>
+                <pf:tab title="Ajouter un objet">
+                    <h:form>
+                        <h:panelGrid columns = "3">
+                            <label for="object">Nom:</label>
+                            <h:inputText id="lastname" h5:placeholder="Chaise" value="#{addSemantic.object}"/>
+                            <h:message for="object"/>
+
+                            <h:commandButton value="Ajouter" action="#{addSemantic.addObject()}"/>
+                        </h:panelGrid>
+                        <h:messages globalOnly="true"/>
+                    </h:form>
+                </pf:tab>
+                <pf:tab title="Ajouter un événement">
+                    <h:form>
+                        <h:panelGrid columns = "3">
+                            <label for="event">Nom:</label>
+                            <h:inputText id="event" h5:placeholder="Noël" value="#{addSemantic.event}"/>
+                            <h:message for="event"/>
+                            
+                            <label for="eventType">Type : #{addSemantic.eventType} </label>
+                            <pf:selectOneRadio id="eventType" value="#{addSemantic.eventType}">
+                                <f:selectItem itemLabel="Gloabal" itemValue="gloabal"/>
+                                <f:selectItem itemLabel="Fête" itemValue="party"/>
+                            </pf:selectOneRadio>
+                            <h:message for="eventType"/>
+
+                            <h:commandButton value="Ajouter" action="#{addSemantic.addEvent()}"/>
+                        </h:panelGrid>
+                        <h:messages globalOnly="true"/>
+                    </h:form>
+                </pf:tab>
+            </pf:tabView>
         </ui:define>      
     </ui:composition>
 </html>
