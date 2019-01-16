@@ -88,8 +88,7 @@ public class Search implements Serializable{
         String self = current.getFirstname()+current.getLastname();
         photos = new ArrayList<>();
         try {
-            //list = rDFStore.getAdvancedSearchPhotos(current.getId(), self, title, persons, objects, country, event);
-            list = rDFStore.getAdvancedSearchPhotos(51, self, title, persons, objects, country, event);
+            list = rDFStore.getAdvancedSearchPhotos(current.getId(), self, title, persons, objects, country, event);
             
             list.forEach(p -> {
                 photos.add(p.getProperty(SempicOnto.path).getObject().toString());
