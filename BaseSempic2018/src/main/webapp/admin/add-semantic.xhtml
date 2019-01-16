@@ -57,12 +57,24 @@
                             
                             <label for="eventType">Type : #{addSemantic.eventType} </label>
                             <pf:selectOneRadio id="eventType" value="#{addSemantic.eventType}">
-                                <f:selectItem itemLabel="Gloabal" itemValue="gloabal"/>
+                                <f:selectItem itemLabel="Global" itemValue="global"/>
                                 <f:selectItem itemLabel="Fête" itemValue="party"/>
                             </pf:selectOneRadio>
                             <h:message for="eventType"/>
 
                             <h:commandButton value="Ajouter" action="#{addSemantic.addEvent()}"/>
+                        </h:panelGrid>
+                        <h:messages globalOnly="true"/>
+                    </h:form>
+                </pf:tab>
+                <pf:tab title="Ajouter un animal">
+                    <h:form>
+                        <h:panelGrid columns = "3">
+                            <label for="animal">Nom:</label>
+                            <h:inputText id="animal" h5:placeholder="Chat" value="#{addSemantic.animal}"/>
+                            <h:message for="animal"/>
+
+                            <h:commandButton value="Ajouter" action="#{addSemantic.addAnimal()}"/>
                         </h:panelGrid>
                         <h:messages globalOnly="true"/>
                     </h:form>

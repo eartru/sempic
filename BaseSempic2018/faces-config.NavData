@@ -4,6 +4,7 @@
     <Scope Scope="Project">
         <Node id="template/layout.xhtml" x="399" y="274" zoom="true"/>
         <Node id="template/footer.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="admin/add-semantic.xhtml" x="150" y="600" zoom="true"/>
         <Node id="login-error.html" x="150" y="300" zoom="true"/>
         <Node id="user/search.xhtml" x="671" y="272" zoom="true"/>
         <Node id="user/view-album.xhtml" x="571" y="453" zoom="true"/>
@@ -15,7 +16,6 @@
         <Node id="public/create-user.xhtml" x="150" y="450" zoom="false"/>
         <Node id="admin/list-users.xhtml" x="900" y="150" zoom="true"/>
         <Node id="user/view-account.xhtml" x="1150" y="150" zoom="true"/>
-        <Node id="admin/add-semantic.xhtml" x="150" y="600" zoom="true"/>
         <Node id="template/header.xhtml" x="400" y="150" zoom="true"/>
         <Node id="user/create-album.xhtml" x="755" y="357" zoom="false"/>
         <Node id="user/edit-account.xhtml" x="1014" y="430" zoom="true"/>
