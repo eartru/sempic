@@ -67,6 +67,18 @@
                         <h:messages globalOnly="true"/>
                     </h:form>
                 </pf:tab>
+                <pf:tab title="Ajouter un animal">
+                    <h:form>
+                        <h:panelGrid columns = "3">
+                            <label for="animal">Nom:</label>
+                            <h:inputText id="animal" h5:placeholder="Chat" value="#{addSemantic.animal}"/>
+                            <h:message for="animal"/>
+
+                            <h:commandButton value="Ajouter" action="#{addSemantic.addAnimal()}"/>
+                        </h:panelGrid>
+                        <h:messages globalOnly="true"/>
+                    </h:form>
+                </pf:tab>
             </pf:tabView>
         </ui:define>      
     </ui:composition>

@@ -33,6 +33,7 @@ public class AddSemantic implements Serializable {
     private String object;
     private String event;
     private String eventType = "gloabal";
+    private String animal;
    
     public SempicUser getUser() {
         return current;
@@ -93,6 +94,14 @@ public class AddSemantic implements Serializable {
     public void setEventType(String eventType) {
         this.eventType = eventType;
     }
+
+    public String getAnimal() {
+        return animal;
+    }
+
+    public void setAnimal(String animal) {
+        this.animal = animal;
+    }
     
      
     public String addPerson() {
@@ -137,9 +146,24 @@ public class AddSemantic implements Serializable {
         
         RDFStore s = new RDFStore();
         try {
-            System.err.println(event);
-            System.err.println(eventType);
             s.createEvent(event, eventType);
+        } catch (Exception e) {
+            partiallyFailed = true;
+        }
+        
+        if (partiallyFailed)
+        {
+            return "failure";
+        } else {
+            return "success";
+        }
+    }
+    public String addAnimal() {
+        boolean partiallyFailed = false;
+        
+        RDFStore s = new RDFStore();
+        try {
+            s.createAnimal(animal);
         } catch (Exception e) {
             partiallyFailed = true;
         }

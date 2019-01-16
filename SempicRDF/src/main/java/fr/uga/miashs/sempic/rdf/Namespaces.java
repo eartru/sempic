@@ -15,6 +15,7 @@ public class Namespaces {
     public final static String personNS =  "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/";
     public final static String objectNS =  "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/";
     public final static String eventNS =  "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/";
+    public final static String animalNS =  "http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/";
     
     public static String getPhotoUri(long photoId) {
         return photoNS+photoId;
@@ -34,5 +35,9 @@ public class Namespaces {
     
     public static String getEventPartyUri(String name) {
         return eventNS+"Party/"+name;
+    }
+    
+    public static String getAnimalUri(String name) {
+        return animalNS+name;
     }
 }

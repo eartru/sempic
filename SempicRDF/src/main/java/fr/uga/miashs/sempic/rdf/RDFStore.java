@@ -691,4 +691,25 @@ public class RDFStore {
 
         return event;
     }
+    
+    /**
+     * Create a resource Animal in semantic
+     * @param name
+     */
+    public Resource createAnimal(String name) {
+
+        Model m = ModelFactory.createDefaultModel(); 
+        String animalURI = Namespaces.getAnimalUri(name);
+        
+        Resource animal = m.createResource(animalURI);
+        
+        animal.addLiteral(RDFS.label, name);
+        animal.addProperty(RDF.type, SempicOnto.Animal);
+
+        m.write(System.out, "turtle");
+
+        saveModel(m);
+
+        return animal;
+    }
 }
