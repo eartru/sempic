@@ -99,7 +99,6 @@ public class EditAccount implements Serializable {
     
     public String edit() {       
         if (spouse != null){
-            System.out.println(spouse);
             RDFStore rdfStore = new RDFStore();
 
             try {
@@ -110,7 +109,6 @@ public class EditAccount implements Serializable {
         }
         
         if (parent1 != null){
-            System.out.println(parent1);
             RDFStore rdfStore = new RDFStore();
 
             try {
@@ -121,7 +119,6 @@ public class EditAccount implements Serializable {
         }
         
         if (parent2 != null){
-            System.out.println(parent2);
             RDFStore rdfStore = new RDFStore();
  
             try {
@@ -132,7 +129,6 @@ public class EditAccount implements Serializable {
         }
         
         if (listChild != null){
-            System.out.println(listChild);
             RDFStore rdfStore = new RDFStore();
 
             try {
@@ -146,7 +142,6 @@ public class EditAccount implements Serializable {
         }
         
         if (listFriend != null){
-            System.out.println(listFriend);
             RDFStore rdfStore = new RDFStore();
 
             try {
@@ -157,8 +152,6 @@ public class EditAccount implements Serializable {
             } catch (Exception e) {
                 System.out.println(e);
             }     
-        }else{
-            System.out.println("nullllllllll !!");
         }
         
         return "success";
