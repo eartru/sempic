@@ -32,7 +32,7 @@ public class AddSemantic implements Serializable {
     private String gender;
     private String object;
     private String event;
-    private String eventType = "gloabal";
+    private String eventType = "global";
     private String animal;
    
     public SempicUser getUser() {
