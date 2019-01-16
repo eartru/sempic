@@ -36,6 +36,13 @@
                     <h:inputSecret id="password" value="#{editAccount.user.passwordHash}"/>
                     <h:message for="password"/>
                     
+                    <pf:outputLabel value="Epoux / Epouse" for="spouse" />
+                    <pf:autoComplete id="spouse" dropdown="true" value="#{editAccount.spouse}" completeMethod="#{editAccount.completePerson}" 
+                                     var="user" itemLabel="#{user.getProperty(RDFS.label).getObject().toString()}" itemValue="#{user}">
+                        <h:outputText value="#{user.getProperty(RDFS.label).getObject().toString()}" />
+                    </pf:autoComplete>
+                    <h:message for="parent1"/> 
+                    
                     <pf:outputLabel value="Parent 1" for="parent1" />
                     <pf:autoComplete id="parent1" dropdown="true" value="#{editAccount.parent1}" completeMethod="#{editAccount.completePerson}" 
                                      var="user" itemLabel="#{user.getProperty(RDFS.label).getObject().toString()}" itemValue="#{user}">

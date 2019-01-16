@@ -602,6 +602,24 @@ public class RDFStore {
     }
     
     /**
+     * Add property "spouse" between two person
+     * @param personFirstName
+     * @param personLasteName
+     * @param parent
+     */
+    public void addSpouse(String personFirstName, String personLasteName, String spouse){
+        
+        Model m = ModelFactory.createDefaultModel();
+        Resource person = m.getResource(Namespaces.getPersonUri(personFirstName, personLasteName));
+
+        m.add(person, Dbpedia.spouse, m.getResource(spouse));
+        
+        m.write(System.out, "turtle");
+
+        saveModel(m);
+    }
+    
+    /**
      * Add property "parent" between two person
      * @param personFirstName
      * @param personLasteName
