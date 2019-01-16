@@ -37,6 +37,7 @@ public class EditAccount implements Serializable {
     
     private String parent1;
     private String parent2;
+    private String spouse;
     private ArrayList<String> listChild;
     private ArrayList<String> listFriend;
     
@@ -83,21 +84,30 @@ public class EditAccount implements Serializable {
     public void setListFriend(ArrayList<String> listFriend) {
         this.listFriend = listFriend;
     }
-    
+
+    public String getSpouse() {
+        return spouse;
+    }
+
+    public void setSpouse(String spouse) {
+        this.spouse = spouse;
+    }
     
 
     
     
     
-    public String edit() {
-        System.out.println("Edit methode");
-        //System.out.println(current);
-        //System.out.println(parent1);
-        //System.out.println(parent2);
-        //System.out.println(listChild);
-        //System.out.println(listFriend);
-        
-        
+    public String edit() {       
+        if (spouse != null){
+            System.out.println(spouse);
+            RDFStore rdfStore = new RDFStore();
+
+            try {
+                rDFStore.addSpouse(current.getFirstname(), current.getLastname(), spouse);
+            } catch (Exception e) {
+                System.out.println(e);
+            }    
+        }
         
         if (parent1 != null){
             System.out.println(parent1);
