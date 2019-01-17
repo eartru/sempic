@@ -535,7 +535,25 @@ public class RDFStore {
                 " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
                 "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^<"+XSD.xlong+">; \n" +
                 "<"+SempicOnto.path+"> ?path ; \n" +
-                "<"+FOAF.depicts +"> <"+Namespaces.personNS+self+"> . }");
+                "<"+FOAF.depicts +"> <"+Namespaces.eventNS+self+"> . }");
+        
+        return m.listSubjects().toList();
+    }
+    
+    /**
+     * Get a list of resource that represents photos. Photos depicts evenement.
+     * Photos are owned by the connected user.
+     * @param selfId
+     * @return
+     */
+    public List<Resource> getPhotosEvent(long selfId){
+         Model m = cnx.queryConstruct("CONSTRUCT { ?photo <"+SempicOnto.path+"> ?path . }\n" +
+                " WHERE   { ?photo a <"+FOAF.Image +"> ; \n" +
+                "<"+SempicOnto.ownerId+"> \""+selfId+"\"^^<"+XSD.xlong+">; \n" +
+                "<"+SempicOnto.path+"> ?path ; \n" +
+                "<"+SempicOnto.takenOn +"> ?evt . \n" +
+                "?evt  a ?event. \n" +
+                "?event  <"+RDFS.subClassOf+"><"+SempicOnto.Event+"> . }");
         
         return m.listSubjects().toList();
     }
