@@ -1,0 +1,781 @@
+@prefix geonames: <http://www.geonames.org/ontology#> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix ns:    <http://creativecommons.org/ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix fo:    <http://www.w3.org/1999/XSL/Format#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sempic: <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#> .
+@prefix relators: <http://id.loc.gov/vocabulary/relators/> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sem:   <http://semanticweb.cs.vu.nl/2009/11/sem/> .
+@prefix vann:  <http://purl.org/vocab/vann/> .
+@prefix db:    <http://dbpedia.org/> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+
+sempic:depicts  a               rdfs:Resource , rdf:Property , owl:ObjectProperty ;
+        rdfs:domain             owl:Thing , rdfs:Resource , foaf:Document , sempic:Photo , foaf:Image ;
+        rdfs:range              owl:Thing , sempic:Depiction , rdfs:Resource ;
+        rdfs:subPropertyOf      foaf:depicts , sempic:depicts ;
+        owl:equivalentProperty  foaf:depicts , sempic:depicts .
+
+sempic:Event  a              rdfs:Resource , owl:Class , rdfs:Class ;
+        rdfs:subClassOf      sempic:Depiction , owl:Thing , rdfs:Resource , sempic:Event ;
+        owl:equivalentClass  sempic:Event .
+
+xsd:nonPositiveInteger
+        a                 owl:Class , rdfs:Resource , rdfs:Datatype , rdfs:Class ;
+        owl:disjointWith  xsd:float , xsd:time , xsd:duration , xsd:string , xsd:date , xsd:boolean , xsd:dateTime .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulesKhan>
+        a                  sempic:Male , owl:Thing , sempic:Depiction , _:b0 , _:b1 , dbo:Person , rdfs:Resource , foaf:Person , sempic:Person ;
+        rdfs:label         "Jules Khan" ;
+        sempic:isFriendOf  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond> ;
+        owl:differentFrom  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/EvaDupond> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/ClaraTyno> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/CaroleDupond> ;
+        owl:sameAs         <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulesKhan> .
+
+xsd:gMonthDay  a  rdfs:Resource , rdfs:Class , rdfs:Datatype .
+
+owl:Restriction  a           owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf      owl:Restriction , rdfs:Resource , owl:Class ;
+        owl:equivalentClass  owl:Restriction .
+
+rdf:nil  a      rdfs:Resource , rdf:List .
+
+rdfs:Container  a  rdfs:Resource , rdfs:Class .
+
+xsd:gYearMonth  a  rdfs:Resource , rdfs:Class , rdfs:Datatype .
+
+xsd:unsignedShort  a         owl:Class , rdfs:Class , rdfs:Resource , rdfs:Datatype ;
+        rdfs:subClassOf      xsd:unsignedLong , xsd:unsignedShort , xsd:long , xsd:unsignedInt , xsd:integer , xsd:short , xsd:nonNegativeInteger , xsd:int ;
+        owl:disjointWith     xsd:time , xsd:float , xsd:duration , xsd:boolean , xsd:dateTime , xsd:string , xsd:date ;
+        owl:equivalentClass  xsd:unsignedShort .
+
+owl:disjointWith  a         rdf:Property , owl:SymmetricProperty , owl:ObjectProperty , rdfs:Resource ;
+        rdfs:domain         rdfs:Resource , owl:Class , rdfs:Class ;
+        rdfs:range          rdfs:Class , owl:Class , rdfs:Resource ;
+        rdfs:subPropertyOf  owl:disjointWith .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Chat>
+        a           sempic:Depiction , owl:Thing , rdfs:Resource , sempic:Animal ;
+        rdfs:label  "Chat" ;
+        owl:sameAs  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Chat> .
+
+sempic:owns  a              owl:ObjectProperty , rdf:Property , rdfs:Resource ;
+        rdfs:domain         rdfs:Resource , sempic:Depiction , _:b0 , _:b1 , owl:Thing , sempic:Person , dbo:Person , foaf:Person ;
+        rdfs:label          "owns" , "possède"@fr ;
+        rdfs:range          rdfs:Resource , sempic:Animal , sempic:Depiction , owl:Thing , sempic:Object ;
+        rdfs:subPropertyOf  owl:topObjectProperty , sempic:owns .
+
+dbo:parent  a                     rdf:Property , owl:ObjectProperty , owl:Property , rdfs:Resource ;
+        rdfs:domain               dbo:Person , rdfs:Resource , owl:Thing , sempic:Person , _:b0 , foaf:Person , _:b1 , sempic:Depiction ;
+        rdfs:range                rdfs:Resource , _:b0 , _:b1 , sempic:Depiction , foaf:Person , sempic:Person , dbo:Person , owl:Thing ;
+        rdfs:subPropertyOf        dbo:parent ;
+        owl:propertyDisjointWith  dbo:spouse , dbo:sibling .
+
+xsd:dateTime  a              rdfs:Class , rdfs:Resource , owl:Class , rdfs:Datatype ;
+        rdfs:subClassOf      rdfs:Resource , xsd:dateTime ;
+        owl:disjointWith     xsd:boolean , xsd:byte , xsd:float , xsd:long , xsd:unsignedLong , xsd:unsignedShort , xsd:date , xsd:integer , xsd:duration , xsd:decimal , xsd:short , xsd:unsignedInt , xsd:string , xsd:unsignedByte , xsd:nonNegativeInteger , xsd:time , xsd:int , xsd:nonPositiveInteger ;
+        owl:equivalentClass  xsd:dateTime .
+
+owl:topDataProperty  a      rdf:Property , rdfs:Resource , owl:Property ;
+        rdfs:subPropertyOf  owl:topDataProperty .
+
+owl:differentFrom  a        rdfs:Resource , owl:ObjectProperty , rdf:Property , owl:SymmetricProperty ;
+        rdfs:subPropertyOf  owl:differentFrom .
+
+sempic:Party  a              rdfs:Resource , owl:Class , rdfs:Class ;
+        rdfs:subClassOf      sempic:Depiction , sempic:Event , owl:Thing , rdfs:Resource , sempic:Party ;
+        owl:equivalentClass  sempic:Party .
+
+sempic:Animal  a             rdfs:Resource , rdfs:Class , owl:Class ;
+        rdfs:label           "Animal"@fr , "Animal" ;
+        rdfs:subClassOf      rdfs:Resource , owl:Thing , sempic:Animal , sempic:Depiction ;
+        owl:equivalentClass  sempic:Animal .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Table>
+        a           rdfs:Resource , owl:Thing , sempic:Depiction , sempic:Object ;
+        rdfs:label  "Table" ;
+        owl:sameAs  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Table> .
+
+owl:unionOf  a              rdfs:Resource , rdf:Property ;
+        rdfs:subPropertyOf  owl:unionOf .
+
+xsd:unsignedInt  a           rdfs:Datatype , owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf      xsd:nonNegativeInteger , xsd:integer , xsd:int , xsd:long , xsd:unsignedLong , xsd:unsignedInt ;
+        owl:disjointWith     xsd:boolean , xsd:string , xsd:dateTime , xsd:float , xsd:time , xsd:date , xsd:duration ;
+        owl:equivalentClass  xsd:unsignedInt .
+
+xsd:byte  a                  owl:Class , rdfs:Class , rdfs:Resource , rdfs:Datatype ;
+        rdfs:subClassOf      xsd:byte , xsd:short , xsd:integer , xsd:long , xsd:int ;
+        owl:disjointWith     xsd:time , xsd:boolean , xsd:dateTime , xsd:float , xsd:duration , xsd:date , xsd:string ;
+        owl:equivalentClass  xsd:byte .
+
+rdf:Seq  a               rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf  rdfs:Container .
+
+owl:AnnotationProperty
+        a       rdfs:Resource , rdfs:Class .
+
+rdfs:range  a               rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Resource , rdf:Property ;
+        rdfs:range          rdfs:Resource , rdfs:Class ;
+        rdfs:subPropertyOf  rdfs:range .
+
+owl:FunctionalProperty
+        a                rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf  rdf:Property .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/ClaraTyno>
+        a                  rdfs:Resource , dbo:Person , _:b1 , sempic:Person , owl:Thing , foaf:Person , _:b0 , sempic:Female , sempic:Depiction ;
+        rdfs:label         "Clara Tyno" ;
+        sempic:isFriendOf  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond> ;
+        owl:differentFrom  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulesKhan> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond> ;
+        owl:sameAs         <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/ClaraTyno> .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/352>
+        a                      sempic:Photo , owl:Thing , foaf:Image , foaf:Document , rdfs:Resource ;
+        rdfs:label             "Famille au vent" ;
+        sempic:albumId         "351"^^xsd:long ;
+        sempic:depicts         <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/CaroleDupond> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/EvaDupond> ;
+        sempic:ownerId         "301"^^xsd:long ;
+        sempic:path            "351/352" ;
+        sempic:takenIn         <http://sws.geonames.org/3017382/> ;
+        sempic:takenOn         "Mon Sep 10 00:00:00 CEST 2018" ;
+        owl:sameAs             <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/352> ;
+        owl:topDataProperty    "351"^^xsd:long , "301"^^xsd:long ;
+        owl:topObjectProperty  <http://sws.geonames.org/3017382/> ;
+        foaf:depicts           <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/CaroleDupond> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/EvaDupond> .
+
+sempic:albumId  a           rdfs:Resource , owl:FunctionalProperty , owl:DatatypeProperty , rdf:Property ;
+        rdfs:label          "in album" ;
+        rdfs:range          rdfs:Resource , xsd:string ;
+        rdfs:subPropertyOf  sempic:albumId , owl:topDataProperty .
+
+owl:sameAs  a               rdfs:Resource , owl:ObjectProperty , rdf:Property , owl:SymmetricProperty ;
+        rdfs:subPropertyOf  owl:sameAs .
+
+owl:backwardCompatibleWith
+        a                   rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Resource , owl:Ontology ;
+        rdfs:range          rdfs:Resource , owl:Ontology ;
+        rdfs:subPropertyOf  owl:backwardCompatibleWith .
+
+sempic:ownerId  a           rdfs:Resource , owl:FunctionalProperty , owl:DatatypeProperty , rdf:Property ;
+        rdfs:label          "has owner" ;
+        rdfs:range          rdfs:Resource , xsd:string ;
+        rdfs:subPropertyOf  sempic:ownerId , owl:topDataProperty .
+
+xsd:anyURI  a   rdfs:Resource , rdfs:Class , rdfs:Datatype .
+
+xsd:positiveInteger  a  rdfs:Resource , rdfs:Class , rdfs:Datatype .
+
+xsd:double  a   rdfs:Resource , rdfs:Class , rdfs:Datatype .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/EvaDupond>
+        a                  sempic:Person , sempic:Depiction , _:b0 , rdfs:Resource , foaf:Person , sempic:Female , dbo:Person , owl:Thing , _:b1 ;
+        rdfs:label         "Eva Dupond" ;
+        owl:differentFrom  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulesKhan> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond> ;
+        owl:sameAs         <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/EvaDupond> .
+
+rdf:XMLLiteral  a  rdfs:Resource , rdfs:Class , rdfs:Datatype .
+
+sempic:Birthday  a  sempic:Event , sempic:Depiction , rdfs:Resource , owl:Thing , sempic:Party , owl:NamedIndividual ;
+        rdfs:label  "Anniversaire"@fr ;
+        owl:sameAs  sempic:Birthday .
+
+xsd:gMonth  a   rdfs:Resource , rdfs:Class , rdfs:Datatype .
+
+<http://geovocab.org/spatial#Feature>
+        a                    owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf      rdfs:Resource , <http://geovocab.org/spatial#Feature> ;
+        owl:equivalentClass  <http://geovocab.org/spatial#Feature> .
+
+_:b0    a                            rdfs:Class , rdfs:Resource , owl:Class , owl:Restriction ;
+        rdfs:subClassOf              rdfs:Resource , owl:Thing , _:b0 ;
+        owl:equivalentClass          _:b0 ;
+        owl:maxQualifiedCardinality  "2"^^xsd:nonNegativeInteger ;
+        owl:onClass                  dbo:Person ;
+        owl:onProperty               dbo:parent .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Chien>
+        a           sempic:Depiction , owl:Thing , rdfs:Resource , sempic:Animal ;
+        rdfs:label  "Chien" ;
+        owl:sameAs  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Chien> .
+
+owl:topObjectProperty
+        a                   rdfs:Resource , rdf:Property ;
+        rdfs:subPropertyOf  owl:topObjectProperty .
+
+xsd:string  a                rdfs:Resource , owl:Class , rdfs:Datatype , rdfs:Class ;
+        rdfs:subClassOf      rdfs:Resource , xsd:string ;
+        owl:disjointWith     xsd:integer , xsd:dateTime , xsd:float , xsd:time , xsd:boolean , xsd:long , xsd:nonNegativeInteger , xsd:nonPositiveInteger , xsd:short , xsd:byte , xsd:decimal , xsd:duration , xsd:unsignedByte , xsd:unsignedShort , xsd:date , xsd:unsignedInt , xsd:int , xsd:unsignedLong ;
+        owl:equivalentClass  xsd:string .
+
+sempic:GlobalEvent  a        rdfs:Resource , owl:Class , rdfs:Class ;
+        rdfs:subClassOf      sempic:Depiction , sempic:Event , owl:Thing , rdfs:Resource , sempic:GlobalEvent ;
+        owl:equivalentClass  sempic:GlobalEvent .
+
+_:b2    a                    rdfs:Resource , owl:Restriction , rdfs:Class , owl:Class ;
+        rdfs:subClassOf      _:b2 , owl:Thing , rdfs:Resource ;
+        owl:equivalentClass  _:b2 ;
+        owl:onProperty       owl:topDataProperty ;
+        owl:someValuesFrom   xsd:dateTime .
+
+[ a                  rdfs:Resource , xsd:dateTime ;
+  owl:differentFrom  "353/356" , "353/354" , "351"^^xsd:long , "353/355" , "Farewell Party" , "351/401" , "353"^^xsd:long , "301"^^xsd:long , "351/352"
+] .
+
+owl:equivalentClass  a      rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Class , rdfs:Resource , owl:Class ;
+        rdfs:range          rdfs:Class , rdfs:Resource , owl:Class ;
+        rdfs:subPropertyOf  owl:equivalentClass .
+
+xsd:nonNegativeInteger
+        a                    owl:Class , rdfs:Class , rdfs:Resource , rdfs:Datatype ;
+        rdfs:subClassOf      xsd:nonNegativeInteger , xsd:integer ;
+        owl:disjointWith     xsd:duration , xsd:date , xsd:float , xsd:string , xsd:dateTime , xsd:boolean , xsd:time ;
+        owl:equivalentClass  xsd:nonNegativeInteger .
+
+owl:InverseFunctionalProperty
+        a                rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf  owl:ObjectProperty .
+
+owl:NamedIndividual  a  rdfs:Resource , rdfs:Class .
+
+rdfs:Resource  a             owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf      rdfs:Resource ;
+        owl:equivalentClass  rdfs:Resource .
+
+xsd:base64Binary  a  rdfs:Resource , rdfs:Class , rdfs:Datatype .
+
+rdfs:subPropertyOf  a       rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Resource , rdf:Property ;
+        rdfs:range          rdfs:Resource , rdf:Property ;
+        rdfs:subPropertyOf  rdfs:subPropertyOf .
+
+owl:OntologyProperty  a  rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf  rdf:Property .
+
+foaf:depicts  a                 rdfs:Resource , owl:ObjectProperty , rdf:Property ;
+        rdfs:domain             foaf:Image , owl:Thing , foaf:Document , sempic:Photo , rdfs:Resource ;
+        rdfs:range              sempic:Depiction , owl:Thing , rdfs:Resource ;
+        rdfs:subPropertyOf      sempic:depicts , foaf:depicts ;
+        owl:equivalentProperty  foaf:depicts , sempic:depicts .
+
+xsd:unsignedLong  a          rdfs:Datatype , rdfs:Class , owl:Class , rdfs:Resource ;
+        rdfs:subClassOf      xsd:unsignedLong , xsd:integer , xsd:nonNegativeInteger , xsd:long ;
+        owl:disjointWith     xsd:float , xsd:dateTime , xsd:boolean , xsd:time , xsd:string , xsd:duration , xsd:date ;
+        owl:equivalentClass  xsd:unsignedLong .
+
+rdfs:domain  a              rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Resource , rdf:Property ;
+        rdfs:range          rdfs:Resource , rdfs:Class ;
+        rdfs:subPropertyOf  rdfs:domain .
+
+rdfs:ContainerMembershipProperty
+        a                rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf  rdf:Property .
+
+rdfs:seeAlso  a             rdfs:Resource , rdf:Property ;
+        rdfs:subPropertyOf  rdfs:seeAlso .
+
+rdf:subject  a              rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Resource , rdf:Statement ;
+        rdfs:subPropertyOf  rdf:subject .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Ourson>
+        a           rdfs:Resource , owl:Thing , sempic:Depiction , sempic:Animal ;
+        rdfs:label  "Ourson" ;
+        owl:sameAs  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Ourson> .
+
+rdfs:Datatype  a         rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf  rdfs:Class .
+
+foaf:Person  a               rdfs:Resource , rdfs:Class , owl:Class ;
+        rdfs:subClassOf      sempic:Person , _:b0 , owl:Thing , dbo:Person , _:b1 , foaf:Person , sempic:Depiction , rdfs:Resource ;
+        owl:equivalentClass  _:b1 , dbo:Person , sempic:Person , foaf:Person .
+
+<http://www.geonames.org/ontology>
+        a       rdfs:Resource , owl:Ontology .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/355>
+        a                      foaf:Document , foaf:Image , rdfs:Resource , sempic:Photo , owl:Thing ;
+        rdfs:label             "Amis" ;
+        sempic:albumId         "353"^^xsd:long ;
+        sempic:depicts         <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulesKhan> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/ClaraTyno> ;
+        sempic:ownerId         "301"^^xsd:long ;
+        sempic:path            "353/355" ;
+        sempic:takenIn         <http://sws.geonames.org/3017382/> ;
+        sempic:takenOn         "Tue Aug 21 00:00:00 CEST 2018" ;
+        owl:sameAs             <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/355> ;
+        owl:topDataProperty    "353"^^xsd:long , "301"^^xsd:long ;
+        owl:topObjectProperty  <http://sws.geonames.org/3017382/> ;
+        foaf:depicts           <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/ClaraTyno> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulesKhan> .
+
+xsd:time  a               rdfs:Datatype , rdfs:Resource , rdfs:Class , owl:Class ;
+        owl:disjointWith  xsd:dateTime , xsd:boolean , xsd:nonNegativeInteger , xsd:short , xsd:string , xsd:byte , xsd:date , xsd:unsignedInt , xsd:decimal , xsd:float , xsd:unsignedByte , xsd:unsignedShort , xsd:long , xsd:int , xsd:unsignedLong , xsd:nonPositiveInteger , xsd:duration , xsd:integer .
+
+rdf:List  a                  owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf      rdf:List , rdfs:Resource ;
+        owl:equivalentClass  rdf:List .
+
+owl:imports  a              rdfs:Resource , owl:OntologyProperty , rdf:Property ;
+        rdfs:domain         rdfs:Resource , owl:Ontology ;
+        rdfs:range          rdfs:Resource , owl:Ontology ;
+        rdfs:subPropertyOf  owl:imports .
+
+[ a                  rdfs:Resource , xsd:dateTime ;
+  owl:differentFrom  "353/356" , "353/354" , "351/401" , "351"^^xsd:long , "Farewell Party" , "351/352" , "353/355" , "353"^^xsd:long , "301"^^xsd:long
+] .
+
+owl:TransitiveProperty
+        a                rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf  owl:ObjectProperty .
+
+owl:equivalentProperty
+        a                   rdfs:Resource , rdf:Property ;
+        rdfs:subPropertyOf  owl:equivalentProperty .
+
+owl:ObjectProperty  a    rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf  rdf:Property .
+
+rdf:Property  a              owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf      rdf:Property , rdfs:Resource ;
+        owl:equivalentClass  rdf:Property .
+
+rdf:first  a                rdfs:Resource , owl:FunctionalProperty , rdf:Property ;
+        rdfs:domain         rdfs:Resource , rdf:List ;
+        rdfs:subPropertyOf  rdf:first .
+
+[ a                  rdfs:Resource , xsd:dateTime ;
+  owl:differentFrom  "353/354" , "353"^^xsd:long , "351/401" , "Farewell Party" , "353/356" , "353/355" , "351"^^xsd:long , "301"^^xsd:long , "351/352"
+] .
+
+owl:oneOf  a                rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Class , rdfs:Resource , owl:Class ;
+        rdfs:subPropertyOf  owl:oneOf .
+
+xsd:negativeInteger  a  rdfs:Resource , rdfs:Class , rdfs:Datatype .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise>
+        a           rdfs:Resource , owl:Thing , sempic:Depiction , sempic:Object ;
+        rdfs:label  "Chaise" ;
+        owl:sameAs  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise> .
+
+xsd:hexBinary  a  rdfs:Resource , rdfs:Class , rdfs:Datatype .
+
+foaf:Image  a                rdfs:Resource , owl:Class , rdfs:Class ;
+        rdfs:label           "Photo" ;
+        rdfs:subClassOf      foaf:Document , rdfs:Resource , foaf:Image , owl:Thing ;
+        owl:equivalentClass  foaf:Image .
+
+sempic:TV  a                 rdfs:Resource , owl:Class , rdfs:Class ;
+        rdfs:label           "Télévision"@fr , "TV" ;
+        rdfs:subClassOf      rdfs:Resource , sempic:Depiction , sempic:Object , sempic:TV , owl:Thing ;
+        owl:equivalentClass  sempic:TV .
+
+owl:priorVersion  a         rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Resource , owl:Ontology ;
+        rdfs:range          rdfs:Resource , owl:Ontology ;
+        rdfs:subPropertyOf  owl:priorVersion .
+
+sempic:Object  a             rdfs:Resource , owl:Class , rdfs:Class ;
+        rdfs:subClassOf      sempic:Depiction , rdfs:Resource , sempic:Object , owl:Thing ;
+        owl:equivalentClass  sempic:Object .
+
+sempic:HouseWarmingParty
+        a           sempic:Event , sempic:Depiction , rdfs:Resource , owl:Thing , sempic:Party , owl:NamedIndividual ;
+        rdfs:label  "Crémaillère"@fr ;
+        owl:sameAs  sempic:HouseWarmingParty .
+
+_:b1    a                    rdfs:Class , owl:Class , rdfs:Resource ;
+        rdfs:subClassOf      _:b1 , rdfs:Resource , foaf:Person , owl:Thing , sempic:Person , sempic:Depiction , dbo:Person , _:b0 ;
+        owl:equivalentClass  foaf:Person , sempic:Person , dbo:Person , _:b1 ;
+        owl:unionOf          [ a          rdfs:Resource , rdf:List ;
+                               rdf:first  sempic:Female ;
+                               rdf:rest   [ a          rdfs:Resource , rdf:List ;
+                                            rdf:first  sempic:Male ;
+                                            rdf:rest   ()
+                                          ]
+                             ] .
+
+<http://sws.geonames.org/3017382/>
+        a           rdfs:Resource , owl:Thing , <http://geovocab.org/spatial#Feature> ;
+        owl:sameAs  <http://sws.geonames.org/3017382/> .
+
+geonames:locatedIn  a       rdfs:Resource , rdf:Property ;
+        rdfs:domain         foaf:Document , owl:Thing , rdfs:Resource , foaf:Image ;
+        rdfs:subPropertyOf  geonames:locatedIn .
+
+foaf:Document  a             rdfs:Resource , owl:Class , rdfs:Class ;
+        rdfs:subClassOf      owl:Thing , rdfs:Resource , foaf:Document ;
+        owl:equivalentClass  foaf:Document .
+
+foaf:lastName  a            rdf:Property , owl:DatatypeProperty , rdfs:Resource ;
+        rdfs:domain         owl:Thing , sempic:Depiction , _:b0 , sempic:Person , _:b1 , foaf:Person , dbo:Person , rdfs:Resource ;
+        rdfs:range          rdfs:Resource , xsd:string ;
+        rdfs:subPropertyOf  foaf:lastName .
+
+owl:intersectionOf  a       rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Class , rdfs:Resource , owl:Class ;
+        rdfs:subPropertyOf  owl:intersectionOf .
+
+owl:propertyDisjointWith
+        a                   rdfs:Resource , rdf:Property ;
+        rdfs:subPropertyOf  owl:propertyDisjointWith .
+
+sempic:takenBy  a           rdf:Property , owl:FunctionalProperty , owl:ObjectProperty , rdfs:Resource ;
+        rdfs:domain         owl:Thing , rdfs:Resource , foaf:Document , foaf:Image ;
+        rdfs:label          "taken by" ;
+        rdfs:range          owl:Thing , foaf:Person , dbo:Person , rdfs:Resource , sempic:Depiction , _:b1 , sempic:Person , _:b0 ;
+        rdfs:subPropertyOf  owl:topObjectProperty , sempic:takenBy .
+
+owl:incompatibleWith  a     rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Resource , owl:Ontology ;
+        rdfs:range          rdfs:Resource , owl:Ontology ;
+        rdfs:subPropertyOf  owl:incompatibleWith .
+
+sempic:Cat  a                rdfs:Resource , owl:Class , rdfs:Class ;
+        rdfs:label           "Cat" , "Chat"@fr ;
+        rdfs:subClassOf      owl:Thing , sempic:Depiction , rdfs:Resource , sempic:Cat , sempic:Animal ;
+        owl:equivalentClass  sempic:Cat .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Ours>
+        a           rdfs:Resource , owl:Thing , sempic:Depiction , sempic:Animal ;
+        rdfs:label  "Ours" ;
+        owl:sameAs  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Ours> .
+
+owl:DatatypeProperty  a  rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf  rdf:Property .
+
+owl:Ontology  a              owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf      owl:Ontology , rdfs:Resource ;
+        owl:equivalentClass  owl:Ontology .
+
+rdf:Alt  a               rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf  rdfs:Container .
+
+xsd:gDay  a     rdfs:Resource , rdfs:Class , rdfs:Datatype .
+
+sempic:Male  a               owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:label           "Homme"@fr ;
+        rdfs:subClassOf      _:b1 , sempic:Male , foaf:Person , _:b0 , sempic:Depiction , sempic:Person , rdfs:Resource , owl:Thing , dbo:Person ;
+        owl:disjointWith     sempic:Female ;
+        owl:equivalentClass  sempic:Male .
+
+dbo:birthDate  a            owl:DatatypeProperty , rdfs:Resource , rdf:Property ;
+        rdfs:domain         sempic:Person , dbo:Person , _:b0 , owl:Thing , foaf:Person , _:b1 , sempic:Depiction , rdfs:Resource ;
+        rdfs:range          rdfs:Resource , xsd:dateTime ;
+        rdfs:subPropertyOf  dbo:birthDate .
+
+rdf:type  a                 rdfs:Resource , rdf:Property ;
+        rdfs:range          rdfs:Resource , rdfs:Class ;
+        rdfs:subPropertyOf  rdf:type .
+
+sempic:hasSister  a         owl:ObjectProperty , rdfs:Resource , rdf:Property ;
+        rdfs:domain         owl:Thing , dbo:Person , _:b0 , sempic:Depiction , foaf:Person , rdfs:Resource , _:b1 , sempic:Person ;
+        rdfs:range          _:b0 , sempic:Female , dbo:Person , owl:Thing , sempic:Depiction , _:b1 , rdfs:Resource , sempic:Person , foaf:Person ;
+        rdfs:subPropertyOf  dbo:sibling , sempic:hasSister .
+
+dbo:child  a                      rdf:Property , owl:ObjectProperty , rdfs:Resource ;
+        rdfs:domain               sempic:Depiction , rdfs:Resource , _:b0 , dbo:Person , sempic:Person , _:b1 , foaf:Person , owl:Thing ;
+        rdfs:range                owl:Thing , rdfs:Resource , foaf:Person , dbo:Person , _:b0 , sempic:Person , _:b1 , sempic:Depiction ;
+        rdfs:subPropertyOf        dbo:child ;
+        owl:propertyDisjointWith  dbo:parent , dbo:spouse , dbo:sibling .
+
+xsd:unsignedByte  a          rdfs:Datatype , rdfs:Resource , rdfs:Class , owl:Class ;
+        rdfs:subClassOf      xsd:int , xsd:unsignedInt , xsd:unsignedByte , xsd:byte , xsd:integer , xsd:short , xsd:unsignedLong , xsd:unsignedShort , xsd:long , xsd:nonNegativeInteger ;
+        owl:disjointWith     xsd:time , xsd:float , xsd:dateTime , xsd:date , xsd:boolean , xsd:string , xsd:duration ;
+        owl:equivalentClass  xsd:unsignedByte .
+
+sempic:Christmas  a          sempic:GlobalEvent , rdfs:Resource , sempic:Depiction , owl:Thing , _:b2 , owl:NamedIndividual , sempic:Event ;
+        rdfs:label           "Noël"@fr ;
+        owl:sameAs           sempic:Christmas ;
+        owl:topDataProperty  [ a                  rdfs:Resource , xsd:dateTime ;
+                               owl:differentFrom  "353/354" , "353/356" , "351/401" , "Farewell Party" , "351"^^xsd:long , "353"^^xsd:long , "351/352" , "301"^^xsd:long , "353/355"
+                             ] .
+
+rdfs:subClassOf  a          rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Resource , rdfs:Class ;
+        rdfs:range          rdfs:Resource , rdfs:Class ;
+        rdfs:subPropertyOf  rdfs:subClassOf .
+
+xsd:float  a              owl:Class , rdfs:Datatype , rdfs:Class , rdfs:Resource ;
+        owl:disjointWith  xsd:byte , xsd:duration , xsd:integer , xsd:short , xsd:long , xsd:int , xsd:dateTime , xsd:nonPositiveInteger , xsd:boolean , xsd:nonNegativeInteger , xsd:decimal , xsd:unsignedShort , xsd:unsignedInt , xsd:string , xsd:unsignedLong , xsd:date , xsd:unsignedByte , xsd:time .
+
+owl:Thing  a                 rdfs:Resource , rdfs:Class , owl:Class ;
+        rdfs:subClassOf      rdfs:Resource , owl:Thing ;
+        owl:equivalentClass  owl:Thing .
+
+rdf:object  a               rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Resource , rdf:Statement ;
+        rdfs:subPropertyOf  rdf:object .
+
+xsd:decimal  a            owl:Class , rdfs:Datatype , rdfs:Resource , rdfs:Class ;
+        owl:disjointWith  xsd:date , xsd:dateTime , xsd:float , xsd:string , xsd:boolean , xsd:duration , xsd:time .
+
+owl:SymmetricProperty
+        a                rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf  owl:ObjectProperty .
+
+dbo:mother  a               rdf:Property , owl:ObjectProperty , rdfs:Resource ;
+        rdfs:domain         _:b0 , dbo:Person , owl:Thing , sempic:Depiction , rdfs:Resource , foaf:Person , sempic:Person , _:b1 ;
+        rdfs:range          dbo:Person , rdfs:Resource , sempic:Person , sempic:Depiction , foaf:Person , sempic:Female , _:b1 , owl:Thing , _:b0 ;
+        rdfs:subPropertyOf  dbo:parent , dbo:mother .
+
+sempic:hasBrother  a        owl:ObjectProperty , rdf:Property , rdfs:Resource ;
+        rdfs:domain         foaf:Person , owl:Thing , _:b0 , dbo:Person , rdfs:Resource , sempic:Depiction , _:b1 , sempic:Person ;
+        rdfs:range          sempic:Depiction , rdfs:Resource , foaf:Person , _:b1 , dbo:Person , sempic:Male , sempic:Person , _:b0 , owl:Thing ;
+        rdfs:subPropertyOf  sempic:hasBrother , dbo:sibling .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/356>
+        a                      foaf:Document , rdfs:Resource , owl:Thing , sempic:Photo , foaf:Image ;
+        sempic:albumId         "353"^^xsd:long ;
+        sempic:depicts         <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/CaroleDupond> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Table> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulesKhan> ;
+        sempic:ownerId         "301"^^xsd:long ;
+        sempic:path            "353/356" ;
+        sempic:takenIn         <http://sws.geonames.org/3017382/> ;
+        sempic:takenOn         "Wed Nov 21 00:00:00 CET 2018" ;
+        sempic:takenOn         sempic:FarewellParty ;
+        owl:sameAs             <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/356> ;
+        owl:topDataProperty    "353"^^xsd:long , "301"^^xsd:long ;
+        owl:topObjectProperty  <http://sws.geonames.org/3017382/> ;
+        foaf:depicts           <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Table> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulesKhan> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/CaroleDupond> .
+
+xsd:boolean  a            rdfs:Datatype , rdfs:Resource , rdfs:Class , owl:Class ;
+        owl:disjointWith  xsd:unsignedShort , xsd:byte , xsd:int , xsd:nonPositiveInteger , xsd:string , xsd:float , xsd:unsignedByte , xsd:unsignedInt , xsd:time , xsd:duration , xsd:date , xsd:long , xsd:unsignedLong , xsd:dateTime , xsd:short , xsd:decimal , xsd:integer , xsd:nonNegativeInteger .
+
+dbo:spouse  a               rdfs:Resource , owl:SymmetricProperty , rdf:Property , owl:FunctionalProperty , owl:ObjectProperty ;
+        rdfs:domain         owl:Thing , rdfs:Resource ;
+        rdfs:range          rdfs:Resource , owl:Thing ;
+        rdfs:subPropertyOf  dbo:spouse .
+
+rdf:Bag  a               rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf  rdfs:Container .
+
+sempic:Female  a             rdfs:Class , rdfs:Resource , owl:Class ;
+        rdfs:label           "Femme"@fr ;
+        rdfs:subClassOf      sempic:Depiction , owl:Thing , foaf:Person , _:b1 , rdfs:Resource , sempic:Female , _:b0 , sempic:Person , dbo:Person ;
+        owl:disjointWith     sempic:Male ;
+        owl:equivalentClass  sempic:Female .
+
+[ a                  xsd:dateTime , rdfs:Resource ;
+  owl:differentFrom  "353/354" , "353/356" , "353"^^xsd:long , "Farewell Party" , "353/355" , "351/401" , "351/352" , "301"^^xsd:long , "351"^^xsd:long
+] .
+
+sempic:FarewellParty  a      sempic:Event , sempic:Depiction , _:b2 , owl:NamedIndividual , rdfs:Resource , owl:Thing , sempic:Party ;
+        rdfs:label           "Pot de départ"@fr ;
+        dc:title             "Farewell Party" ;
+        owl:sameAs           sempic:FarewellParty ;
+        owl:topDataProperty  [ a                  rdfs:Resource , xsd:dateTime ;
+                               owl:differentFrom  "353/356" , "Farewell Party" , "351/401" , "351"^^xsd:long , "353/355" , "301"^^xsd:long , "353"^^xsd:long , "351/352" , "353/354"
+                             ] .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/401>
+        a                      foaf:Image , foaf:Document , rdfs:Resource , owl:Thing , sempic:Photo ;
+        rdfs:label             "Famille d'ours" ;
+        sempic:albumId         "351"^^xsd:long ;
+        sempic:depicts         <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Ourson> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Ours> ;
+        sempic:ownerId         "301"^^xsd:long ;
+        sempic:path            "351/401" ;
+        sempic:takenIn         <http://sws.geonames.org/3017382/> ;
+        sempic:takenOn         "Wed Sep 12 00:00:00 CEST 2018" ;
+        owl:sameAs             <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/401> ;
+        owl:topDataProperty    "301"^^xsd:long , "351"^^xsd:long ;
+        owl:topObjectProperty  <http://sws.geonames.org/3017382/> ;
+        foaf:depicts           <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Ourson> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Animal/Ours> .
+
+owl:maxQualifiedCardinality
+        a                   rdfs:Resource , rdf:Property ;
+        rdfs:subPropertyOf  owl:maxQualifiedCardinality .
+
+sempic:Photo  a              rdfs:Resource , owl:Class , rdfs:Class ;
+        rdfs:subClassOf      owl:Thing , rdfs:Resource , sempic:Photo ;
+        owl:equivalentClass  sempic:Photo .
+
+rdf:predicate  a            rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Resource , rdf:Statement ;
+        rdfs:subPropertyOf  rdf:predicate .
+
+sempic:takenOn  a           rdfs:Resource , owl:ObjectProperty , rdf:Property ;
+        rdfs:domain         sempic:Photo , owl:Thing , rdfs:Resource ;
+        rdfs:label          "taken on" ;
+        rdfs:range          _:b2 , sempic:Depiction , rdfs:Resource , owl:Thing , sempic:Event ;
+        rdfs:subPropertyOf  sempic:takenOn .
+
+xsd:long  a                  rdfs:Datatype , rdfs:Class , owl:Class , rdfs:Resource ;
+        rdfs:subClassOf      xsd:integer , xsd:long ;
+        owl:disjointWith     xsd:dateTime , xsd:duration , xsd:boolean , xsd:date , xsd:float , xsd:string , xsd:time ;
+        owl:equivalentClass  xsd:long .
+
+dbo:Person  a                rdfs:Resource , owl:Class , rdfs:Class ;
+        rdfs:subClassOf      dbo:Person , rdfs:Resource , sempic:Person , owl:Thing , _:b0 , foaf:Person , _:b1 , sempic:Depiction ;
+        owl:equivalentClass  sempic:Person , dbo:Person , foaf:Person , _:b1 .
+
+dbo:sibling  a                    rdf:Property , rdfs:Resource , owl:ObjectProperty ;
+        rdfs:domain               dbo:Person , owl:Thing , _:b0 , _:b1 , sempic:Person , rdfs:Resource , foaf:Person , sempic:Depiction ;
+        rdfs:range                owl:Thing , _:b1 , _:b0 , sempic:Depiction , dbo:Person , rdfs:Resource , sempic:Person , foaf:Person ;
+        rdfs:subPropertyOf        dbo:sibling ;
+        owl:propertyDisjointWith  dbo:spouse .
+
+dc:title  a                 rdfs:Resource , owl:DatatypeProperty , rdf:Property ;
+        rdfs:range          rdfs:Resource , xsd:string ;
+        rdfs:subPropertyOf  dc:title .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/CaroleDupond>
+        a                  sempic:Female , rdfs:Resource , sempic:Person , dbo:Person , _:b1 , owl:Thing , foaf:Person , sempic:Depiction , _:b0 ;
+        rdfs:label         "Carole Dupond" ;
+        dbo:spouse         <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond> ;
+        owl:differentFrom  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulesKhan> ;
+        owl:sameAs         <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/CaroleDupond> .
+
+owl:versionInfo  a  owl:AnnotationProperty .
+
+xsd:short  a                 rdfs:Datatype , rdfs:Class , rdfs:Resource , owl:Class ;
+        rdfs:subClassOf      xsd:short , xsd:int , xsd:long , xsd:integer ;
+        owl:disjointWith     xsd:time , xsd:duration , xsd:dateTime , xsd:date , xsd:string , xsd:boolean , xsd:float ;
+        owl:equivalentClass  xsd:short .
+
+sempic:Person  a             owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf      _:b1 , _:b0 , rdfs:Resource , foaf:Person , sempic:Depiction , dbo:Person , sempic:Person , owl:Thing ;
+        owl:equivalentClass  sempic:Person , foaf:Person , dbo:Person , _:b1 .
+
+owl:onClass  a              rdfs:Resource , rdf:Property ;
+        rdfs:subPropertyOf  owl:onClass .
+
+dbo:father  a               rdfs:Resource , rdf:Property , owl:ObjectProperty ;
+        rdfs:domain         _:b1 , rdfs:Resource , dbo:Person , sempic:Person , foaf:Person , _:b0 , owl:Thing , sempic:Depiction ;
+        rdfs:range          rdfs:Resource , dbo:Person , foaf:Person , sempic:Depiction , sempic:Person , sempic:Male , _:b0 , _:b1 , owl:Thing ;
+        rdfs:subPropertyOf  dbo:parent , dbo:father .
+
+rdf:Statement  a             owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf      rdf:Statement , rdfs:Resource ;
+        owl:equivalentClass  rdf:Statement .
+
+rdfs:isDefinedBy  a         rdfs:Resource , rdf:Property ;
+        rdfs:subPropertyOf  rdfs:isDefinedBy , rdfs:seeAlso .
+
+xsd:int  a                   rdfs:Resource , rdfs:Class , rdfs:Datatype , owl:Class ;
+        rdfs:subClassOf      xsd:long , xsd:integer , xsd:int ;
+        owl:disjointWith     xsd:string , xsd:boolean , xsd:date , xsd:time , xsd:dateTime , xsd:duration , xsd:float ;
+        owl:equivalentClass  xsd:int .
+
+owl:onProperty  a           rdfs:Resource , rdf:Property ;
+        rdfs:domain         rdfs:Class , owl:Class , rdfs:Resource , owl:Restriction ;
+        rdfs:range          rdfs:Resource , owl:Property ;
+        rdfs:subPropertyOf  owl:onProperty .
+
+sempic:Dog  a                rdfs:Resource , owl:Class , rdfs:Class ;
+        rdfs:label           "Chien"@fr , "Dog" ;
+        rdfs:subClassOf      rdfs:Resource , owl:Thing , sempic:Depiction , sempic:Animal , sempic:Dog ;
+        owl:equivalentClass  sempic:Dog .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond>
+        a                  sempic:Person , sempic:Depiction , rdfs:Resource , foaf:Person , dbo:Person , sempic:Male , owl:Thing , _:b0 , _:b1 ;
+        rdfs:label         "Jeff Dupond" ;
+        dbo:child          <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/EvaDupond> ;
+        dbo:spouse         <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/CaroleDupond> ;
+        sempic:isFriendOf  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/ClaraTyno> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JulesKhan> ;
+        owl:differentFrom  <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/EvaDupond> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/ClaraTyno> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/CaroleDupond> ;
+        owl:sameAs         <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Person/JeffDupond> .
+
+sempic:Depiction  a          rdfs:Resource , owl:Class , rdfs:Class ;
+        rdfs:label           "Depiction" ;
+        rdfs:subClassOf      owl:Thing , rdfs:Resource , sempic:Depiction ;
+        owl:equivalentClass  sempic:Depiction .
+
+[ a                  rdfs:Resource , xsd:dateTime ;
+  owl:differentFrom  "353"^^xsd:long , "353/356" , "353/354" , "Farewell Party" , "351/352" , "353/355" , "301"^^xsd:long , "351/401" , "351"^^xsd:long
+] .
+
+xsd:integer  a               rdfs:Resource , rdfs:Class , owl:Class , rdfs:Datatype ;
+        rdfs:subClassOf      xsd:decimal , xsd:integer ;
+        owl:disjointWith     xsd:time , xsd:dateTime , xsd:date , xsd:string , xsd:float , xsd:boolean , xsd:duration ;
+        owl:equivalentClass  xsd:integer .
+
+sempic:isFriendOf  a        owl:SymmetricProperty , rdfs:Resource , rdf:Property , owl:ObjectProperty ;
+        rdfs:domain         _:b0 , owl:Thing , dbo:Person , _:b1 , foaf:Person , sempic:Person , sempic:Depiction , rdfs:Resource ;
+        rdfs:range          _:b0 , _:b1 , sempic:Depiction , foaf:Person , dbo:Person , sempic:Person , owl:Thing , rdfs:Resource ;
+        rdfs:subPropertyOf  sempic:isFriendOf .
+
+foaf:firstName  a           rdfs:Resource , owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain         sempic:Person , owl:Thing , _:b0 , _:b1 , rdfs:Resource , sempic:Depiction , foaf:Person , dbo:Person ;
+        rdfs:range          rdfs:Resource , xsd:string ;
+        rdfs:subPropertyOf  foaf:firstName .
+
+owl:Class  a                 owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf      owl:Class , rdfs:Resource , rdfs:Class ;
+        owl:equivalentClass  owl:Class .
+
+sempic:path  a              rdfs:Resource , owl:FunctionalProperty , owl:DatatypeProperty , rdf:Property ;
+        rdfs:range          rdfs:Resource , xsd:string ;
+        rdfs:subPropertyOf  sempic:path .
+
+xsd:date  a               rdfs:Datatype , owl:Class , rdfs:Resource , rdfs:Class ;
+        owl:disjointWith  xsd:unsignedLong , xsd:dateTime , xsd:unsignedShort , xsd:duration , xsd:unsignedByte , xsd:float , xsd:integer , xsd:long , xsd:string , xsd:decimal , xsd:int , xsd:nonNegativeInteger , xsd:nonPositiveInteger , xsd:boolean , xsd:unsignedInt , xsd:short , xsd:byte , xsd:time .
+
+owl:Property  a              owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf      owl:Property , rdfs:Resource ;
+        owl:equivalentClass  owl:Property .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/354>
+        a                      foaf:Image , foaf:Document , rdfs:Resource , sempic:Photo , owl:Thing ;
+        rdfs:label             "Table de Noel" ;
+        sempic:albumId         "353"^^xsd:long ;
+        sempic:depicts         <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Table> ;
+        sempic:ownerId         "301"^^xsd:long ;
+        sempic:path            "353/354" ;
+        sempic:takenIn         <http://sws.geonames.org/3017382/> ;
+        sempic:takenOn         sempic:Christmas ;
+        owl:sameAs             <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Photo/354> ;
+        owl:topDataProperty    "301"^^xsd:long , "353"^^xsd:long ;
+        owl:topObjectProperty  <http://sws.geonames.org/3017382/> ;
+        foaf:depicts           <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Chaise> , <http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl#Object/Table> .
+
+xsd:gYear  a    rdfs:Resource , rdfs:Class , rdfs:Datatype .
+
+xsd:duration  a           rdfs:Resource , owl:Class , rdfs:Datatype , rdfs:Class ;
+        owl:disjointWith  xsd:byte , xsd:unsignedLong , xsd:string , xsd:decimal , xsd:date , xsd:unsignedInt , xsd:time , xsd:unsignedByte , xsd:boolean , xsd:long , xsd:short , xsd:integer , xsd:nonPositiveInteger , xsd:float , xsd:unsignedShort , xsd:dateTime , xsd:nonNegativeInteger , xsd:int .
+
+rdfs:Literal  a              owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf      rdfs:Literal , rdfs:Resource ;
+        owl:equivalentClass  rdfs:Literal .
+
+sempic:takenIn  a           rdf:Property , rdfs:Resource , owl:FunctionalProperty , owl:ObjectProperty ;
+        rdfs:domain         foaf:Image , owl:Thing , foaf:Document , rdfs:Resource ;
+        rdfs:label          "taken in" ;
+        rdfs:range          owl:Thing , rdfs:Resource , <http://geovocab.org/spatial#Feature> ;
+        rdfs:subPropertyOf  sempic:takenIn , owl:topObjectProperty .
+
+owl:someValuesFrom  a       rdfs:Resource , rdf:Property ;
+        rdfs:subPropertyOf  owl:someValuesFrom .
+
+owl:Nothing  a               rdfs:Resource , rdfs:Class , owl:Class ;
+        rdfs:subClassOf      owl:Nothing , rdfs:Resource , owl:Thing ;
+        owl:equivalentClass  owl:Nothing .
+
+rdfs:Class  a                owl:Class , rdfs:Resource , rdfs:Class ;
+        rdfs:subClassOf      rdfs:Class , rdfs:Resource ;
+        owl:equivalentClass  rdfs:Class .
+
+rdf:rest  a                 rdfs:Resource , owl:FunctionalProperty , rdf:Property ;
+        rdfs:domain         rdfs:Resource , rdf:List ;
+        rdfs:range          rdfs:Resource , rdf:List ;
+        rdfs:subPropertyOf  rdf:rest .
+
+sempic:Wedding  a   sempic:Event , sempic:Depiction , rdfs:Resource , owl:Thing , sempic:Party , owl:NamedIndividual ;
+        rdfs:label  "Mariage"@fr ;
+        owl:sameAs  sempic:Wedding .
+
+<http://miashs.univ-grenoble-alpes.fr/ontologies/sempic.owl>
+        a            rdfs:Resource , owl:Ontology ;
+        owl:imports  <http://www.geonames.org/ontology> .
+
+rdfs:label  a               rdfs:Resource , rdf:Property ;
+        rdfs:subPropertyOf  rdfs:label .
+
