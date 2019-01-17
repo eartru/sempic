@@ -67,6 +67,8 @@ public class Search implements Serializable{
                 list = rDFStore.getPhotosNoPeople(current.getId());
             if (requete.equals("5"))
                 list = rDFStore.getSelfies(current.getId(), self);
+            if (requete.equals("6"))
+                list = rDFStore.getPhotosEvent(current.getId());
             
             list.forEach(p -> {
                 photos.add(p.getProperty(SempicOnto.path).getObject().toString());
